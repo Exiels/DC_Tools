@@ -1,0 +1,14 @@
+release/authenticator.o
+release/authenticator.o
+release/config.o
+release/config.o
+release/framecodegenerator.o
+release/framecodegenerator.o
+release/main.o
+release/main.o
+release/mainframe.o
+release/mainframe.o
+release/moc_authenticator.o
+release/moc_config.o
+release/moc_framecodegenerator.o
+release/moc_mainframe.o

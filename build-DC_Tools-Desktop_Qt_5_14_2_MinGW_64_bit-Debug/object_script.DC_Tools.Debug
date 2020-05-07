@@ -1,0 +1,14 @@
+debug/authenticator.o
+debug/authenticator.o
+debug/config.o
+debug/config.o
+debug/framecodegenerator.o
+debug/framecodegenerator.o
+debug/main.o
+debug/main.o
+debug/mainframe.o
+debug/mainframe.o
+debug/moc_authenticator.o
+debug/moc_config.o
+debug/moc_framecodegenerator.o
+debug/moc_mainframe.o
