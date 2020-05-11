@@ -1,7 +1,7 @@
 #ifndef AUTHENTICATOR_H
 #define AUTHENTICATOR_H
 
-#include <QTWidgets>
+#include <QtWidgets>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QNetworkRequest>
