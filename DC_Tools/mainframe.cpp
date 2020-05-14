@@ -557,7 +557,7 @@ void MainFrame::updater()
     //Initialisation du Manager
     QNetworkAccessManager manager;
     //Vérification de la version du serveur
-    reply = manager.get(QNetworkRequest(QUrl("http://34.89.127.139/version.txt")));
+    reply = manager.get(QNetworkRequest(QUrl("http://31.38.22.246/DC_Tools/version.txt")));
     QEventLoop loop;
     QObject::connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
     loop.exec();
