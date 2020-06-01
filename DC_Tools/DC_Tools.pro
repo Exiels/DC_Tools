@@ -20,5 +20,7 @@ HEADERS += \
 
 QT += widgets
 QT += network
+QT += xml
+
 LIBS += -lz
 LIBS += -L$${QUAZIPLIBDIR} -lquazip

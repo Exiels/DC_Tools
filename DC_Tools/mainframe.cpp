@@ -8,7 +8,7 @@ using namespace std;
 MainFrame::MainFrame()
 {
     //DEBUT_Informations
-        version = "2.5";
+        version = "0.8";
     //FIN_Informations
 
     //DEBUT_Titre et Icone
@@ -27,7 +27,7 @@ MainFrame::MainFrame()
 
             //Menu Fichier : Actions
                 QAction *actionNewPrg = menuFichier->addAction("&Nouveau Programme");
-                QAction *actionNewGlace = menuFichier->addAction("&Nouvelle GLACE");
+                QAction *actionNewGlace = menuFichier->addAction("&Nouvelle GLACE/RV");
                 QAction *actionNewIa = menuFichier->addAction("&Nouvelle IA");
                 QAction *actionQuit = menuFichier->addAction("&Quitter");
             //Menu Options : Actions
@@ -64,7 +64,7 @@ MainFrame::MainFrame()
 
             //Actions à Gauche
                 QAction *actionPrg = toolBarMain->addAction("&Programme");
-                QAction *actionGlace = toolBarMain->addAction("&GLACE");
+                QAction *actionGlace = toolBarMain->addAction("&GLACE/RV");
                 QAction *actionIa = toolBarMain->addAction("&IA");
             //Actions à Droite
                 toolBarMain->addWidget(spacer);
@@ -107,17 +107,20 @@ void MainFrame::Program()
     //Importation des Paramètres stocké dans le registre
         QSettings settings("Exiel", "DC_Tools");
 
+        QLabel *nameL = new QLabel;
+        nameL->setText("Programs Creator");
+
     //DEBUT_Groupe Main
 
-        GB_Main_Name_Line = new QLineEdit;
-        GB_Main_Name_Line->setText(settings.value("Programme/Nom").toString());
-        GB_Main_Desc_Line = new QLineEdit;
-        GB_Main_Desc_Line->setText(settings.value("Programme/MiniDescription").toString());
+        PRG_Main_Name_Line = new QLineEdit;
+        PRG_Main_Name_Line->setText(settings.value("Programme/Nom").toString());
+        PRG_Main_Desc_Line = new QLineEdit;
+        PRG_Main_Desc_Line->setText(settings.value("Programme/MiniDescription").toString());
 
         //Layout Main
             QFormLayout *mainLayout = new QFormLayout;
-            mainLayout->addRow("&Nom :", GB_Main_Name_Line);
-            mainLayout->addRow("&Description  :", GB_Main_Desc_Line);
+            mainLayout->addRow("&Nom :", PRG_Main_Name_Line);
+            mainLayout->addRow("&Description  :", PRG_Main_Desc_Line);
 
         //GroupBox Main
             QGroupBox *GB_Main = new QGroupBox("Principal");
@@ -125,15 +128,15 @@ void MainFrame::Program()
     //FIN_Groupe Main
 
     //DEBUT_Groupe Description
-        GB_Desc_Img_Line = new QLineEdit;
-        GB_Desc_Img_Line->setText(settings.value("Programme/UrlImage").toString());
-        GB_Desc_Desc_Line = new QTextEdit;
-        GB_Desc_Desc_Line->setText(settings.value("Programme/Description").toString());
+        PRG_Desc_Img_Line = new QLineEdit;
+        PRG_Desc_Img_Line->setText(settings.value("Programme/UrlImage").toString());
+        PRG_Desc_Desc_Line = new QTextEdit;
+        PRG_Desc_Desc_Line->setText(settings.value("Programme/Description").toString());
 
         //Layout Description
             QFormLayout *descLayout = new QFormLayout;
-            descLayout->addRow("&URL Image :", GB_Desc_Img_Line);
-            descLayout->addRow("&Description Complète :", GB_Desc_Desc_Line);
+            descLayout->addRow("&URL Image :", PRG_Desc_Img_Line);
+            descLayout->addRow("&Description Complète :", PRG_Desc_Desc_Line);
 
         //GroupBox Description
             QGroupBox *GB_Desc = new QGroupBox("Description");
@@ -141,73 +144,74 @@ void MainFrame::Program()
     //FIN_Groupe Description
 
     //DEBUT_Groupe Fiche_Technique
-        GB_Tech_Aute_Line = new QLineEdit;
-        GB_Tech_Aute_Line->setText(settings.value("Configuration/Auteur").toString());
-        GB_Tech_Desc_Line = new QLineEdit;
-        GB_Tech_Desc_Line->setText(settings.value("Programme/MiniDescriptionB").toString());
-        GB_Tech_Auto_Line = new QLineEdit;
-        GB_Tech_Auto_Line->setText(settings.value("Programme/Autorisations").toString());
-        GB_Tech_Inte_Line = new QLineEdit;
-        GB_Tech_Inte_Line->setText(settings.value("Programme/Interdictions").toString());
-        GB_Tech_Vers_Line = new QLineEdit;
-        GB_Tech_Vers_Line->setText(settings.value("Programme/Version").toString());
-        GB_Tech_Acti_Line = new QLineEdit;
-        GB_Tech_Acti_Line->setText(settings.value("Programme/Activation").toString());
-        GB_Tech_Util_Line = new QLineEdit;
-        GB_Tech_Util_Line->setText(settings.value("Programme/Utilisation").toString());
-        GB_Tech_Mate_Line = new QLineEdit;
-        GB_Tech_Mate_Line->setText(settings.value("Configuration/Materiel").toString());
-        GB_Tech_Dure_Line = new QLineEdit;
-        GB_Tech_Dure_Line->setText(settings.value("Programme/DureeUtilisation").toString());
+        PRG_Tech_Aute_Line = new QLineEdit;
+        PRG_Tech_Aute_Line->setText(settings.value("Configuration/Auteur").toString());
+        PRG_Tech_Desc_Line = new QLineEdit;
+        PRG_Tech_Desc_Line->setText(settings.value("Programme/MiniDescriptionB").toString());
+        PRG_Tech_Auto_Line = new QLineEdit;
+        PRG_Tech_Auto_Line->setText(settings.value("Programme/Autorisations").toString());
+        PRG_Tech_Inte_Line = new QLineEdit;
+        PRG_Tech_Inte_Line->setText(settings.value("Programme/Interdictions").toString());
+        PRG_Tech_Vers_Line = new QLineEdit;
+        PRG_Tech_Vers_Line->setText(settings.value("Programme/Version").toString());
+        PRG_Tech_Acti_Line = new QLineEdit;
+        PRG_Tech_Acti_Line->setText(settings.value("Programme/Activation").toString());
+        PRG_Tech_Util_Line = new QLineEdit;
+        PRG_Tech_Util_Line->setText(settings.value("Programme/Utilisation").toString());
+        PRG_Tech_Mate_Line = new QLineEdit;
+        PRG_Tech_Mate_Line->setText(settings.value("Configuration/Materiel").toString());
+        PRG_Tech_Dure_Line = new QLineEdit;
+        PRG_Tech_Dure_Line->setText(settings.value("Programme/DureeUtilisation").toString());
 
         //ComboBox Fiche_Technique
-            GB_Tech_Type_Comb = new QComboBox;
-            GB_Tech_Type_Comb->addItem("Pavlov");
-            GB_Tech_Type_Comb->addItem("Databomb");
-            GB_Tech_Type_Comb->addItem("Killer");
-            GB_Tech_Type_Comb->addItem("Crippler");
-            GB_Tech_Type_Comb->addItem("Shield");
-            GB_Tech_Type_Comb->addItem("Mirror");
-            GB_Tech_Type_Comb->addItem("Leurre");
-            GB_Tech_Type_Comb->addItem("Cloak");
-            GB_Tech_Type_Comb->addItem("Sonde");
-            GB_Tech_Type_Comb->addItem("Sniffer");
-            GB_Tech_Type_Comb->addItem("Analyseur");
-            GB_Tech_Type_Comb->addItem("Booster");
-            GB_Tech_Type_Comb->addItem("Assist");
-            GB_Tech_Type_Comb->addItem("Overide");
-            GB_Tech_Type_Comb->addItem("Purge");
+            PRG_Tech_Type_Comb = new QComboBox;
+            PRG_Tech_Type_Comb->addItem("Pavlov");
+            PRG_Tech_Type_Comb->addItem("Databomb");
+            PRG_Tech_Type_Comb->addItem("Killer");
+            PRG_Tech_Type_Comb->addItem("Crippler");
+            PRG_Tech_Type_Comb->addItem("Shield");
+            PRG_Tech_Type_Comb->addItem("Mirror");
+            PRG_Tech_Type_Comb->addItem("Leurre");
+            PRG_Tech_Type_Comb->addItem("Cloak");
+            PRG_Tech_Type_Comb->addItem("Sonde");
+            PRG_Tech_Type_Comb->addItem("Sniffer");
+            PRG_Tech_Type_Comb->addItem("Analyseur");
+            PRG_Tech_Type_Comb->addItem("Booster");
+            PRG_Tech_Type_Comb->addItem("Assist");
+            PRG_Tech_Type_Comb->addItem("Overide");
+            PRG_Tech_Type_Comb->addItem("Purge");
 
         //Layout Fiche_Technique
             QFormLayout *techLayout = new QFormLayout;
-            techLayout->addRow("&Auteur :", GB_Tech_Aute_Line);
-            techLayout->addRow("&Type :", GB_Tech_Type_Comb);
-            techLayout->addRow("&Description :", GB_Tech_Desc_Line);
-            techLayout->addRow("&Autorisations :", GB_Tech_Auto_Line);
-            techLayout->addRow("&Interdictions :", GB_Tech_Inte_Line);
-            techLayout->addRow("&Version :", GB_Tech_Vers_Line);
-            techLayout->addRow("&Activation :", GB_Tech_Acti_Line);
-            techLayout->addRow("&Utilisation :", GB_Tech_Util_Line);
-            techLayout->addRow("&Matériel Hôte :", GB_Tech_Mate_Line);
-            techLayout->addRow("&Durée d'Effet :", GB_Tech_Dure_Line);
+            techLayout->addRow("&Auteur :", PRG_Tech_Aute_Line);
+            techLayout->addRow("&Type :", PRG_Tech_Type_Comb);
+            techLayout->addRow("&Description :", PRG_Tech_Desc_Line);
+            techLayout->addRow("&Autorisations :", PRG_Tech_Auto_Line);
+            techLayout->addRow("&Interdictions :", PRG_Tech_Inte_Line);
+            techLayout->addRow("&Version :", PRG_Tech_Vers_Line);
+            techLayout->addRow("&Activation :", PRG_Tech_Acti_Line);
+            techLayout->addRow("&Utilisation :", PRG_Tech_Util_Line);
+            techLayout->addRow("&Matériel Hôte :", PRG_Tech_Mate_Line);
+            techLayout->addRow("&Durée d'Effet :", PRG_Tech_Dure_Line);
         //GroupBox Fiche_Technique
             QGroupBox *GB_Tech = new QGroupBox("Fiche Technique");
             GB_Tech->setLayout(techLayout);
     //FIN_Groupe Fiche_Technique
 
     //DEBUT_Bouton Générer
-        generate = new QPushButton("&Générer !");
+        PRG_Generate = new QPushButton("&Générer !");
 
         //Layout Bouton Générer
             QHBoxLayout *buttonsLayout = new QHBoxLayout;
             buttonsLayout->setAlignment(Qt::AlignRight);
 
-            buttonsLayout->addWidget(generate);
+            buttonsLayout->addWidget(PRG_Generate);
     //FIN_Bouton Générer
 
 
     //DEBUT_Main Layout
         QVBoxLayout *layoutMainL = new QVBoxLayout;
+        layoutMainL->addWidget(nameL);
         layoutMainL->addWidget(GB_Main);
         layoutMainL->addWidget(GB_Desc);
         layoutMainL->addWidget(GB_Tech);
@@ -218,7 +222,7 @@ void MainFrame::Program()
     //FIN_Main Layout
 
     //DEBUT_Signaux
-        connect(generate, SIGNAL(clicked()), this, SLOT(generateCode()));
+        connect(PRG_Generate, SIGNAL(clicked()), this, SLOT(generateCode()));
     //FIN_Signaux
 
     setCentralWidget(layout);
@@ -226,7 +230,7 @@ void MainFrame::Program()
 
 void MainFrame::generateCode()
 {
-    if (GB_Main_Name_Line->text().isEmpty())
+    if (PRG_Main_Name_Line->text().isEmpty())
     {
         QMessageBox::critical(this, "Erreur", "Veuillez entrer au moins un nom de programme");
         return; // Arrêt de la méthode
@@ -245,7 +249,7 @@ void MainFrame::generateCode()
         fluxPr.setCodec("UTF-8");
 
         //Lecture du Template Protection
-        protection = fluxPr.readAll();
+        protection += fluxPr.readAll();
 
         //Remplacement des Variables par les valeurs stocké dans le registre
             protection.replace("PR_Name", settings.value("Protection/Name").toString());
@@ -267,24 +271,24 @@ void MainFrame::generateCode()
         fluxP.setCodec("UTF-8");
 
             //Lecture du Template Programme
-            programme = fluxP.readAll();
+            programme = fluxP.readAll() % fluxPr.readAll();
 
             //Remplacement des Variables par les valeurs stocké dans le registre
-            programme.replace("GB_Desc_Img_Line", GB_Desc_Img_Line->text());
-            programme.replace("GB_Main_Name_Line", GB_Main_Name_Line->text());
-            programme.replace("GB_Main_Desc_Line", GB_Main_Desc_Line->text());
-            programme.replace("GB_Desc_Desc_Line", GB_Desc_Desc_Line->toPlainText());
-            programme.replace("GB_Main_Name_Line", GB_Main_Name_Line->text());
-            programme.replace("GB_Tech_Aute_Line", GB_Tech_Aute_Line->text());
-            programme.replace("GB_Tech_Type_Comb", GB_Tech_Type_Comb->currentText());
-            programme.replace("GB_Tech_Desc_Line", GB_Tech_Desc_Line->text());
-            programme.replace("GB_Tech_Auto_Line", GB_Tech_Auto_Line->text());
-            programme.replace("GB_Tech_Inte_Line", GB_Tech_Inte_Line->text());
-            programme.replace("GB_Tech_Vers_Line", GB_Tech_Vers_Line->text());
-            programme.replace("GB_Tech_Acti_Line", GB_Tech_Acti_Line->text());
-            programme.replace("GB_Tech_Util_Line", GB_Tech_Util_Line->text());
-            programme.replace("GB_Tech_Mate_Line", GB_Tech_Mate_Line->text());
-            programme.replace("GB_Tech_Dure_Line", GB_Tech_Dure_Line->text());
+            programme.replace("GB_Desc_Img_Line", PRG_Desc_Img_Line->text());
+            programme.replace("GB_Main_Name_Line", PRG_Main_Name_Line->text());
+            programme.replace("GB_Main_Desc_Line", PRG_Main_Desc_Line->text());
+            programme.replace("GB_Desc_Desc_Line", PRG_Desc_Desc_Line->toPlainText());
+            programme.replace("GB_Main_Name_Line", PRG_Main_Name_Line->text());
+            programme.replace("GB_Tech_Aute_Line", PRG_Tech_Aute_Line->text());
+            programme.replace("GB_Tech_Type_Comb", PRG_Tech_Type_Comb->currentText());
+            programme.replace("GB_Tech_Desc_Line", PRG_Tech_Desc_Line->text());
+            programme.replace("GB_Tech_Auto_Line", PRG_Tech_Auto_Line->text());
+            programme.replace("GB_Tech_Inte_Line", PRG_Tech_Inte_Line->text());
+            programme.replace("GB_Tech_Vers_Line", PRG_Tech_Vers_Line->text());
+            programme.replace("GB_Tech_Acti_Line", PRG_Tech_Acti_Line->text());
+            programme.replace("GB_Tech_Util_Line", PRG_Tech_Util_Line->text());
+            programme.replace("GB_Tech_Mate_Line", PRG_Tech_Mate_Line->text());
+            programme.replace("GB_Tech_Dure_Line", PRG_Tech_Dure_Line->text());
     //FIN_Programme
 
     //Envoi des codes à la classe FrameCodeGenerator
@@ -299,17 +303,17 @@ void MainFrame::Glace()
         //DEBUT_Save Programme
     if (i_p == "i")
     {
-            settings.setValue("Programme/Nom", QString(pname = GB_Main_Name_Line->text()));
-            settings.setValue("Programme/MiniDescription", QString(pmdesc = GB_Main_Desc_Line->text()));
-            settings.setValue("Programme/UrlImage", QString(purlimg = GB_Desc_Img_Line->text()));
-            settings.setValue("Programme/Description", QString(pdesc = GB_Desc_Desc_Line->toPlainText()));
-            settings.setValue("Programme/MiniDescriptionB", QString(pmdescb = GB_Tech_Desc_Line->text()));
-            settings.setValue("Programme/Autorisations", QString(pauto = GB_Tech_Auto_Line->text()));
-            settings.setValue("Programme/Interdictions", QString(pinte = GB_Tech_Inte_Line->text()));
-            settings.setValue("Programme/Version", QString(pvers = GB_Tech_Vers_Line->text()));
-            settings.setValue("Programme/Activation", QString(pacti = GB_Tech_Acti_Line->text()));
-            settings.setValue("Programme/Utilisation", QString(putil = GB_Tech_Util_Line->text()));
-            settings.setValue("Programme/DureeUtilisation", QString(pdutil = GB_Tech_Dure_Line->text()));
+            settings.setValue("Programme/Nom", QString(pname = PRG_Main_Name_Line->text()));
+            settings.setValue("Programme/MiniDescription", QString(pmdesc = PRG_Main_Desc_Line->text()));
+            settings.setValue("Programme/UrlImage", QString(purlimg = PRG_Desc_Img_Line->text()));
+            settings.setValue("Programme/Description", QString(pdesc = PRG_Desc_Desc_Line->toPlainText()));
+            settings.setValue("Programme/MiniDescriptionB", QString(pmdescb = PRG_Tech_Desc_Line->text()));
+            settings.setValue("Programme/Autorisations", QString(pauto = PRG_Tech_Auto_Line->text()));
+            settings.setValue("Programme/Interdictions", QString(pinte = PRG_Tech_Inte_Line->text()));
+            settings.setValue("Programme/Version", QString(pvers = PRG_Tech_Vers_Line->text()));
+            settings.setValue("Programme/Activation", QString(pacti = PRG_Tech_Acti_Line->text()));
+            settings.setValue("Programme/Utilisation", QString(putil = PRG_Tech_Util_Line->text()));
+            settings.setValue("Programme/DureeUtilisation", QString(pdutil = PRG_Tech_Dure_Line->text()));
     }
         //FIN_Save Programme
 
@@ -321,34 +325,28 @@ void MainFrame::Glace()
     QVBoxLayout *MainLayout = new QVBoxLayout;
     //DEBUT_Onglet Main
         //Création du TabWidget
-            QTabWidget *main = new QTabWidget(this);
+            mainGL = new QTabWidget(this);
         //Création des pages
-            QWidget *principal = new QWidget;
-            QWidget *cm = new QWidget;
-            QWidget *alerte = new QWidget;
-            QWidget *niveau = new QWidget;
-            QWidget *ia = new QWidget;
+            principal = new QWidget;
+            cm = new QWidget;
+            alerte = new QWidget;
+            niveau = new QWidget;
 
         //DEBUT_Page Principal
-            PR_Name_Line = new QLineEdit;
-            PR_Img_Line = new QLineEdit;
-            PR_Niveau_Line = new QComboBox;
-            PR_Glace_Check = new QCheckBox;
-            PR_IA_Check = new QCheckBox;
-            PR_Vers_Line = new QLineEdit;
+            GL_Main_Name_Line = new QLineEdit;
+            GL_Main_Img_Line = new QLineEdit;
+            GL_Main_Vers_Line = new QLineEdit;
+            GL_Main_Desc_Line = new QTextEdit;
+            GL_Glace_Check = new QCheckBox;
 
-            //Edition de la QComboBox
-            PR_Niveau_Line->addItem("Blanche");
-            PR_Niveau_Line->addItem("Gris");
-            PR_Niveau_Line->addItem("Noire");
             //Layout Page Principal
                 QFormLayout *P_main = new QFormLayout;
 
-                P_main->addRow("Nom :", PR_Name_Line);
-                P_main->addRow("Url Image :", PR_Img_Line);
-                P_main->addRow("Version :", PR_Vers_Line);
-                P_main->addRow("GLACE ?", PR_Glace_Check);
-                P_main->addRow("IA ?", PR_IA_Check);
+                P_main->addRow("Nom :", GL_Main_Name_Line);
+                P_main->addRow("Url Image :", GL_Main_Img_Line);
+                P_main->addRow("Version :", GL_Main_Vers_Line);
+                P_main->addRow("Description :", GL_Main_Desc_Line);
+                P_main->addRow("GLACE ?", GL_Glace_Check);
 
             //GroupBox Page Principal
                 QGroupBox *GB_Prin = new QGroupBox;
@@ -363,66 +361,228 @@ void MainFrame::Glace()
         //FIN_Page Principal
 
         //DEBUT_Page CM
-            PR_Niveau_Line = new QComboBox;
+            mainCM = new QTabWidget();
+            GL_Main_Lvl_Line = new QComboBox;
+            GL_CM_Add_CM = new QPushButton("Nouvelle Contre-Mesures");
+
+            CM1 = new QWidget;
+            CM2 = new QWidget;
+            CM3 = new QWidget;
+            CM4 = new QWidget;
+            CM5 = new QWidget;
+            CM6 = new QWidget;
+            CM7 = new QWidget;
+            CM8 = new QWidget;
+            CM9 = new QWidget;
+            CM10 = new QWidget;
+
+            GL_CM1_Name_Line = new QLineEdit;
+            GL_CM1_Img_Line = new QLineEdit;
+            GL_CM1_Cat_Line = new QComboBox;
+            GL_CM1_Cat_Line->addItems(QStringList() << "Pavlov" << "Databomb" << "Killer" << "Crippler" << "Sonde" << "Trace" << "Sentinelle" << "Brouilleur" << "Environnementale");
+            GL_CM1_Comp1_Line = new QLineEdit;
+            GL_CM1_Comp2_Line = new QLineEdit;
+            GL_CM1_Comp3_Line = new QLineEdit;
+            GL_CM1_Alg1_Line = new QLineEdit;
+            GL_CM1_Alg2_Line = new QLineEdit;
+            GL_CM1_Alg3_Line = new QLineEdit;
+            GL_CM1_Desc_Line = new QTextEdit;
+
+            QHBoxLayout *buttonsLayout = new QHBoxLayout;
+            buttonsLayout->setAlignment(Qt::AlignRight);
+
+            buttonsLayout->addWidget(GL_CM_Add_CM);
 
             //Edition de la QComboBox
-                    PR_Niveau_Line->addItem("Blanche");
-                    PR_Niveau_Line->addItem("Grise");
-                    PR_Niveau_Line->addItem("Noire");
+                    GL_Main_Lvl_Line->addItem("Blanche");
+                    GL_Main_Lvl_Line->addItem("Grise");
             //Layout Page CM
 
                     QFormLayout *P_CM = new QFormLayout;
-                    P_CM->addRow("GLACE :", PR_Niveau_Line);
+                    P_CM->addRow("GLACE :", GL_Main_Lvl_Line);
 
             //GroupBox Page CM
                     QGroupBox *GB_CM = new QGroupBox;
                     GB_CM->setLayout(P_CM);
-                    G = new QWidget;
-                    G->setLayout(P_CM);
-                    G->hide();
+
+                    QFormLayout *L_CM1 = new QFormLayout;
+                    L_CM1->addRow("&Nom :", GL_CM1_Name_Line);
+                    L_CM1->addRow("&Url Image :", GL_CM1_Img_Line);
+                    L_CM1->addRow("&Catégorie :", GL_CM1_Cat_Line);
+                    L_CM1->addRow("&Composition 1 :", GL_CM1_Comp1_Line);
+                    L_CM1->addRow("&Composition 2 :", GL_CM1_Comp2_Line);
+                    L_CM1->addRow("&Composition 3 :", GL_CM1_Comp3_Line);
+                    L_CM1->addRow("&Algorithme 1 :", GL_CM1_Alg1_Line);
+                    L_CM1->addRow("&Algorithme 2 :", GL_CM1_Alg2_Line);
+                    L_CM1->addRow("&Algorithme 3 :", GL_CM1_Alg3_Line);
+                    L_CM1->addRow("&Description :", GL_CM1_Desc_Line);
+
+                    QVBoxLayout *PVB_CM1 = new QVBoxLayout;
+                    PVB_CM1->addLayout(L_CM1);
+
+                    CM1->setLayout(PVB_CM1);
+                    mainCM->addTab(CM1, "CM1");
+
             //Layout Main Page CM
                     QVBoxLayout *PVB_CM = new QVBoxLayout;
-                    PVB_CM->addWidget(G);
+                    PVB_CM->addWidget(mainCM);
+                    PVB_CM->addWidget(GB_CM);
+                    PVB_CM->addLayout(buttonsLayout);
 
             //Définition du Layout de la Page Principal
                     cm->setLayout(PVB_CM);
         //FIN_Page CM
 
-        //DEBUT_Page CM
-            PR_Importer_IA = new QPushButton;
-            //Layout Page CM
+        //DEBUT_Page Alerte
+                    GL_CM_Lab1_Line = new QLabel;
+                    GL_CM_Lab1_Line->setText("Aucune Alerte : Etat passif.");
+                    GL_CM_Lab2_Line = new QLabel;
+                    GL_CM_Lab2_Line->setText("Alerte faible : Légère perturbation dans la RV (absence de cloak, programmes visibles).");
+                    GL_CM_Lab3_Line = new QLabel;
+                    GL_CM_Lab3_Line->setText("Alerte élevée : Plongeurs combatifs, Intrusion réseau détecté, CMs engagées.");
 
-                QFormLayout *P_IA = new QFormLayout;
-                P_IA->addRow("Importer", PR_Importer_IA);
+                    GL_CM_NAlrt1_Line = new QLineEdit;
+                    GL_CM_NAlrt2_Line = new QLineEdit;
+                    GL_CM_NAlrt3_Line = new QLineEdit;
 
-            //GroupBox Page CM
-                QGroupBox *GB_IA = new QGroupBox;
-                GB_IA->setLayout(P_IA);
-                I = new QWidget;
-                I->setLayout(P_IA);
-                I->hide();
-            //Layout Main Page CM
-                QVBoxLayout *PVB_IA = new QVBoxLayout;
-                PVB_IA->addWidget(I);
+                    GL_CM_FAlrt1_Line = new QLineEdit;
+                    GL_CM_FAlrt2_Line = new QLineEdit;
+                    GL_CM_FAlrt3_Line = new QLineEdit;
 
-            //Définition du Layout de la Page Principal
-                ia->setLayout(PVB_IA);
-        //FIN_Page CM
+                    GL_CM_HAlrt1_Line = new QLineEdit;
+                    GL_CM_HAlrt2_Line = new QLineEdit;
+                    GL_CM_HAlrt3_Line = new QLineEdit;
+
+                    QFormLayout *P_Alrt = new QFormLayout;
+                    P_Alrt->addWidget(GL_CM_Lab1_Line);
+                    P_Alrt->addRow("► ", GL_CM_NAlrt1_Line);
+                    P_Alrt->addRow("► ", GL_CM_NAlrt2_Line);
+                    P_Alrt->addRow("► ", GL_CM_NAlrt3_Line);
+                    P_Alrt->addWidget(GL_CM_Lab2_Line);
+                    P_Alrt->addRow("► ", GL_CM_FAlrt1_Line);
+                    P_Alrt->addRow("► ", GL_CM_FAlrt2_Line);
+                    P_Alrt->addRow("► ", GL_CM_FAlrt3_Line);
+                    P_Alrt->addWidget(GL_CM_Lab3_Line);
+                    P_Alrt->addRow("► ", GL_CM_HAlrt1_Line);
+                    P_Alrt->addRow("► ", GL_CM_HAlrt2_Line);
+                    P_Alrt->addRow("► ", GL_CM_HAlrt3_Line);
+
+                    QGroupBox *GB_Alrt = new QGroupBox;
+                    GB_Alrt->setLayout(P_Alrt);
+
+                    QVBoxLayout *PVB_Alrt = new QVBoxLayout;
+                    PVB_Alrt->addWidget(GB_Alrt);
+
+                    alerte->setLayout(PVB_Alrt);
+
+        //FIN_Page Alerte
+
+        //DEBUT_Page Niveau
+                    mainLvl = new QTabWidget();
+
+                    Lvl1 = new QWidget;
+                    Lvl2 = new QWidget;
+                    Lvl3 = new QWidget;
+                    Lvl4 = new QWidget;
+                    Lvl5 = new QWidget;
+
+                    GL_LVl1_LImg1_Line = new QLabel;
+                    GL_LVl1_LImg1_Line->setText("Url Image :");
+                    GL_LVl1_LSpacer1_Line = new QLabel;
+                    GL_LVl1_LSpacer1_Line->setText("---------------------------------------------------------------------------");
+                    GL_LVl1_LSpacer2_Line = new QLabel;
+                    GL_LVl1_LSpacer2_Line->setText("---------------------------------------------------------------------------");
+                    GL_LVl1_LSpacer3_Line = new QLabel;
+                    GL_LVl1_LSpacer3_Line->setText("---------------------------------------------------------------------------");
+                    GL_LVl1_LCM1_Line = new QLabel;
+                    GL_LVl1_LCM1_Line->setText("Nom CM1 :");
+                    GL_LVl1_LCM2_Line = new QLabel;
+                    GL_LVl1_LCM2_Line->setText("Nom CM2 :");
+                    GL_LVl1_LCM3_Line = new QLabel;
+                    GL_LVl1_LCM3_Line->setText("Nom CM3 :");
+                    GL_LVl1_LCM4_Line = new QLabel;
+                    GL_LVl1_LCM4_Line->setText("Nom CM4 :");
+                    GL_LVl1_LCM5_Line = new QLabel;
+                    GL_LVl1_LCM5_Line->setText("Nom CM5 :");
+                    GL_LVl1_LDesc_Line = new QLabel;
+                    GL_LVl1_LDesc_Line->setText("Description du Niveau :");
+                    GL_LVl1_LImg2_Line = new QLabel;
+                    GL_LVl1_LImg2_Line->setText("Plan du Niveau (Url Image):");
+                    GL_Lvl1_CM1_Line = new QLineEdit;
+                    GL_Lvl1_CM2_Line = new QLineEdit;
+                    GL_Lvl1_CM3_Line = new QLineEdit;
+                    GL_Lvl1_CM4_Line = new QLineEdit;
+                    GL_Lvl1_CM5_Line = new QLineEdit;
+                    GL_LVl1_Nbr1_Line = new QLineEdit;
+                    GL_LVl1_Desc1_Line = new QTextEdit;
+                    GL_LVl1_PImg1_Line = new QLineEdit;
+                    GL_Lvl_Add_Lvl = new QPushButton("Nouveau Niveau");
+
+                    QHBoxLayout *buttonsLayoutLvl = new QHBoxLayout;
+                    buttonsLayoutLvl->setAlignment(Qt::AlignRight);
+
+                    GL_Lvl1 = new QGridLayout;
+                    GL_Lvl1->addWidget(GL_LVl1_LImg1_Line, 0, 0);
+                    GL_Lvl1->addWidget(GL_LVl1_Nbr1_Line, 0, 1);
+                    GL_Lvl1->addWidget(GL_LVl1_LSpacer1_Line, 1, 1, Qt::AlignCenter);
+                    GL_Lvl1->addWidget(GL_LVl1_LCM1_Line, 2, 0);
+                    GL_Lvl1->addWidget(GL_Lvl1_CM1_Line, 2, 1);
+                    GL_Lvl1->addWidget(GL_LVl1_LCM2_Line, 3, 0);
+                    GL_Lvl1->addWidget(GL_Lvl1_CM2_Line, 3, 1);
+                    GL_Lvl1->addWidget(GL_LVl1_LCM3_Line, 4, 0);
+                    GL_Lvl1->addWidget(GL_Lvl1_CM3_Line, 4, 1);
+                    GL_Lvl1->addWidget(GL_LVl1_LCM4_Line, 5, 0);
+                    GL_Lvl1->addWidget(GL_Lvl1_CM4_Line, 5, 1);
+                    GL_Lvl1->addWidget(GL_LVl1_LCM5_Line, 6, 0);
+                    GL_Lvl1->addWidget(GL_Lvl1_CM5_Line, 6, 1);
+                    GL_Lvl1->addWidget(GL_LVl1_LSpacer2_Line, 7, 1, Qt::AlignCenter);
+                    GL_Lvl1->addWidget(GL_LVl1_LDesc_Line, 8, 0);
+                    GL_Lvl1->addWidget(GL_LVl1_Desc1_Line, 8, 1);
+                    GL_Lvl1->addWidget(GL_LVl1_LSpacer3_Line, 9, 1, Qt::AlignCenter);
+                    GL_Lvl1->addWidget(GL_LVl1_LImg2_Line, 10, 0);
+                    GL_Lvl1->addWidget(GL_LVl1_PImg1_Line, 10, 1);
+
+                    GL_LVl1_LSpacer1_Line->setVisible(false);
+                    GL_LVl1_LCM1_Line->setVisible(false);
+                    GL_Lvl1_CM1_Line->setVisible(false);
+                    GL_LVl1_LCM2_Line->setVisible(false);
+                    GL_Lvl1_CM2_Line->setVisible(false);
+                    GL_LVl1_LCM3_Line->setVisible(false);
+                    GL_Lvl1_CM3_Line->setVisible(false);
+                    GL_LVl1_LCM4_Line->setVisible(false);
+                    GL_Lvl1_CM4_Line->setVisible(false);
+                    GL_LVl1_LCM5_Line->setVisible(false);
+                    GL_Lvl1_CM5_Line->setVisible(false);
+
+                    buttonsLayoutLvl->addWidget(GL_Lvl_Add_Lvl);
+
+                    QVBoxLayout *PVB_Lvl1 = new QVBoxLayout;
+                    PVB_Lvl1->addLayout(GL_Lvl1);
+
+                    Lvl1->setLayout(PVB_Lvl1);
+                    mainLvl->addTab(Lvl1, "Niveau 1");
+
+                    QVBoxLayout *PVB_Lvl = new QVBoxLayout;
+                    PVB_Lvl->addWidget(mainLvl);
+                    PVB_Lvl->addLayout(buttonsLayoutLvl);
+
+                    niveau->setLayout(PVB_Lvl);
+
+        //FIN_Page Niveau
 
         //Ajout des onglets au TabWidget
-            main->addTab(principal, "Principal");
-            main->addTab(cm, "Contres-Mesures");
-            main->addTab(alerte, "Alertes");
-            main->addTab(niveau, "Niveaux");
-            main->addTab(ia, "IA");
+            mainGL->insertTab(0, principal, "Principal");
+            mainGL->insertTab(3, niveau, "Niveaux");
     //FIN_Onglet Main
-    MainLayout->addWidget(main);
+    MainLayout->addWidget(mainGL);
     QWidget *layout = new QWidget();
     layout->setLayout(MainLayout);
 
     //DEBUT_Signaux
-        connect(PR_Glace_Check, SIGNAL(stateChanged(int)), this, SLOT(uGlaceCm(int)));
-        connect(PR_IA_Check, SIGNAL(stateChanged(int)), this, SLOT(uGlaceIa(int)));
+        connect(GL_Glace_Check, SIGNAL(stateChanged(int)), this, SLOT(uGlaceCm(int)));
+        connect(GL_CM_Add_CM, SIGNAL(clicked()), this, SLOT(addCM()));
+        connect(GL_Main_Lvl_Line, SIGNAL(currentIndexChanged(const QString&)), this, SLOT(stateChanged(QString)));
+        connect(GL_Lvl_Add_Lvl, SIGNAL(clicked()), this, SLOT(addLvl()));
     //FIN_Signaux
 
     setCentralWidget(layout);
@@ -525,13 +685,13 @@ void MainFrame::  Ia()
         //FIN_Page IA
 
         //DEBUT_Bouton Générer
-            generate = new QPushButton("&Générer !");
+            IA_Generate = new QPushButton("&Générer !");
 
             //Layout Bouton Générer
                 QHBoxLayout *buttonsLayout = new QHBoxLayout;
                 buttonsLayout->setAlignment(Qt::AlignRight);
 
-                buttonsLayout->addWidget(generate);
+                buttonsLayout->addWidget(IA_Generate);
         //FIN_Bouton Générer
 
         //Ajout des onglets au TabWidget
@@ -546,7 +706,7 @@ void MainFrame::  Ia()
         layout->setLayout(MainLayoutI);
 
         //DEBUT_Signaux
-            connect(generate, SIGNAL(clicked()), this, SLOT(generateCodeIa()));
+            connect(IA_Generate, SIGNAL(clicked()), this, SLOT(generateCodeIa()));
         //FIN_Signaux
 
         setCentralWidget(layout);
@@ -580,40 +740,161 @@ void MainFrame::uGlaceCm(int etat)
 {
     if (etat != 0)
     {
-        G->show();
-    } else if(etat != 2)
-    {
-        G->hide();
-    }
-}
+        mainGL->insertTab(1, cm, "Contres-Mesures");
+        mainGL->insertTab(2, alerte, "Alertes");
 
-void MainFrame::uGlaceIa(int etat)
-{
-    if (etat != 0)
-    {
-        I->show();
+        GL_LVl1_LSpacer1_Line->setVisible(true);
+        GL_LVl1_LCM1_Line->setVisible(true);
+        GL_Lvl1_CM1_Line->setVisible(true);
+        GL_LVl1_LCM2_Line->setVisible(true);
+        GL_Lvl1_CM2_Line->setVisible(true);
+        GL_LVl1_LCM3_Line->setVisible(true);
+        GL_Lvl1_CM3_Line->setVisible(true);
+        GL_LVl1_LCM4_Line->setVisible(true);
+        GL_Lvl1_CM4_Line->setVisible(true);
+        GL_LVl1_LCM5_Line->setVisible(true);
+        GL_Lvl1_CM5_Line->setVisible(true);
+
+        if(countL >=2){
+        GL_LVl2_LSpacer1_Line->setVisible(true);
+        GL_LVl2_LCM1_Line->setVisible(true);
+        GL_Lvl2_CM1_Line->setVisible(true);
+        GL_LVl2_LCM2_Line->setVisible(true);
+        GL_Lvl2_CM2_Line->setVisible(true);
+        GL_LVl2_LCM3_Line->setVisible(true);
+        GL_Lvl2_CM3_Line->setVisible(true);
+        GL_LVl2_LCM4_Line->setVisible(true);
+        GL_Lvl2_CM4_Line->setVisible(true);
+        GL_LVl2_LCM5_Line->setVisible(true);
+        GL_Lvl2_CM5_Line->setVisible(true);
+        }
+        if(countL >=3){
+        GL_LVl3_LSpacer1_Line->setVisible(true);
+        GL_LVl3_LCM1_Line->setVisible(true);
+        GL_Lvl3_CM1_Line->setVisible(true);
+        GL_LVl3_LCM2_Line->setVisible(true);
+        GL_Lvl3_CM2_Line->setVisible(true);
+        GL_LVl3_LCM3_Line->setVisible(true);
+        GL_Lvl3_CM3_Line->setVisible(true);
+        GL_LVl3_LCM4_Line->setVisible(true);
+        GL_Lvl3_CM4_Line->setVisible(true);
+        GL_LVl3_LCM5_Line->setVisible(true);
+        GL_Lvl3_CM5_Line->setVisible(true);
+        }
+        if(countL >=4){
+        GL_LVl4_LSpacer1_Line->setVisible(true);
+        GL_LVl4_LCM1_Line->setVisible(true);
+        GL_Lvl4_CM1_Line->setVisible(true);
+        GL_LVl4_LCM2_Line->setVisible(true);
+        GL_Lvl4_CM2_Line->setVisible(true);
+        GL_LVl4_LCM3_Line->setVisible(true);
+        GL_Lvl4_CM3_Line->setVisible(true);
+        GL_LVl4_LCM4_Line->setVisible(true);
+        GL_Lvl4_CM4_Line->setVisible(true);
+        GL_LVl4_LCM5_Line->setVisible(true);
+        GL_Lvl4_CM5_Line->setVisible(true);
+        }
+        if(countL >=5){
+        GL_LVl5_LSpacer1_Line->setVisible(true);
+        GL_LVl5_LCM1_Line->setVisible(true);
+        GL_Lvl5_CM1_Line->setVisible(true);
+        GL_LVl5_LCM2_Line->setVisible(true);
+        GL_Lvl5_CM2_Line->setVisible(true);
+        GL_LVl5_LCM3_Line->setVisible(true);
+        GL_Lvl5_CM3_Line->setVisible(true);
+        GL_LVl5_LCM4_Line->setVisible(true);
+        GL_Lvl5_CM4_Line->setVisible(true);
+        GL_LVl5_LCM5_Line->setVisible(true);
+        GL_Lvl5_CM5_Line->setVisible(true);
+        }
+
     } else if(etat != 2)
     {
-        I->hide();
+        mainGL->removeTab(2);
+        mainGL->removeTab(1);
+        GL_LVl1_LSpacer1_Line->setVisible(false);
+        GL_LVl1_LCM1_Line->setVisible(false);
+        GL_Lvl1_CM1_Line->setVisible(false);
+        GL_LVl1_LCM2_Line->setVisible(false);
+        GL_Lvl1_CM2_Line->setVisible(false);
+        GL_LVl1_LCM3_Line->setVisible(false);
+        GL_Lvl1_CM3_Line->setVisible(false);
+        GL_LVl1_LCM4_Line->setVisible(false);
+        GL_Lvl1_CM4_Line->setVisible(false);
+        GL_LVl1_LCM5_Line->setVisible(false);
+        GL_Lvl1_CM5_Line->setVisible(false);
+
+        if(countL >= 2){
+        GL_LVl2_LSpacer1_Line->setVisible(false);
+        GL_LVl2_LCM1_Line->setVisible(false);
+        GL_Lvl2_CM1_Line->setVisible(false);
+        GL_LVl2_LCM2_Line->setVisible(false);
+        GL_Lvl2_CM2_Line->setVisible(false);
+        GL_LVl2_LCM3_Line->setVisible(false);
+        GL_Lvl2_CM3_Line->setVisible(false);
+        GL_LVl2_LCM4_Line->setVisible(false);
+        GL_Lvl2_CM4_Line->setVisible(false);
+        GL_LVl2_LCM5_Line->setVisible(false);
+        GL_Lvl2_CM5_Line->setVisible(false);
+        }
+        if(countL >=3){
+        GL_LVl3_LSpacer1_Line->setVisible(false);
+        GL_LVl3_LCM1_Line->setVisible(false);
+        GL_Lvl3_CM1_Line->setVisible(false);
+        GL_LVl3_LCM2_Line->setVisible(false);
+        GL_Lvl3_CM2_Line->setVisible(false);
+        GL_LVl3_LCM3_Line->setVisible(false);
+        GL_Lvl3_CM3_Line->setVisible(false);
+        GL_LVl3_LCM4_Line->setVisible(false);
+        GL_Lvl3_CM4_Line->setVisible(false);
+        GL_LVl3_LCM5_Line->setVisible(false);
+        GL_Lvl3_CM5_Line->setVisible(false);
+        }
+        if(countL >=4){
+        GL_LVl4_LSpacer1_Line->setVisible(false);
+        GL_LVl4_LCM1_Line->setVisible(false);
+        GL_Lvl4_CM1_Line->setVisible(false);
+        GL_LVl4_LCM2_Line->setVisible(false);
+        GL_Lvl4_CM2_Line->setVisible(false);
+        GL_LVl4_LCM3_Line->setVisible(false);
+        GL_Lvl4_CM3_Line->setVisible(false);
+        GL_LVl4_LCM4_Line->setVisible(false);
+        GL_Lvl4_CM4_Line->setVisible(false);
+        GL_LVl4_LCM5_Line->setVisible(false);
+        GL_Lvl4_CM5_Line->setVisible(false);
+        }
+        if(countL >=5){
+        GL_LVl5_LSpacer1_Line->setVisible(false);
+        GL_LVl5_LCM1_Line->setVisible(false);
+        GL_Lvl5_CM1_Line->setVisible(false);
+        GL_LVl5_LCM2_Line->setVisible(false);
+        GL_Lvl5_CM2_Line->setVisible(false);
+        GL_LVl5_LCM3_Line->setVisible(false);
+        GL_Lvl5_CM3_Line->setVisible(false);
+        GL_LVl5_LCM4_Line->setVisible(false);
+        GL_Lvl5_CM4_Line->setVisible(false);
+        GL_LVl5_LCM5_Line->setVisible(false);
+        GL_Lvl5_CM5_Line->setVisible(false);
+        }
     }
 }
 
 void MainFrame::newProgram()
 {
     MainFrame::Program();
-    GB_Main_Name_Line->setText("");
-    GB_Main_Desc_Line->setText("");
-    GB_Desc_Img_Line->setText("");
-    GB_Desc_Desc_Line->setText("");
-    GB_Tech_Aute_Line->setText("");
-    GB_Tech_Desc_Line->setText("");
-    GB_Tech_Auto_Line->setText("");
-    GB_Tech_Inte_Line->setText("");
-    GB_Tech_Vers_Line->setText("");
-    GB_Tech_Acti_Line->setText("");
-    GB_Tech_Util_Line->setText("");
-    GB_Tech_Mate_Line->setText("");
-    GB_Tech_Dure_Line->setText("");
+    PRG_Main_Name_Line->setText("");
+    PRG_Main_Desc_Line->setText("");
+    PRG_Desc_Img_Line->setText("");
+    PRG_Desc_Desc_Line->setText("");
+    PRG_Tech_Aute_Line->setText("");
+    PRG_Tech_Desc_Line->setText("");
+    PRG_Tech_Auto_Line->setText("");
+    PRG_Tech_Inte_Line->setText("");
+    PRG_Tech_Vers_Line->setText("");
+    PRG_Tech_Acti_Line->setText("");
+    PRG_Tech_Util_Line->setText("");
+    PRG_Tech_Mate_Line->setText("");
+    PRG_Tech_Dure_Line->setText("");
 }
 
 void MainFrame::newIa()
@@ -632,17 +913,17 @@ void MainFrame::closeEvent(QCloseEvent* event) {
         //DEBUT_Save Programme
     if (i_p == "i")
     {
-            settings.setValue("Programme/Nom", QString(pname = GB_Main_Name_Line->text()));
-            settings.setValue("Programme/MiniDescription", QString(pmdesc = GB_Main_Desc_Line->text()));
-            settings.setValue("Programme/UrlImage", QString(purlimg = GB_Desc_Img_Line->text()));
-            settings.setValue("Programme/Description", QString(pdesc = GB_Desc_Desc_Line->toPlainText()));
-            settings.setValue("Programme/MiniDescriptionB", QString(pmdescb = GB_Tech_Desc_Line->text()));
-            settings.setValue("Programme/Autorisations", QString(pauto = GB_Tech_Auto_Line->text()));
-            settings.setValue("Programme/Interdictions", QString(pinte = GB_Tech_Inte_Line->text()));
-            settings.setValue("Programme/Version", QString(pvers = GB_Tech_Vers_Line->text()));
-            settings.setValue("Programme/Activation", QString(pacti = GB_Tech_Acti_Line->text()));
-            settings.setValue("Programme/Utilisation", QString(putil = GB_Tech_Util_Line->text()));
-            settings.setValue("Programme/DureeUtilisation", QString(pdutil = GB_Tech_Dure_Line->text()));
+            settings.setValue("Programme/Nom", QString(pname = PRG_Main_Name_Line->text()));
+            settings.setValue("Programme/MiniDescription", QString(pmdesc = PRG_Main_Desc_Line->text()));
+            settings.setValue("Programme/UrlImage", QString(purlimg = PRG_Desc_Img_Line->text()));
+            settings.setValue("Programme/Description", QString(pdesc = PRG_Desc_Desc_Line->toPlainText()));
+            settings.setValue("Programme/MiniDescriptionB", QString(pmdescb = PRG_Tech_Desc_Line->text()));
+            settings.setValue("Programme/Autorisations", QString(pauto = PRG_Tech_Auto_Line->text()));
+            settings.setValue("Programme/Interdictions", QString(pinte = PRG_Tech_Inte_Line->text()));
+            settings.setValue("Programme/Version", QString(pvers = PRG_Tech_Vers_Line->text()));
+            settings.setValue("Programme/Activation", QString(pacti = PRG_Tech_Acti_Line->text()));
+            settings.setValue("Programme/Utilisation", QString(putil = PRG_Tech_Util_Line->text()));
+            settings.setValue("Programme/DureeUtilisation", QString(pdutil = PRG_Tech_Dure_Line->text()));
     }   //FIN_Save Programme
     else if (i_g == "i")
     {
@@ -727,7 +1008,7 @@ void MainFrame::generateCodeIa()
 
 void MainFrame::generateCodeGlace()
 {
-    if (GB_Main_Name_Line->text().isEmpty())
+    if (PRG_Main_Name_Line->text().isEmpty())
     {
         QMessageBox::critical(this, "Erreur", "Veuillez entrer au moins un nom de programme");
         return; // Arrêt de la méthode
@@ -771,24 +1052,697 @@ void MainFrame::generateCodeGlace()
             programme = fluxP.readAll();
 
             //Remplacement des Variables par les valeurs stocké dans le registre
-            programme.replace("GB_Desc_Img_Line", GB_Desc_Img_Line->text());
-            programme.replace("GB_Main_Name_Line", GB_Main_Name_Line->text());
-            programme.replace("GB_Main_Desc_Line", GB_Main_Desc_Line->text());
-            programme.replace("GB_Desc_Desc_Line", GB_Desc_Desc_Line->toPlainText());
-            programme.replace("GB_Main_Name_Line", GB_Main_Name_Line->text());
-            programme.replace("GB_Tech_Aute_Line", GB_Tech_Aute_Line->text());
-            programme.replace("GB_Tech_Type_Comb", GB_Tech_Type_Comb->currentText());
-            programme.replace("GB_Tech_Desc_Line", GB_Tech_Desc_Line->text());
-            programme.replace("GB_Tech_Auto_Line", GB_Tech_Auto_Line->text());
-            programme.replace("GB_Tech_Inte_Line", GB_Tech_Inte_Line->text());
-            programme.replace("GB_Tech_Vers_Line", GB_Tech_Vers_Line->text());
-            programme.replace("GB_Tech_Acti_Line", GB_Tech_Acti_Line->text());
-            programme.replace("GB_Tech_Util_Line", GB_Tech_Util_Line->text());
-            programme.replace("GB_Tech_Mate_Line", GB_Tech_Mate_Line->text());
-            programme.replace("GB_Tech_Dure_Line", GB_Tech_Dure_Line->text());
+            programme.replace("GB_Desc_Img_Line", PRG_Desc_Img_Line->text());
+            programme.replace("GB_Main_Name_Line", PRG_Main_Name_Line->text());
+            programme.replace("GB_Main_Desc_Line", PRG_Main_Desc_Line->text());
+            programme.replace("GB_Desc_Desc_Line", PRG_Desc_Desc_Line->toPlainText());
+            programme.replace("GB_Main_Name_Line", PRG_Main_Name_Line->text());
+            programme.replace("GB_Tech_Aute_Line", PRG_Tech_Aute_Line->text());
+            programme.replace("GB_Tech_Type_Comb", PRG_Tech_Type_Comb->currentText());
+            programme.replace("GB_Tech_Desc_Line", PRG_Tech_Desc_Line->text());
+            programme.replace("GB_Tech_Auto_Line", PRG_Tech_Auto_Line->text());
+            programme.replace("GB_Tech_Inte_Line", PRG_Tech_Inte_Line->text());
+            programme.replace("GB_Tech_Vers_Line", PRG_Tech_Vers_Line->text());
+            programme.replace("GB_Tech_Acti_Line", PRG_Tech_Acti_Line->text());
+            programme.replace("GB_Tech_Util_Line", PRG_Tech_Util_Line->text());
+            programme.replace("GB_Tech_Mate_Line", PRG_Tech_Mate_Line->text());
+            programme.replace("GB_Tech_Dure_Line", PRG_Tech_Dure_Line->text());
     //FIN_Programme
 
     //Envoi des codes à la classe FrameCodeGenerator
     FrameCodeGenerator *fenetreCode = new FrameCodeGenerator(programme, protection, this);
     fenetreCode->exec();
+}
+
+void MainFrame::addCM()
+{
+    count++;
+    if(count >10){
+        QMessageBox::warning(this, tr("Erreur"), tr("Nombre Maximum de Contre-Mesures atteinte !"));
+    }
+    else if(count ==2){
+        GL_CM2_Name_Line = new QLineEdit;
+        GL_CM2_Img_Line = new QLineEdit;
+        GL_CM2_Cat_Line = new QComboBox;
+        GL_CM2_Cat_Line->addItems(QStringList() << "Pavlov" << "Databomb" << "Killer" << "Crippler" << "Sonde" << "Trace" << "Sentinelle" << "Brouilleur" << "Environnementale");
+        GL_CM2_Comp1_Line = new QLineEdit;
+        GL_CM2_Comp2_Line = new QLineEdit;
+        GL_CM2_Comp3_Line = new QLineEdit;
+        GL_CM2_Alg1_Line = new QLineEdit;
+        GL_CM2_Alg2_Line = new QLineEdit;
+        GL_CM2_Alg3_Line = new QLineEdit;
+        GL_CM2_Desc_Line = new QTextEdit;
+
+        QFormLayout *L_CM2 = new QFormLayout;
+        L_CM2->addRow("&Nom :", GL_CM2_Name_Line);
+        L_CM2->addRow("&Url Image :", GL_CM2_Img_Line);
+        L_CM2->addRow("&Catégorie :", GL_CM2_Cat_Line);
+        L_CM2->addRow("&Composition 1 :", GL_CM2_Comp1_Line);
+        L_CM2->addRow("&Composition 2 :", GL_CM2_Comp2_Line);
+        L_CM2->addRow("&Composition 3 :", GL_CM2_Comp3_Line);
+        L_CM2->addRow("&Algorithme 1 :", GL_CM2_Alg1_Line);
+        L_CM2->addRow("&Algorithme 2 :", GL_CM2_Alg2_Line);
+        L_CM2->addRow("&Algorithme 3 :", GL_CM2_Alg3_Line);
+        L_CM2->addRow("&Description :", GL_CM2_Desc_Line);
+
+        QVBoxLayout *PVB_CM2 = new QVBoxLayout;
+        PVB_CM2->addLayout(L_CM2);
+
+        CM2->setLayout(PVB_CM2);
+
+        mainCM->addTab(CM2, "CM2");
+    }
+    else if(count ==3){
+        GL_CM3_Name_Line = new QLineEdit;
+        GL_CM3_Img_Line = new QLineEdit;
+        GL_CM3_Cat_Line = new QComboBox;
+        GL_CM3_Cat_Line->addItems(QStringList() << "Pavlov" << "Databomb" << "Killer" << "Crippler" << "Sonde" << "Trace" << "Sentinelle" << "Brouilleur" << "Environnementale");
+        GL_CM3_Comp1_Line = new QLineEdit;
+        GL_CM3_Comp2_Line = new QLineEdit;
+        GL_CM3_Comp3_Line = new QLineEdit;
+        GL_CM3_Alg1_Line = new QLineEdit;
+        GL_CM3_Alg2_Line = new QLineEdit;
+        GL_CM3_Alg3_Line = new QLineEdit;
+        GL_CM3_Desc_Line = new QTextEdit;
+
+        QFormLayout *L_CM3 = new QFormLayout;
+        L_CM3->addRow("&Nom :", GL_CM3_Name_Line);
+        L_CM3->addRow("&Url Image :", GL_CM3_Img_Line);
+        L_CM3->addRow("&Catégorie :", GL_CM3_Cat_Line);
+        L_CM3->addRow("&Composition 1 :", GL_CM3_Comp1_Line);
+        L_CM3->addRow("&Composition 2 :", GL_CM3_Comp2_Line);
+        L_CM3->addRow("&Composition 3 :", GL_CM3_Comp3_Line);
+        L_CM3->addRow("&Algorithme 1 :", GL_CM3_Alg1_Line);
+        L_CM3->addRow("&Algorithme 2 :", GL_CM3_Alg2_Line);
+        L_CM3->addRow("&Algorithme 3 :", GL_CM3_Alg3_Line);
+        L_CM3->addRow("&Description :", GL_CM3_Desc_Line);
+
+        QVBoxLayout *PVB_CM3 = new QVBoxLayout;
+        PVB_CM3->addLayout(L_CM3);
+
+        CM3->setLayout(PVB_CM3);
+
+        mainCM->addTab(CM3, "CM3");
+    }
+    else if(count ==4){
+        GL_CM4_Name_Line = new QLineEdit;
+        GL_CM4_Img_Line = new QLineEdit;
+        GL_CM4_Cat_Line = new QComboBox;
+        GL_CM4_Cat_Line->addItems(QStringList() << "Pavlov" << "Databomb" << "Killer" << "Crippler" << "Sonde" << "Trace" << "Sentinelle" << "Brouilleur" << "Environnementale");
+        GL_CM4_Comp1_Line = new QLineEdit;
+        GL_CM4_Comp2_Line = new QLineEdit;
+        GL_CM4_Comp3_Line = new QLineEdit;
+        GL_CM4_Alg1_Line = new QLineEdit;
+        GL_CM4_Alg2_Line = new QLineEdit;
+        GL_CM4_Alg3_Line = new QLineEdit;
+        GL_CM4_Desc_Line = new QTextEdit;
+
+        QFormLayout *L_CM4 = new QFormLayout;
+        L_CM4->addRow("&Nom :", GL_CM4_Name_Line);
+        L_CM4->addRow("&Url Image :", GL_CM4_Img_Line);
+        L_CM4->addRow("&Catégorie :", GL_CM4_Cat_Line);
+        L_CM4->addRow("&Composition 1 :", GL_CM4_Comp1_Line);
+        L_CM4->addRow("&Composition 2 :", GL_CM4_Comp2_Line);
+        L_CM4->addRow("&Composition 3 :", GL_CM4_Comp3_Line);
+        L_CM4->addRow("&Algorithme 1 :", GL_CM4_Alg1_Line);
+        L_CM4->addRow("&Algorithme 2 :", GL_CM4_Alg2_Line);
+        L_CM4->addRow("&Algorithme 3 :", GL_CM4_Alg3_Line);
+        L_CM4->addRow("&Description :", GL_CM4_Desc_Line);
+
+        QVBoxLayout *PVB_CM4 = new QVBoxLayout;
+        PVB_CM4->addLayout(L_CM4);
+
+        CM4->setLayout(PVB_CM4);
+
+        mainCM->addTab(CM4, "CM4");
+    }
+    else if(count ==5){
+        GL_CM5_Name_Line = new QLineEdit;
+        GL_CM5_Img_Line = new QLineEdit;
+        GL_CM5_Cat_Line = new QComboBox;
+        GL_CM5_Cat_Line->addItems(QStringList() << "Pavlov" << "Databomb" << "Killer" << "Crippler" << "Sonde" << "Trace" << "Sentinelle" << "Brouilleur" << "Environnementale");
+        GL_CM5_Comp1_Line = new QLineEdit;
+        GL_CM5_Comp2_Line = new QLineEdit;
+        GL_CM5_Comp3_Line = new QLineEdit;
+        GL_CM5_Alg1_Line = new QLineEdit;
+        GL_CM5_Alg2_Line = new QLineEdit;
+        GL_CM5_Alg3_Line = new QLineEdit;
+        GL_CM5_Desc_Line = new QTextEdit;
+
+        QFormLayout *L_CM5 = new QFormLayout;
+        L_CM5->addRow("&Nom :", GL_CM5_Name_Line);
+        L_CM5->addRow("&Url Image :", GL_CM5_Img_Line);
+        L_CM5->addRow("&Catégorie :", GL_CM5_Cat_Line);
+        L_CM5->addRow("&Composition 1 :", GL_CM5_Comp1_Line);
+        L_CM5->addRow("&Composition 2 :", GL_CM5_Comp2_Line);
+        L_CM5->addRow("&Composition 3 :", GL_CM5_Comp3_Line);
+        L_CM5->addRow("&Algorithme 1 :", GL_CM5_Alg1_Line);
+        L_CM5->addRow("&Algorithme 2 :", GL_CM5_Alg2_Line);
+        L_CM5->addRow("&Algorithme 3 :", GL_CM5_Alg3_Line);
+        L_CM5->addRow("&Description :", GL_CM5_Desc_Line);
+
+        QVBoxLayout *PVB_CM5 = new QVBoxLayout;
+        PVB_CM5->addLayout(L_CM5);
+
+        CM5->setLayout(PVB_CM5);
+
+        mainCM->addTab(CM5, "CM5");
+    }
+    else if(count ==6){
+        GL_CM6_Name_Line = new QLineEdit;
+        GL_CM6_Img_Line = new QLineEdit;
+        GL_CM6_Cat_Line = new QComboBox;
+        GL_CM6_Cat_Line->addItems(QStringList() << "Pavlov" << "Databomb" << "Killer" << "Crippler" << "Sonde" << "Trace" << "Sentinelle" << "Brouilleur" << "Environnementale");
+        GL_CM6_Comp1_Line = new QLineEdit;
+        GL_CM6_Comp2_Line = new QLineEdit;
+        GL_CM6_Comp3_Line = new QLineEdit;
+        GL_CM6_Alg1_Line = new QLineEdit;
+        GL_CM6_Alg2_Line = new QLineEdit;
+        GL_CM6_Alg3_Line = new QLineEdit;
+        GL_CM6_Desc_Line = new QTextEdit;
+
+        QFormLayout *L_CM6 = new QFormLayout;
+        L_CM6->addRow("&Nom :", GL_CM6_Name_Line);
+        L_CM6->addRow("&Url Image :", GL_CM6_Img_Line);
+        L_CM6->addRow("&Catégorie :", GL_CM6_Cat_Line);
+        L_CM6->addRow("&Composition 1 :", GL_CM6_Comp1_Line);
+        L_CM6->addRow("&Composition 2 :", GL_CM6_Comp2_Line);
+        L_CM6->addRow("&Composition 3 :", GL_CM6_Comp3_Line);
+        L_CM6->addRow("&Algorithme 1 :", GL_CM6_Alg1_Line);
+        L_CM6->addRow("&Algorithme 2 :", GL_CM6_Alg2_Line);
+        L_CM6->addRow("&Algorithme 3 :", GL_CM6_Alg3_Line);
+        L_CM6->addRow("&Description :", GL_CM6_Desc_Line);
+
+        QVBoxLayout *PVB_CM6 = new QVBoxLayout;
+        PVB_CM6->addLayout(L_CM6);
+
+        CM6->setLayout(PVB_CM6);
+
+        mainCM->addTab(CM6, "CM6");
+    }
+    else if(count ==7){
+        GL_CM7_Name_Line = new QLineEdit;
+        GL_CM7_Img_Line = new QLineEdit;
+        GL_CM7_Cat_Line = new QComboBox;
+        GL_CM7_Cat_Line->addItems(QStringList() << "Pavlov" << "Databomb" << "Killer" << "Crippler" << "Sonde" << "Trace" << "Sentinelle" << "Brouilleur" << "Environnementale");
+        GL_CM7_Comp1_Line = new QLineEdit;
+        GL_CM7_Comp2_Line = new QLineEdit;
+        GL_CM7_Comp3_Line = new QLineEdit;
+        GL_CM7_Alg1_Line = new QLineEdit;
+        GL_CM7_Alg2_Line = new QLineEdit;
+        GL_CM7_Alg3_Line = new QLineEdit;
+        GL_CM7_Desc_Line = new QTextEdit;
+
+        QFormLayout *L_CM7 = new QFormLayout;
+        L_CM7->addRow("&Nom :", GL_CM7_Name_Line);
+        L_CM7->addRow("&Url Image :", GL_CM7_Img_Line);
+        L_CM7->addRow("&Catégorie :", GL_CM7_Cat_Line);
+        L_CM7->addRow("&Composition 1 :", GL_CM7_Comp1_Line);
+        L_CM7->addRow("&Composition 2 :", GL_CM7_Comp2_Line);
+        L_CM7->addRow("&Composition 3 :", GL_CM7_Comp3_Line);
+        L_CM7->addRow("&Algorithme 1 :", GL_CM7_Alg1_Line);
+        L_CM7->addRow("&Algorithme 2 :", GL_CM7_Alg2_Line);
+        L_CM7->addRow("&Algorithme 3 :", GL_CM7_Alg3_Line);
+        L_CM7->addRow("&Description :", GL_CM7_Desc_Line);
+
+        QVBoxLayout *PVB_CM7 = new QVBoxLayout;
+        PVB_CM7->addLayout(L_CM7);
+
+        CM7->setLayout(PVB_CM7);
+
+        mainCM->addTab(CM7, "CM7");
+    }
+    else if(count ==8){
+        GL_CM8_Name_Line = new QLineEdit;
+        GL_CM8_Img_Line = new QLineEdit;
+        GL_CM8_Cat_Line = new QComboBox;
+        GL_CM8_Cat_Line->addItems(QStringList() << "Pavlov" << "Databomb" << "Killer" << "Crippler" << "Sonde" << "Trace" << "Sentinelle" << "Brouilleur" << "Environnementale");
+        GL_CM8_Comp1_Line = new QLineEdit;
+        GL_CM8_Comp2_Line = new QLineEdit;
+        GL_CM8_Comp3_Line = new QLineEdit;
+        GL_CM8_Alg1_Line = new QLineEdit;
+        GL_CM8_Alg2_Line = new QLineEdit;
+        GL_CM8_Alg3_Line = new QLineEdit;
+        GL_CM8_Desc_Line = new QTextEdit;
+
+        QFormLayout *L_CM8 = new QFormLayout;
+        L_CM8->addRow("&Nom :", GL_CM8_Name_Line);
+        L_CM8->addRow("&Url Image :", GL_CM8_Img_Line);
+        L_CM8->addRow("&Catégorie :", GL_CM8_Cat_Line);
+        L_CM8->addRow("&Composition 1 :", GL_CM8_Comp1_Line);
+        L_CM8->addRow("&Composition 2 :", GL_CM8_Comp2_Line);
+        L_CM8->addRow("&Composition 3 :", GL_CM8_Comp3_Line);
+        L_CM8->addRow("&Algorithme 1 :", GL_CM8_Alg1_Line);
+        L_CM8->addRow("&Algorithme 2 :", GL_CM8_Alg2_Line);
+        L_CM8->addRow("&Algorithme 3 :", GL_CM8_Alg3_Line);
+        L_CM8->addRow("&Description :", GL_CM8_Desc_Line);
+
+        QVBoxLayout *PVB_CM8 = new QVBoxLayout;
+        PVB_CM8->addLayout(L_CM8);
+
+        CM8->setLayout(PVB_CM8);
+
+        mainCM->addTab(CM8, "CM8");
+    }
+    else if(count ==9){
+        GL_CM9_Name_Line = new QLineEdit;
+        GL_CM9_Img_Line = new QLineEdit;
+        GL_CM9_Cat_Line = new QComboBox;
+        GL_CM9_Cat_Line->addItems(QStringList() << "Pavlov" << "Databomb" << "Killer" << "Crippler" << "Sonde" << "Trace" << "Sentinelle" << "Brouilleur" << "Environnementale");
+        GL_CM9_Comp1_Line = new QLineEdit;
+        GL_CM9_Comp2_Line = new QLineEdit;
+        GL_CM9_Comp3_Line = new QLineEdit;
+        GL_CM9_Alg1_Line = new QLineEdit;
+        GL_CM9_Alg2_Line = new QLineEdit;
+        GL_CM9_Alg3_Line = new QLineEdit;
+        GL_CM9_Desc_Line = new QTextEdit;
+
+        QFormLayout *L_CM9 = new QFormLayout;
+        L_CM9->addRow("&Nom :", GL_CM9_Name_Line);
+        L_CM9->addRow("&Url Image :", GL_CM9_Img_Line);
+        L_CM9->addRow("&Catégorie :", GL_CM9_Cat_Line);
+        L_CM9->addRow("&Composition 1 :", GL_CM9_Comp1_Line);
+        L_CM9->addRow("&Composition 2 :", GL_CM9_Comp2_Line);
+        L_CM9->addRow("&Composition 3 :", GL_CM9_Comp3_Line);
+        L_CM9->addRow("&Algorithme 1 :", GL_CM9_Alg1_Line);
+        L_CM9->addRow("&Algorithme 2 :", GL_CM9_Alg2_Line);
+        L_CM9->addRow("&Algorithme 3 :", GL_CM9_Alg3_Line);
+        L_CM9->addRow("&Description :", GL_CM9_Desc_Line);
+
+        QVBoxLayout *PVB_CM9 = new QVBoxLayout;
+        PVB_CM9->addLayout(L_CM9);
+
+        CM9->setLayout(PVB_CM9);
+
+        mainCM->addTab(CM9, "CM9");
+    }
+    else if(count ==10){
+        GL_CM10_Name_Line = new QLineEdit;
+        GL_CM10_Img_Line = new QLineEdit;
+        GL_CM10_Cat_Line = new QComboBox;
+        GL_CM10_Cat_Line->addItems(QStringList() << "Pavlov" << "Databomb" << "Killer" << "Crippler" << "Sonde" << "Trace" << "Sentinelle" << "Brouilleur" << "Environnementale");
+        GL_CM10_Comp1_Line = new QLineEdit;
+        GL_CM10_Comp2_Line = new QLineEdit;
+        GL_CM10_Comp3_Line = new QLineEdit;
+        GL_CM10_Alg1_Line = new QLineEdit;
+        GL_CM10_Alg2_Line = new QLineEdit;
+        GL_CM10_Alg3_Line = new QLineEdit;
+        GL_CM10_Desc_Line = new QTextEdit;
+
+        QFormLayout *L_CM10 = new QFormLayout;
+        L_CM10->addRow("&Nom :", GL_CM10_Name_Line);
+        L_CM10->addRow("&Url Image :", GL_CM10_Img_Line);
+        L_CM10->addRow("&Catégorie :", GL_CM10_Cat_Line);
+        L_CM10->addRow("&Composition 1 :", GL_CM10_Comp1_Line);
+        L_CM10->addRow("&Composition 2 :", GL_CM10_Comp2_Line);
+        L_CM10->addRow("&Composition 3 :", GL_CM10_Comp3_Line);
+        L_CM10->addRow("&Algorithme 1 :", GL_CM10_Alg1_Line);
+        L_CM10->addRow("&Algorithme 2 :", GL_CM10_Alg2_Line);
+        L_CM10->addRow("&Algorithme 3 :", GL_CM10_Alg3_Line);
+        L_CM10->addRow("&Description :", GL_CM10_Desc_Line);
+
+        QVBoxLayout *PVB_CM10 = new QVBoxLayout;
+        PVB_CM10->addLayout(L_CM10);
+
+        CM10->setLayout(PVB_CM10);
+
+        mainCM->addTab(CM10, "CM10");
+    }
+
+}
+
+void MainFrame::stateChanged(QString Slvl)
+{
+    if(Slvl == "Blanche"){
+            GL_CM1_Cat_Line->removeItem(9);
+            GL_CM1_Cat_Line->removeItem(9);
+            GL_CM1_Cat_Line->removeItem(9);
+        if(count >=2){
+            GL_CM2_Cat_Line->removeItem(9);
+            GL_CM2_Cat_Line->removeItem(9);
+            GL_CM2_Cat_Line->removeItem(9);
+        }
+        if(count >=3){
+            GL_CM3_Cat_Line->removeItem(9);
+            GL_CM3_Cat_Line->removeItem(9);
+            GL_CM3_Cat_Line->removeItem(9);
+        }
+        if(count >=4){
+            GL_CM4_Cat_Line->removeItem(9);
+            GL_CM4_Cat_Line->removeItem(9);
+            GL_CM4_Cat_Line->removeItem(9);
+        }
+        if(count >=5){
+            GL_CM5_Cat_Line->removeItem(9);
+            GL_CM5_Cat_Line->removeItem(9);
+            GL_CM5_Cat_Line->removeItem(9);
+        }
+        if(count >=6){
+            GL_CM6_Cat_Line->removeItem(9);
+            GL_CM6_Cat_Line->removeItem(9);
+            GL_CM6_Cat_Line->removeItem(9);
+        }
+        if(count >=7){
+            GL_CM7_Cat_Line->removeItem(9);
+            GL_CM7_Cat_Line->removeItem(9);
+            GL_CM7_Cat_Line->removeItem(9);
+        }
+        if(count >=8){
+            GL_CM8_Cat_Line->removeItem(9);
+            GL_CM8_Cat_Line->removeItem(9);
+            GL_CM8_Cat_Line->removeItem(9);
+        }
+        if(count >=9){
+            GL_CM9_Cat_Line->removeItem(9);
+            GL_CM9_Cat_Line->removeItem(9);
+            GL_CM9_Cat_Line->removeItem(9);
+        }
+        if(count >=10){
+            GL_CM10_Cat_Line->removeItem(9);
+            GL_CM10_Cat_Line->removeItem(9);
+            GL_CM10_Cat_Line->removeItem(9);
+        }
+
+    } else if (Slvl == "Grise"){
+        GL_CM1_Cat_Line->addItems(QStringList() << "Blaster" << "Foudre" << "Ripper");
+        if(count >=2){
+            GL_CM2_Cat_Line->addItems(QStringList() << "Blaster" << "Foudre" << "Ripper");
+        }
+        if(count >=3){
+            GL_CM3_Cat_Line->addItems(QStringList() << "Blaster" << "Foudre" << "Ripper");
+        }
+        if(count >=4){
+            GL_CM4_Cat_Line->addItems(QStringList() << "Blaster" << "Foudre" << "Ripper");
+        }
+        if(count >=5){
+            GL_CM5_Cat_Line->addItems(QStringList() << "Blaster" << "Foudre" << "Ripper");
+        }
+        if(count >=6){
+            GL_CM6_Cat_Line->addItems(QStringList() << "Blaster" << "Foudre" << "Ripper");
+        }
+        if(count >=7){
+            GL_CM7_Cat_Line->addItems(QStringList() << "Blaster" << "Foudre" << "Ripper");
+        }
+        if(count >=8){
+            GL_CM8_Cat_Line->addItems(QStringList() << "Blaster" << "Foudre" << "Ripper");
+        }
+        if(count >=9){
+            GL_CM9_Cat_Line->addItems(QStringList() << "Blaster" << "Foudre" << "Ripper");
+        }
+        if(count >=10){
+            GL_CM10_Cat_Line->addItems(QStringList() << "Blaster" << "Foudre" << "Ripper");
+        }
+    }
+}
+
+void MainFrame::addLvl()
+{
+    countL++;
+    if(countL >5){
+        QMessageBox::warning(this, tr("Erreur"), tr("Nombre Maximum de Niveaux atteint !"));
+    }
+    else if(countL ==2){
+        GL_LVl2_LImg1_Line = new QLabel;
+        GL_LVl2_LImg1_Line->setText("Url Image :");
+        GL_LVl2_LSpacer1_Line = new QLabel;
+        GL_LVl2_LSpacer1_Line->setText("---------------------------------------------------------------------------");
+        GL_LVl2_LSpacer2_Line = new QLabel;
+        GL_LVl2_LSpacer2_Line->setText("---------------------------------------------------------------------------");
+        GL_LVl2_LSpacer3_Line = new QLabel;
+        GL_LVl2_LSpacer3_Line->setText("---------------------------------------------------------------------------");
+        GL_LVl2_LCM1_Line = new QLabel;
+        GL_LVl2_LCM1_Line->setText("Nom CM1 :");
+        GL_LVl2_LCM2_Line = new QLabel;
+        GL_LVl2_LCM2_Line->setText("Nom CM2 :");
+        GL_LVl2_LCM3_Line = new QLabel;
+        GL_LVl2_LCM3_Line->setText("Nom CM3 :");
+        GL_LVl2_LCM4_Line = new QLabel;
+        GL_LVl2_LCM4_Line->setText("Nom CM4 :");
+        GL_LVl2_LCM5_Line = new QLabel;
+        GL_LVl2_LCM5_Line->setText("Nom CM5 :");
+        GL_LVl2_LDesc_Line = new QLabel;
+        GL_LVl2_LDesc_Line->setText("Description du Niveau :");
+        GL_LVl2_LImg2_Line = new QLabel;
+        GL_LVl2_LImg2_Line->setText("Plan du Niveau (Url Image):");
+        GL_Lvl2_CM1_Line = new QLineEdit;
+        GL_Lvl2_CM2_Line = new QLineEdit;
+        GL_Lvl2_CM3_Line = new QLineEdit;
+        GL_Lvl2_CM4_Line = new QLineEdit;
+        GL_Lvl2_CM5_Line = new QLineEdit;
+        GL_LVl2_Nbr1_Line = new QLineEdit;
+        GL_LVl2_Desc1_Line = new QTextEdit;
+        GL_LVl2_PImg1_Line = new QLineEdit;
+
+        GL_LVl2_LSpacer1_Line->setVisible(false);
+        GL_LVl2_LCM1_Line->setVisible(false);
+        GL_Lvl2_CM1_Line->setVisible(false);
+        GL_LVl2_LCM2_Line->setVisible(false);
+        GL_Lvl2_CM2_Line->setVisible(false);
+        GL_LVl2_LCM3_Line->setVisible(false);
+        GL_Lvl2_CM3_Line->setVisible(false);
+        GL_LVl2_LCM4_Line->setVisible(false);
+        GL_Lvl2_CM4_Line->setVisible(false);
+        GL_LVl2_LCM5_Line->setVisible(false);
+        GL_Lvl2_CM5_Line->setVisible(false);
+
+        QGridLayout *GL_Lvl2 = new QGridLayout;
+        GL_Lvl2->addWidget(GL_LVl2_LImg1_Line, 0, 0);
+        GL_Lvl2->addWidget(GL_LVl2_Nbr1_Line, 0, 1);
+        GL_Lvl2->addWidget(GL_LVl2_LSpacer1_Line, 1, 1, Qt::AlignCenter);
+        GL_Lvl2->addWidget(GL_LVl2_LCM1_Line, 2, 0);
+        GL_Lvl2->addWidget(GL_Lvl2_CM1_Line, 2, 1);
+        GL_Lvl2->addWidget(GL_LVl2_LCM2_Line, 3, 0);
+        GL_Lvl2->addWidget(GL_Lvl2_CM2_Line, 3, 1);
+        GL_Lvl2->addWidget(GL_LVl2_LCM3_Line, 4, 0);
+        GL_Lvl2->addWidget(GL_Lvl2_CM3_Line, 4, 1);
+        GL_Lvl2->addWidget(GL_LVl2_LCM4_Line, 5, 0);
+        GL_Lvl2->addWidget(GL_Lvl2_CM4_Line, 5, 1);
+        GL_Lvl2->addWidget(GL_LVl2_LCM5_Line, 6, 0);
+        GL_Lvl2->addWidget(GL_Lvl2_CM5_Line, 6, 1);
+        GL_Lvl2->addWidget(GL_LVl2_LSpacer2_Line, 7, 1, Qt::AlignCenter);
+        GL_Lvl2->addWidget(GL_LVl2_LDesc_Line, 8, 0);
+        GL_Lvl2->addWidget(GL_LVl2_Desc1_Line, 8, 1);
+        GL_Lvl2->addWidget(GL_LVl2_LSpacer3_Line, 9, 1, Qt::AlignCenter);
+        GL_Lvl2->addWidget(GL_LVl2_LImg2_Line, 10, 0);
+        GL_Lvl2->addWidget(GL_LVl2_PImg1_Line, 10, 1);
+
+        QVBoxLayout *PVB_Lvl2 = new QVBoxLayout;
+        PVB_Lvl2->addLayout(GL_Lvl2);
+
+        Lvl2->setLayout(PVB_Lvl2);
+        mainLvl->addTab(Lvl2, "Niveau 2");
+    }
+    else if(countL ==3){
+        GL_LVl3_LImg1_Line = new QLabel;
+        GL_LVl3_LImg1_Line->setText("Url Image :");
+        GL_LVl3_LSpacer1_Line = new QLabel;
+        GL_LVl3_LSpacer1_Line->setText("---------------------------------------------------------------------------");
+        GL_LVl3_LSpacer2_Line = new QLabel;
+        GL_LVl3_LSpacer2_Line->setText("---------------------------------------------------------------------------");
+        GL_LVl3_LSpacer3_Line = new QLabel;
+        GL_LVl3_LSpacer3_Line->setText("---------------------------------------------------------------------------");
+        GL_LVl3_LCM1_Line = new QLabel;
+        GL_LVl3_LCM1_Line->setText("Nom CM1 :");
+        GL_LVl3_LCM2_Line = new QLabel;
+        GL_LVl3_LCM2_Line->setText("Nom CM2 :");
+        GL_LVl3_LCM3_Line = new QLabel;
+        GL_LVl3_LCM3_Line->setText("Nom CM3 :");
+        GL_LVl3_LCM4_Line = new QLabel;
+        GL_LVl3_LCM4_Line->setText("Nom CM4 :");
+        GL_LVl3_LCM5_Line = new QLabel;
+        GL_LVl3_LCM5_Line->setText("Nom CM5 :");
+        GL_LVl3_LDesc_Line = new QLabel;
+        GL_LVl3_LDesc_Line->setText("Description du Niveau :");
+        GL_LVl3_LImg2_Line = new QLabel;
+        GL_LVl3_LImg2_Line->setText("Plan du Niveau (Url Image):");
+        GL_Lvl3_CM1_Line = new QLineEdit;
+        GL_Lvl3_CM2_Line = new QLineEdit;
+        GL_Lvl3_CM3_Line = new QLineEdit;
+        GL_Lvl3_CM4_Line = new QLineEdit;
+        GL_Lvl3_CM5_Line = new QLineEdit;
+        GL_LVl3_Nbr1_Line = new QLineEdit;
+        GL_LVl3_Desc1_Line = new QTextEdit;
+        GL_LVl3_PImg1_Line = new QLineEdit;
+
+        GL_LVl3_LSpacer1_Line->setVisible(false);
+        GL_LVl3_LCM1_Line->setVisible(false);
+        GL_Lvl3_CM1_Line->setVisible(false);
+        GL_LVl3_LCM2_Line->setVisible(false);
+        GL_Lvl3_CM2_Line->setVisible(false);
+        GL_LVl3_LCM3_Line->setVisible(false);
+        GL_Lvl3_CM3_Line->setVisible(false);
+        GL_LVl3_LCM4_Line->setVisible(false);
+        GL_Lvl3_CM4_Line->setVisible(false);
+        GL_LVl3_LCM5_Line->setVisible(false);
+        GL_Lvl3_CM5_Line->setVisible(false);
+
+        QGridLayout *GL_Lvl3 = new QGridLayout;
+        GL_Lvl3->addWidget(GL_LVl3_LImg1_Line, 0, 0);
+        GL_Lvl3->addWidget(GL_LVl3_Nbr1_Line, 0, 1);
+        GL_Lvl3->addWidget(GL_LVl3_LSpacer1_Line, 1, 1, Qt::AlignCenter);
+        GL_Lvl3->addWidget(GL_LVl3_LCM1_Line, 2, 0);
+        GL_Lvl3->addWidget(GL_Lvl3_CM1_Line, 2, 1);
+        GL_Lvl3->addWidget(GL_LVl3_LCM2_Line, 3, 0);
+        GL_Lvl3->addWidget(GL_Lvl3_CM2_Line, 3, 1);
+        GL_Lvl3->addWidget(GL_LVl3_LCM3_Line, 4, 0);
+        GL_Lvl3->addWidget(GL_Lvl3_CM3_Line, 4, 1);
+        GL_Lvl3->addWidget(GL_LVl3_LCM4_Line, 5, 0);
+        GL_Lvl3->addWidget(GL_Lvl3_CM4_Line, 5, 1);
+        GL_Lvl3->addWidget(GL_LVl3_LCM5_Line, 6, 0);
+        GL_Lvl3->addWidget(GL_Lvl3_CM5_Line, 6, 1);
+        GL_Lvl3->addWidget(GL_LVl3_LSpacer2_Line, 7, 1, Qt::AlignCenter);
+        GL_Lvl3->addWidget(GL_LVl3_LDesc_Line, 8, 0);
+        GL_Lvl3->addWidget(GL_LVl3_Desc1_Line, 8, 1);
+        GL_Lvl3->addWidget(GL_LVl3_LSpacer3_Line, 9, 1, Qt::AlignCenter);
+        GL_Lvl3->addWidget(GL_LVl3_LImg2_Line, 10, 0);
+        GL_Lvl3->addWidget(GL_LVl3_PImg1_Line, 10, 1);
+
+        QVBoxLayout *PVB_Lvl3 = new QVBoxLayout;
+        PVB_Lvl3->addLayout(GL_Lvl3);
+
+        Lvl3->setLayout(PVB_Lvl3);
+        mainLvl->addTab(Lvl3, "Niveau 3");
+    }
+    else if(countL ==4){
+        GL_LVl4_LImg1_Line = new QLabel;
+        GL_LVl4_LImg1_Line->setText("Url Image :");
+        GL_LVl4_LSpacer1_Line = new QLabel;
+        GL_LVl4_LSpacer1_Line->setText("---------------------------------------------------------------------------");
+        GL_LVl4_LSpacer2_Line = new QLabel;
+        GL_LVl4_LSpacer2_Line->setText("---------------------------------------------------------------------------");
+        GL_LVl4_LSpacer3_Line = new QLabel;
+        GL_LVl4_LSpacer3_Line->setText("---------------------------------------------------------------------------");
+        GL_LVl4_LCM1_Line = new QLabel;
+        GL_LVl4_LCM1_Line->setText("Nom CM1 :");
+        GL_LVl4_LCM2_Line = new QLabel;
+        GL_LVl4_LCM2_Line->setText("Nom CM2 :");
+        GL_LVl4_LCM3_Line = new QLabel;
+        GL_LVl4_LCM3_Line->setText("Nom CM3 :");
+        GL_LVl4_LCM4_Line = new QLabel;
+        GL_LVl4_LCM4_Line->setText("Nom CM4 :");
+        GL_LVl4_LCM5_Line = new QLabel;
+        GL_LVl4_LCM5_Line->setText("Nom CM5 :");
+        GL_LVl4_LDesc_Line = new QLabel;
+        GL_LVl4_LDesc_Line->setText("Description du Niveau :");
+        GL_LVl4_LImg2_Line = new QLabel;
+        GL_LVl4_LImg2_Line->setText("Plan du Niveau (Url Image):");
+        GL_Lvl4_CM1_Line = new QLineEdit;
+        GL_Lvl4_CM2_Line = new QLineEdit;
+        GL_Lvl4_CM3_Line = new QLineEdit;
+        GL_Lvl4_CM4_Line = new QLineEdit;
+        GL_Lvl4_CM5_Line = new QLineEdit;
+        GL_LVl4_Nbr1_Line = new QLineEdit;
+        GL_LVl4_Desc1_Line = new QTextEdit;
+        GL_LVl4_PImg1_Line = new QLineEdit;
+
+        GL_LVl4_LSpacer1_Line->setVisible(false);
+        GL_LVl4_LCM1_Line->setVisible(false);
+        GL_Lvl4_CM1_Line->setVisible(false);
+        GL_LVl4_LCM2_Line->setVisible(false);
+        GL_Lvl4_CM2_Line->setVisible(false);
+        GL_LVl4_LCM3_Line->setVisible(false);
+        GL_Lvl4_CM3_Line->setVisible(false);
+        GL_LVl4_LCM4_Line->setVisible(false);
+        GL_Lvl4_CM4_Line->setVisible(false);
+        GL_LVl4_LCM5_Line->setVisible(false);
+        GL_Lvl4_CM5_Line->setVisible(false);
+
+        QGridLayout *GL_Lvl4 = new QGridLayout;
+        GL_Lvl4->addWidget(GL_LVl4_LImg1_Line, 0, 0);
+        GL_Lvl4->addWidget(GL_LVl4_Nbr1_Line, 0, 1);
+        GL_Lvl4->addWidget(GL_LVl4_LSpacer1_Line, 1, 1, Qt::AlignCenter);
+        GL_Lvl4->addWidget(GL_LVl4_LCM1_Line, 2, 0);
+        GL_Lvl4->addWidget(GL_Lvl4_CM1_Line, 2, 1);
+        GL_Lvl4->addWidget(GL_LVl4_LCM2_Line, 3, 0);
+        GL_Lvl4->addWidget(GL_Lvl4_CM2_Line, 3, 1);
+        GL_Lvl4->addWidget(GL_LVl4_LCM3_Line, 4, 0);
+        GL_Lvl4->addWidget(GL_Lvl4_CM3_Line, 4, 1);
+        GL_Lvl4->addWidget(GL_LVl4_LCM4_Line, 5, 0);
+        GL_Lvl4->addWidget(GL_Lvl4_CM4_Line, 5, 1);
+        GL_Lvl4->addWidget(GL_LVl4_LCM5_Line, 6, 0);
+        GL_Lvl4->addWidget(GL_Lvl4_CM5_Line, 6, 1);
+        GL_Lvl4->addWidget(GL_LVl4_LSpacer2_Line, 7, 1, Qt::AlignCenter);
+        GL_Lvl4->addWidget(GL_LVl4_LDesc_Line, 8, 0);
+        GL_Lvl4->addWidget(GL_LVl4_Desc1_Line, 8, 1);
+        GL_Lvl4->addWidget(GL_LVl4_LSpacer3_Line, 9, 1, Qt::AlignCenter);
+        GL_Lvl4->addWidget(GL_LVl4_LImg2_Line, 10, 0);
+        GL_Lvl4->addWidget(GL_LVl4_PImg1_Line, 10, 1);
+
+        QVBoxLayout *PVB_Lvl4 = new QVBoxLayout;
+        PVB_Lvl4->addLayout(GL_Lvl4);
+
+        Lvl4->setLayout(PVB_Lvl4);
+        mainLvl->addTab(Lvl4, "Niveau 4");
+    }
+    else if(countL ==5){
+        GL_LVl5_LImg1_Line = new QLabel;
+        GL_LVl5_LImg1_Line->setText("Url Image :");
+        GL_LVl5_LSpacer1_Line = new QLabel;
+        GL_LVl5_LSpacer1_Line->setText("---------------------------------------------------------------------------");
+        GL_LVl5_LSpacer2_Line = new QLabel;
+        GL_LVl5_LSpacer2_Line->setText("---------------------------------------------------------------------------");
+        GL_LVl5_LSpacer3_Line = new QLabel;
+        GL_LVl5_LSpacer3_Line->setText("---------------------------------------------------------------------------");
+        GL_LVl5_LCM1_Line = new QLabel;
+        GL_LVl5_LCM1_Line->setText("Nom CM1 :");
+        GL_LVl5_LCM2_Line = new QLabel;
+        GL_LVl5_LCM2_Line->setText("Nom CM2 :");
+        GL_LVl5_LCM3_Line = new QLabel;
+        GL_LVl5_LCM3_Line->setText("Nom CM3 :");
+        GL_LVl5_LCM4_Line = new QLabel;
+        GL_LVl5_LCM4_Line->setText("Nom CM4 :");
+        GL_LVl5_LCM5_Line = new QLabel;
+        GL_LVl5_LCM5_Line->setText("Nom CM5 :");
+        GL_LVl5_LDesc_Line = new QLabel;
+        GL_LVl5_LDesc_Line->setText("Description du Niveau :");
+        GL_LVl5_LImg2_Line = new QLabel;
+        GL_LVl5_LImg2_Line->setText("Plan du Niveau (Url Image):");
+        GL_Lvl5_CM1_Line = new QLineEdit;
+        GL_Lvl5_CM2_Line = new QLineEdit;
+        GL_Lvl5_CM3_Line = new QLineEdit;
+        GL_Lvl5_CM4_Line = new QLineEdit;
+        GL_Lvl5_CM5_Line = new QLineEdit;
+        GL_LVl5_Nbr1_Line = new QLineEdit;
+        GL_LVl5_Desc1_Line = new QTextEdit;
+        GL_LVl5_PImg1_Line = new QLineEdit;
+
+        GL_LVl5_LSpacer1_Line->setVisible(false);
+        GL_LVl5_LCM1_Line->setVisible(false);
+        GL_Lvl5_CM1_Line->setVisible(false);
+        GL_LVl5_LCM2_Line->setVisible(false);
+        GL_Lvl5_CM2_Line->setVisible(false);
+        GL_LVl5_LCM3_Line->setVisible(false);
+        GL_Lvl5_CM3_Line->setVisible(false);
+        GL_LVl5_LCM4_Line->setVisible(false);
+        GL_Lvl5_CM4_Line->setVisible(false);
+        GL_LVl5_LCM5_Line->setVisible(false);
+        GL_Lvl5_CM5_Line->setVisible(false);
+
+        QGridLayout *GL_Lvl5 = new QGridLayout;
+        GL_Lvl5->addWidget(GL_LVl5_LImg1_Line, 0, 0);
+        GL_Lvl5->addWidget(GL_LVl5_Nbr1_Line, 0, 1);
+        GL_Lvl5->addWidget(GL_LVl5_LSpacer1_Line, 1, 1, Qt::AlignCenter);
+        GL_Lvl5->addWidget(GL_LVl5_LCM1_Line, 2, 0);
+        GL_Lvl5->addWidget(GL_Lvl5_CM1_Line, 2, 1);
+        GL_Lvl5->addWidget(GL_LVl5_LCM2_Line, 3, 0);
+        GL_Lvl5->addWidget(GL_Lvl5_CM2_Line, 3, 1);
+        GL_Lvl5->addWidget(GL_LVl5_LCM3_Line, 4, 0);
+        GL_Lvl5->addWidget(GL_Lvl5_CM3_Line, 4, 1);
+        GL_Lvl5->addWidget(GL_LVl5_LCM4_Line, 5, 0);
+        GL_Lvl5->addWidget(GL_Lvl5_CM4_Line, 5, 1);
+        GL_Lvl5->addWidget(GL_LVl5_LCM5_Line, 6, 0);
+        GL_Lvl5->addWidget(GL_Lvl5_CM5_Line, 6, 1);
+        GL_Lvl5->addWidget(GL_LVl5_LSpacer2_Line, 7, 1, Qt::AlignCenter);
+        GL_Lvl5->addWidget(GL_LVl5_LDesc_Line, 8, 0);
+        GL_Lvl5->addWidget(GL_LVl5_Desc1_Line, 8, 1);
+        GL_Lvl5->addWidget(GL_LVl5_LSpacer3_Line, 9, 1, Qt::AlignCenter);
+        GL_Lvl5->addWidget(GL_LVl5_LImg2_Line, 10, 0);
+        GL_Lvl5->addWidget(GL_LVl5_PImg1_Line, 10, 1);
+
+        QVBoxLayout *PVB_Lvl5 = new QVBoxLayout;
+        PVB_Lvl5->addLayout(GL_Lvl5);
+
+        Lvl5->setLayout(PVB_Lvl5);
+        mainLvl->addTab(Lvl5, "Niveau 5");
+    }
 }
