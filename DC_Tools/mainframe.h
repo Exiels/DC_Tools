@@ -84,6 +84,7 @@ protected :
             QLineEdit *GL_Main_Vers_Line;
             QComboBox *GL_Main_Lvl_Line;
             QTextEdit *GL_Main_Desc_Line;
+            QLineEdit *GL_Main_Plan_Line;
             QCheckBox *GL_Glace_Check;
         //END_Var_Glace_Main
 
@@ -103,6 +104,7 @@ protected :
                 QPushButton *GL_CM_Add_CM;
                 int count = 1;
                 int glace = 0;
+                int glaceon = 0;
             //END_Var_Glace_Cm_Main
 
             //START_Var_Glace_Cm_Cm1

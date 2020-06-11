@@ -337,6 +337,7 @@ void MainFrame::Glace()
             GL_Main_Img_Line = new QLineEdit;
             GL_Main_Vers_Line = new QLineEdit;
             GL_Main_Desc_Line = new QTextEdit;
+            GL_Main_Plan_Line = new QLineEdit;
             GL_Glace_Check = new QCheckBox;
 
             //Layout Page Principal
@@ -346,6 +347,7 @@ void MainFrame::Glace()
                 P_main->addRow("Url Image :", GL_Main_Img_Line);
                 P_main->addRow("Version :", GL_Main_Vers_Line);
                 P_main->addRow("Description :", GL_Main_Desc_Line);
+                P_main->addRow("URL Plan Général d'Intéraction :", GL_Main_Plan_Line);
                 P_main->addRow("GLACE ?", GL_Glace_Check);
 
             //GroupBox Page Principal
@@ -740,6 +742,7 @@ void MainFrame::uGlaceCm(int etat)
 {
     if (etat != 0)
     {
+        glaceon = 1;
         mainGL->insertTab(1, cm, "Contres-Mesures");
         mainGL->insertTab(2, alerte, "Alertes");
 
@@ -810,6 +813,7 @@ void MainFrame::uGlaceCm(int etat)
 
     } else if(etat != 2)
     {
+        glaceon = 0;
         mainGL->removeTab(2);
         mainGL->removeTab(1);
         GL_LVl1_LSpacer1_Line->setVisible(false);
@@ -1008,22 +1012,36 @@ void MainFrame::generateCodeIa()
 
 void MainFrame::generateCodeGlace()
 {
-    if (PRG_Main_Name_Line->text().isEmpty())
+    if (GL_Main_Name_Line->text().isEmpty())
     {
-        QMessageBox::critical(this, "Erreur", "Veuillez entrer au moins un nom de programme");
+        QMessageBox::critical(this, "Erreur", "Veuillez entrer au moins un nom de GLACE/RV");
         return; // Arrêt de la méthode
     }
     QSettings settings("Exiel", "DC_Tools");
 
     QString protection;
-    QString programme;
+    QString GL_Main;
+    QString GL_CM1;
+    QString GL_CM2;
+    QString GL_CM3;
+    QString GL_CM4;
+    QString GL_CM5;
+    QString GL_CM6;
+    QString GL_CM7;
+    QString GL_CM8;
+    QString GL_CM9;
+    QString GL_CM10;
+
+    QString GL_Alrt;
+    QString GL_Lvl;
+    QString GL_End;
 
     //DEBUT_Protection
         //Importation du Template Protection
         QString fileNamePr = settings.value("Configuration/TemplatePr").toString();
-        QFile fichierPr(fileNamePr);
-        fichierPr.open(QIODevice::ReadOnly | QIODevice::Text);
-        QTextStream fluxPr(&fichierPr);
+        QFile filePr(fileNamePr);
+        filePr.open(QIODevice::ReadOnly | QIODevice::Text);
+        QTextStream fluxPr(&filePr);
         fluxPr.setCodec("UTF-8");
 
         //Lecture du Template Protection
@@ -1040,38 +1058,136 @@ void MainFrame::generateCodeGlace()
             protection.replace("PR_Admi", settings.value("Protection/Administrator").toString());
     //FIN_Protection
 
-    //DEBUT_Programme
-        //Importation du Template Programme
-        QString fileNameP = settings.value("Configuration/TemplateP").toString();
-        QFile fichierP(fileNameP);
-        fichierP.open(QIODevice::ReadOnly | QIODevice::Text);
-        QTextStream fluxP(&fichierP);
-        fluxP.setCodec("UTF-8");
+    //DEBUT_Glace
 
-            //Lecture du Template Programme
-            programme = fluxP.readAll();
+        //START_GL_Main
+            //Importation du Template Glace_Main
+                QString fileNameGlMain = settings.value("Configuration/TemplateGL").toString() + "\\main.cfg";
+                QFile fileGlMain(fileNameGlMain);
+                fileGlMain.open(QIODevice::ReadOnly | QIODevice::Text);
+                QTextStream fluxGlMain(&fileGlMain);
+                fluxGlMain.setCodec("UTF-8");
 
-            //Remplacement des Variables par les valeurs stocké dans le registre
-            programme.replace("GB_Desc_Img_Line", PRG_Desc_Img_Line->text());
-            programme.replace("GB_Main_Name_Line", PRG_Main_Name_Line->text());
-            programme.replace("GB_Main_Desc_Line", PRG_Main_Desc_Line->text());
-            programme.replace("GB_Desc_Desc_Line", PRG_Desc_Desc_Line->toPlainText());
-            programme.replace("GB_Main_Name_Line", PRG_Main_Name_Line->text());
-            programme.replace("GB_Tech_Aute_Line", PRG_Tech_Aute_Line->text());
-            programme.replace("GB_Tech_Type_Comb", PRG_Tech_Type_Comb->currentText());
-            programme.replace("GB_Tech_Desc_Line", PRG_Tech_Desc_Line->text());
-            programme.replace("GB_Tech_Auto_Line", PRG_Tech_Auto_Line->text());
-            programme.replace("GB_Tech_Inte_Line", PRG_Tech_Inte_Line->text());
-            programme.replace("GB_Tech_Vers_Line", PRG_Tech_Vers_Line->text());
-            programme.replace("GB_Tech_Acti_Line", PRG_Tech_Acti_Line->text());
-            programme.replace("GB_Tech_Util_Line", PRG_Tech_Util_Line->text());
-            programme.replace("GB_Tech_Mate_Line", PRG_Tech_Mate_Line->text());
-            programme.replace("GB_Tech_Dure_Line", PRG_Tech_Dure_Line->text());
-    //FIN_Programme
+                    //Lecture du Template Glace_Main
+                        GL_Main = fluxGlMain.readAll();
+
+                    //Remplacement des Variables par les valeurs stocké dans le registre
+                        GL_Main.replace("GL_Main_Img_Line", GL_Main_Img_Line->text());
+                        GL_Main.replace("GL_Main_Name_Line", GL_Main_Name_Line->text());
+                        if(glaceon == 1){
+                            GL_Main.replace("GL_Main_Lvl_Line", GL_Main_Lvl_Line->currentText());
+                        }
+                        GL_Main.replace("GL_Main_Vers_Line", GL_Main_Vers_Line->text());
+                        GL_Main.replace("Gl_Main_Desc_Line", GL_Main_Desc_Line->toPlainText());
+        //END_GL_Main
+
+        //START_GL_CM
+            if(glaceon == 1){
+            //Importation du Template Glace_CM
+                QString fileNameGlMain = settings.value("Configuration/TemplateGL").toString() + "\\cm.cfg";
+                QFile fileGlCM(fileNameGlMain);
+                fileGlCM.open(QIODevice::ReadOnly | QIODevice::Text);
+                QTextStream fluxGlCM(&fileGlCM);
+                fluxGlCM.setCodec("UTF-8");
+
+                    //Lecture du Template Glace_CM
+                        GL_CM1 = fluxGlCM.readAll();
+                    //Remplacement des Variables par les valeurs stockés dans le registre
+                        GL_CM1.replace("GL_CM_Name_Line", GL_CM1_Name_Line->text());
+                        GL_CM1.replace("GL_CM_Img_Line", GL_CM1_Img_Line->text());
+                        GL_CM1.replace("GL_CM_Cat_Line", GL_CM1_Cat_Line->currentText());
+                        GL_CM1.replace("GL_CM_Comp1_Line", GL_CM1_Comp1_Line->text());
+                        GL_CM1.replace("GL_CM_Comp2_Line", GL_CM1_Comp2_Line->text());
+                        GL_CM1.replace("GL_CM_Comp3_Line", GL_CM1_Comp3_Line->text());
+                        GL_CM1.replace("GL_CM_Alg1_Line", GL_CM1_Alg1_Line->text());
+                        GL_CM1.replace("GL_CM_Alg2_Line", GL_CM1_Alg2_Line->text());
+                        GL_CM1.replace("GL_CM_Alg3_Line", GL_CM1_Alg3_Line->text());
+                        GL_CM1.replace("GL_CM_Desc_Line", GL_CM1_Desc_Line->toPlainText());
+
+               if(count >= 2){
+                   //Lecture du Template Glace_CM
+                       GL_CM2 = fluxGlCM.readAll();
+                   //Remplacement des Variables par les valeurs stockés dans le registre
+                       GL_CM2.replace("GL_CM_Name_Line", GL_CM2_Name_Line->text());
+                       GL_CM2.replace("GL_CM_Img_Line", GL_CM2_Img_Line->text());
+                       GL_CM2.replace("GL_CM_Cat_Line", GL_CM2_Cat_Line->currentText());
+                       GL_CM2.replace("GL_CM_Comp1_Line", GL_CM2_Comp1_Line->text());
+                       GL_CM2.replace("GL_CM_Comp2_Line", GL_CM2_Comp2_Line->text());
+                       GL_CM2.replace("GL_CM_Comp3_Line", GL_CM2_Comp3_Line->text());
+                       GL_CM2.replace("GL_CM_Alg1_Line", GL_CM2_Alg1_Line->text());
+                       GL_CM2.replace("GL_CM_Alg2_Line", GL_CM2_Alg2_Line->text());
+                       GL_CM2.replace("GL_CM_Alg3_Line", GL_CM2_Alg3_Line->text());
+                       GL_CM2.replace("GL_CM_Desc_Line", GL_CM2_Desc_Line->toPlainText());
+               }
+               if(count >= 3){
+                   //Lecture du Template Glace_CM
+                       GL_CM3 = fluxGlCM.readAll();
+                   //Remplacement des Variables par les valeurs stockés dans le registre
+                       GL_CM3.replace("GL_CM_Name_Line", GL_CM3_Name_Line->text());
+                       GL_CM3.replace("GL_CM_Img_Line", GL_CM3_Img_Line->text());
+                       GL_CM3.replace("GL_CM_Cat_Line", GL_CM3_Cat_Line->currentText());
+                       GL_CM3.replace("GL_CM_Comp1_Line", GL_CM3_Comp1_Line->text());
+                       GL_CM3.replace("GL_CM_Comp2_Line", GL_CM3_Comp2_Line->text());
+                       GL_CM3.replace("GL_CM_Comp3_Line", GL_CM3_Comp3_Line->text());
+                       GL_CM3.replace("GL_CM_Alg1_Line", GL_CM3_Alg1_Line->text());
+                       GL_CM3.replace("GL_CM_Alg2_Line", GL_CM3_Alg2_Line->text());
+                       GL_CM3.replace("GL_CM_Alg3_Line", GL_CM3_Alg3_Line->text());
+                       GL_CM3.replace("GL_CM_Desc_Line", GL_CM3_Desc_Line->toPlainText());
+               }
+               if(count >= 4){
+                   //Lecture du Template Glace_CM
+                       GL_CM4 = fluxGlCM.readAll();
+                   //Remplacement des Variables par les valeurs stockés dans le registre
+                       GL_CM4.replace("GL_CM_Name_Line", GL_CM4_Name_Line->text());
+                       GL_CM4.replace("GL_CM_Img_Line", GL_CM4_Img_Line->text());
+                       GL_CM4.replace("GL_CM_Cat_Line", GL_CM4_Cat_Line->currentText());
+                       GL_CM4.replace("GL_CM_Comp1_Line", GL_CM4_Comp1_Line->text());
+                       GL_CM4.replace("GL_CM_Comp2_Line", GL_CM4_Comp2_Line->text());
+                       GL_CM4.replace("GL_CM_Comp3_Line", GL_CM4_Comp3_Line->text());
+                       GL_CM4.replace("GL_CM_Alg1_Line", GL_CM4_Alg1_Line->text());
+                       GL_CM4.replace("GL_CM_Alg2_Line", GL_CM4_Alg2_Line->text());
+                       GL_CM4.replace("GL_CM_Alg3_Line", GL_CM4_Alg3_Line->text());
+                       GL_CM4.replace("GL_CM_Desc_Line", GL_CM4_Desc_Line->toPlainText());
+               }
+               if(count >= 5){
+                   //Lecture du Template Glace_CM
+                       GL_CM5 = fluxGlCM.readAll();
+                   //Remplacement des Variables par les valeurs stockés dans le registre
+                       GL_CM5.replace("GL_CM_Name_Line", GL_CM5_Name_Line->text());
+                       GL_CM5.replace("GL_CM_Img_Line", GL_CM5_Img_Line->text());
+                       GL_CM5.replace("GL_CM_Cat_Line", GL_CM5_Cat_Line->currentText());
+                       GL_CM5.replace("GL_CM_Comp1_Line", GL_CM5_Comp1_Line->text());
+                       GL_CM5.replace("GL_CM_Comp2_Line", GL_CM5_Comp2_Line->text());
+                       GL_CM5.replace("GL_CM_Comp3_Line", GL_CM5_Comp3_Line->text());
+                       GL_CM5.replace("GL_CM_Alg1_Line", GL_CM5_Alg1_Line->text());
+                       GL_CM5.replace("GL_CM_Alg2_Line", GL_CM5_Alg2_Line->text());
+                       GL_CM5.replace("GL_CM_Alg3_Line", GL_CM5_Alg3_Line->text());
+                       GL_CM5.replace("GL_CM_Desc_Line", GL_CM5_Desc_Line->toPlainText());
+               }
+               if(count >= 6){
+                   //Lecture du Template Glace_CM
+                       GL_CM6 = fluxGlCM.readAll();
+                   //Remplacement des Variables par les valeurs stockés dans le registre
+                       GL_CM6.replace("GL_CM_Name_Line", GL_CM6_Name_Line->text());
+                       GL_CM6.replace("GL_CM_Img_Line", GL_CM6_Img_Line->text());
+                       GL_CM6.replace("GL_CM_Cat_Line", GL_CM6_Cat_Line->currentText());
+                       GL_CM6.replace("GL_CM_Comp1_Line", GL_CM6_Comp1_Line->text());
+                       GL_CM6.replace("GL_CM_Comp2_Line", GL_CM6_Comp2_Line->text());
+                       GL_CM6.replace("GL_CM_Comp3_Line", GL_CM6_Comp3_Line->text());
+                       GL_CM6.replace("GL_CM_Alg1_Line", GL_CM6_Alg1_Line->text());
+                       GL_CM6.replace("GL_CM_Alg2_Line", GL_CM6_Alg2_Line->text());
+                       GL_CM6.replace("GL_CM_Alg3_Line", GL_CM6_Alg3_Line->text());
+                       GL_CM6.replace("GL_CM_Desc_Line", GL_CM6_Desc_Line->toPlainText());
+               }
+
+            }
+
+    //FIN_Glace
+
 
     //Envoi des codes à la classe FrameCodeGenerator
-    FrameCodeGenerator *fenetreCode = new FrameCodeGenerator(programme, protection, this);
-    fenetreCode->exec();
+        //FrameCodeGenerator *fenetreCode = new FrameCodeGenerator(programme, protection, this);
+        //fenetreCode->exec();
 }
 
 void MainFrame::addCM()
