@@ -24,6 +24,13 @@ Config::Config() : QDialog()
         // ...on va au prochain fichier correspondant à notre filtre
         fileListIa << dirIteratorIa.next();
     }
+    QDirIterator dirIteratorGlace("template/glace", QDir::AllDirs | QDir::NoSymLinks | QDir::NoDotAndDotDot);
+    QStringList dirListGlace;
+    while(dirIteratorGlace.hasNext())
+    {
+        // ...on va au prochain fichier correspondant à notre filtre
+        dirListGlace << dirIteratorGlace.next();
+    }
 
     QSettings settings("Exiel", "DC_Tools");
     resize(600, 500);
@@ -44,6 +51,10 @@ Config::Config() : QDialog()
     templateIaL->setText(" " + settings.value("Configuration/TemplateIa").toString());
     templateIaC = new QComboBox;
     templateIaC->addItems(fileListIa);
+    templateGlL = new QLabel;
+    templateGlL->setText(" " + settings.value("Configuration/TemplateGL").toString());
+    templateGlC = new QComboBox;
+    templateGlC->addItems(dirListGlace);
 
     GB_Prot_Name_Line = new QLineEdit;
     GB_Prot_Name_Line->setText(settings.value("Protection/Name").toString());
@@ -87,6 +98,8 @@ Config::Config() : QDialog()
     cfgLayout->addRow("Template Programme :",templateC);
     cfgLayout->addRow("Template IA Actuel :", templateIaL);
     cfgLayout->addRow("Template Ia :", templateIaC);
+    cfgLayout->addRow("Template Glace Actuel :", templateGlL);
+    cfgLayout->addRow("Template Glace :", templateGlC);
 
     QGroupBox *GB_Cfg = new QGroupBox("Configuration");
     GB_Cfg->setLayout(cfgLayout);
@@ -131,6 +144,8 @@ void Config::saveS()
     typePr += templatePC->currentText();
     QString typeIa;
     typeIa += templateIaC->currentText();
+    QString typeGl;
+    typeGl += templateGlC->currentText();
 
     settings.setValue("Configuration/Auteur", name);
     settings.setValue("Configuration/Materiel", mate);
@@ -146,9 +161,7 @@ void Config::saveS()
     settings.setValue("Protection/Administrator", admi);
     settings.setValue("Configuration/TemplatePr", typePr);
     settings.setValue("Configuration/TemplateIa", typeIa);
-
-    QProcess *restart = new QProcess(this);
-    restart->startDetached("DC_Tools.exe");
+    settings.setValue("Configuration/TemplateGL", typeGl);
     close();
 }
 
@@ -183,6 +196,8 @@ void Config::closeEvent(QCloseEvent* event) {
     typePr += templatePC->currentText();
     QString typeIa;
     typeIa += templateIaC->currentText();
+    QString typeGl;
+    typeGl += templateGlC->currentText();
 
     settings.setValue("Configuration/Auteur", name);
     settings.setValue("Configuration/Materiel", mate);
@@ -198,8 +213,6 @@ void Config::closeEvent(QCloseEvent* event) {
     settings.setValue("Protection/Administrator", admi);
     settings.setValue("Configuration/TemplatePr", typePr);
     settings.setValue("Configuration/TemplateIa", typeIa);
-
-    QProcess *restart = new QProcess(this);
-    restart->startDetached("DC_Tools.exe");
+    settings.setValue("Configuration/TemplateGL", typeGl);
     event->accept();
 }

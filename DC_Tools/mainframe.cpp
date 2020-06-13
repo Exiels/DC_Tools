@@ -90,6 +90,8 @@ MainFrame::MainFrame()
             connect(actionNewGlace, SIGNAL(triggered()), this, SLOT(newGlace()));
             connect(actionGlace, SIGNAL(triggered()), this, SLOT(Glace()));
             connect(actionMaj, SIGNAL(triggered()), this, SLOT(updater()));
+            new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_U), this, SLOT(uniqIDShow()));
+
         //FIN_Signaux
 
     setCentralWidget(zoneCentrale);
@@ -98,7 +100,7 @@ MainFrame::MainFrame()
 
 void MainFrame::About()
 {
-    QMessageBox::information(this, tr("A propos..."), tr("DC_Tools est un Logiciel créé par Exiel en 2019."));
+    QMessageBox::information(this, tr("A propos..."), tr("DC_Tools est un Logiciel créé par Exiel en 2020."));
 }
 
 void MainFrame::Program()
@@ -489,7 +491,7 @@ void MainFrame::Glace()
                     Lvl5 = new QWidget;
 
                     GL_LVl1_LImg1_Line = new QLabel;
-                    GL_LVl1_LImg1_Line->setText("Url Image :");
+                    GL_LVl1_LImg1_Line->setText("Image niveau (URL) :");
                     GL_LVl1_LSpacer1_Line = new QLabel;
                     GL_LVl1_LSpacer1_Line->setText("---------------------------------------------------------------------------");
                     GL_LVl1_LSpacer2_Line = new QLabel;
@@ -511,11 +513,31 @@ void MainFrame::Glace()
                     GL_LVl1_LImg2_Line = new QLabel;
                     GL_LVl1_LImg2_Line->setText("Plan du Niveau (Url Image):");
                     GL_Lvl1_CM1_Line = new QLineEdit;
+                    GL_Lvl1_CM1_Nbr_Line = new QSpinBox;
+                    GL_Lvl1_CM1_Nbr_Line->setMaximumWidth(50);
+                    GL_LVL1_LCM1NBR_Line = new QLabel;
+                    GL_LVL1_LCM1NBR_Line->setText("Nbr CM1 :");
                     GL_Lvl1_CM2_Line = new QLineEdit;
+                    GL_Lvl1_CM2_Nbr_Line = new QSpinBox;
+                    GL_Lvl1_CM2_Nbr_Line->setMaximumWidth(50);
+                    GL_LVL1_LCM2NBR_Line = new QLabel;
+                    GL_LVL1_LCM2NBR_Line->setText("Nbr CM2 :");
                     GL_Lvl1_CM3_Line = new QLineEdit;
+                    GL_Lvl1_CM3_Nbr_Line = new QSpinBox;
+                    GL_Lvl1_CM3_Nbr_Line->setMaximumWidth(50);
+                    GL_LVL1_LCM3NBR_Line = new QLabel;
+                    GL_LVL1_LCM3NBR_Line->setText("Nbr CM3 :");
                     GL_Lvl1_CM4_Line = new QLineEdit;
+                    GL_Lvl1_CM4_Nbr_Line = new QSpinBox;
+                    GL_Lvl1_CM4_Nbr_Line->setMaximumWidth(50);
+                    GL_LVL1_LCM4NBR_Line = new QLabel;
+                    GL_LVL1_LCM4NBR_Line->setText("Nbr CM4 :");
                     GL_Lvl1_CM5_Line = new QLineEdit;
-                    GL_LVl1_Nbr1_Line = new QLineEdit;
+                    GL_Lvl1_CM5_Nbr_Line = new QSpinBox;
+                    GL_Lvl1_CM5_Nbr_Line->setMaximumWidth(50);
+                    GL_LVL1_LCM5NBR_Line = new QLabel;
+                    GL_LVL1_LCM5NBR_Line->setText("Nbr CM5 :");
+                    GL_LVl1_Img1_Line = new QLineEdit;
                     GL_LVl1_Desc1_Line = new QTextEdit;
                     GL_LVl1_PImg1_Line = new QLineEdit;
                     GL_Lvl_Add_Lvl = new QPushButton("Nouveau Niveau");
@@ -523,9 +545,23 @@ void MainFrame::Glace()
                     QHBoxLayout *buttonsLayoutLvl = new QHBoxLayout;
                     buttonsLayoutLvl->setAlignment(Qt::AlignRight);
 
+                    GL_Lvl1_WCmNbr = new QWidget();
+                    QHBoxLayout *GL_Lvl1_CmNbr = new QHBoxLayout(GL_Lvl1_WCmNbr);
+                    GL_Lvl1_CmNbr->addWidget(GL_LVL1_LCM1NBR_Line);
+                    GL_Lvl1_CmNbr->addWidget(GL_Lvl1_CM1_Nbr_Line);
+                    GL_Lvl1_CmNbr->addWidget(GL_LVL1_LCM2NBR_Line);
+                    GL_Lvl1_CmNbr->addWidget(GL_Lvl1_CM2_Nbr_Line);
+                    GL_Lvl1_CmNbr->addWidget(GL_LVL1_LCM3NBR_Line);
+                    GL_Lvl1_CmNbr->addWidget(GL_Lvl1_CM3_Nbr_Line);
+                    GL_Lvl1_CmNbr->addWidget(GL_LVL1_LCM4NBR_Line);
+                    GL_Lvl1_CmNbr->addWidget(GL_Lvl1_CM4_Nbr_Line);
+                    GL_Lvl1_CmNbr->addWidget(GL_LVL1_LCM5NBR_Line);
+                    GL_Lvl1_CmNbr->addWidget(GL_Lvl1_CM5_Nbr_Line);
+
+
                     GL_Lvl1 = new QGridLayout;
                     GL_Lvl1->addWidget(GL_LVl1_LImg1_Line, 0, 0);
-                    GL_Lvl1->addWidget(GL_LVl1_Nbr1_Line, 0, 1);
+                    GL_Lvl1->addWidget(GL_LVl1_Img1_Line, 0, 1);
                     GL_Lvl1->addWidget(GL_LVl1_LSpacer1_Line, 1, 1, Qt::AlignCenter);
                     GL_Lvl1->addWidget(GL_LVl1_LCM1_Line, 2, 0);
                     GL_Lvl1->addWidget(GL_Lvl1_CM1_Line, 2, 1);
@@ -537,12 +573,13 @@ void MainFrame::Glace()
                     GL_Lvl1->addWidget(GL_Lvl1_CM4_Line, 5, 1);
                     GL_Lvl1->addWidget(GL_LVl1_LCM5_Line, 6, 0);
                     GL_Lvl1->addWidget(GL_Lvl1_CM5_Line, 6, 1);
-                    GL_Lvl1->addWidget(GL_LVl1_LSpacer2_Line, 7, 1, Qt::AlignCenter);
-                    GL_Lvl1->addWidget(GL_LVl1_LDesc_Line, 8, 0);
-                    GL_Lvl1->addWidget(GL_LVl1_Desc1_Line, 8, 1);
-                    GL_Lvl1->addWidget(GL_LVl1_LSpacer3_Line, 9, 1, Qt::AlignCenter);
-                    GL_Lvl1->addWidget(GL_LVl1_LImg2_Line, 10, 0);
-                    GL_Lvl1->addWidget(GL_LVl1_PImg1_Line, 10, 1);
+                    GL_Lvl1->addWidget(GL_Lvl1_WCmNbr, 7, 1);
+                    GL_Lvl1->addWidget(GL_LVl1_LSpacer2_Line, 8, 1, Qt::AlignCenter);
+                    GL_Lvl1->addWidget(GL_LVl1_LDesc_Line, 9, 0);
+                    GL_Lvl1->addWidget(GL_LVl1_Desc1_Line, 9, 1);
+                    GL_Lvl1->addWidget(GL_LVl1_LSpacer3_Line, 10, 1, Qt::AlignCenter);
+                    GL_Lvl1->addWidget(GL_LVl1_LImg2_Line, 11, 0);
+                    GL_Lvl1->addWidget(GL_LVl1_PImg1_Line, 11, 1);
 
                     GL_LVl1_LSpacer1_Line->setVisible(false);
                     GL_LVl1_LCM1_Line->setVisible(false);
@@ -555,6 +592,7 @@ void MainFrame::Glace()
                     GL_Lvl1_CM4_Line->setVisible(false);
                     GL_LVl1_LCM5_Line->setVisible(false);
                     GL_Lvl1_CM5_Line->setVisible(false);
+                    GL_Lvl1_WCmNbr->setVisible(false);
 
                     buttonsLayoutLvl->addWidget(GL_Lvl_Add_Lvl);
 
@@ -572,11 +610,14 @@ void MainFrame::Glace()
 
         //FIN_Page Niveau
 
+            QPushButton *PRG_Generate = new QPushButton("&Générer !");
+
         //Ajout des onglets au TabWidget
             mainGL->insertTab(0, principal, "Principal");
             mainGL->insertTab(3, niveau, "Niveaux");
     //FIN_Onglet Main
     MainLayout->addWidget(mainGL);
+    MainLayout->addWidget(PRG_Generate);
     QWidget *layout = new QWidget();
     layout->setLayout(MainLayout);
 
@@ -585,6 +626,7 @@ void MainFrame::Glace()
         connect(GL_CM_Add_CM, SIGNAL(clicked()), this, SLOT(addCM()));
         connect(GL_Main_Lvl_Line, SIGNAL(currentIndexChanged(const QString&)), this, SLOT(stateChanged(QString)));
         connect(GL_Lvl_Add_Lvl, SIGNAL(clicked()), this, SLOT(addLvl()));
+        connect(PRG_Generate, SIGNAL(clicked()), this, SLOT(generateCodeGlace()));
     //FIN_Signaux
 
     setCentralWidget(layout);
@@ -757,6 +799,8 @@ void MainFrame::uGlaceCm(int etat)
         GL_Lvl1_CM4_Line->setVisible(true);
         GL_LVl1_LCM5_Line->setVisible(true);
         GL_Lvl1_CM5_Line->setVisible(true);
+        GL_Lvl1_WCmNbr->setVisible(true);
+
 
         if(countL >=2){
         GL_LVl2_LSpacer1_Line->setVisible(true);
@@ -770,6 +814,7 @@ void MainFrame::uGlaceCm(int etat)
         GL_Lvl2_CM4_Line->setVisible(true);
         GL_LVl2_LCM5_Line->setVisible(true);
         GL_Lvl2_CM5_Line->setVisible(true);
+        GL_Lvl2_WCmNbr->setVisible(true);
         }
         if(countL >=3){
         GL_LVl3_LSpacer1_Line->setVisible(true);
@@ -783,6 +828,7 @@ void MainFrame::uGlaceCm(int etat)
         GL_Lvl3_CM4_Line->setVisible(true);
         GL_LVl3_LCM5_Line->setVisible(true);
         GL_Lvl3_CM5_Line->setVisible(true);
+        GL_Lvl3_WCmNbr->setVisible(true);
         }
         if(countL >=4){
         GL_LVl4_LSpacer1_Line->setVisible(true);
@@ -796,6 +842,7 @@ void MainFrame::uGlaceCm(int etat)
         GL_Lvl4_CM4_Line->setVisible(true);
         GL_LVl4_LCM5_Line->setVisible(true);
         GL_Lvl4_CM5_Line->setVisible(true);
+        GL_Lvl4_WCmNbr->setVisible(true);
         }
         if(countL >=5){
         GL_LVl5_LSpacer1_Line->setVisible(true);
@@ -809,6 +856,7 @@ void MainFrame::uGlaceCm(int etat)
         GL_Lvl5_CM4_Line->setVisible(true);
         GL_LVl5_LCM5_Line->setVisible(true);
         GL_Lvl5_CM5_Line->setVisible(true);
+        GL_Lvl5_WCmNbr->setVisible(true);
         }
 
     } else if(etat != 2)
@@ -827,6 +875,7 @@ void MainFrame::uGlaceCm(int etat)
         GL_Lvl1_CM4_Line->setVisible(false);
         GL_LVl1_LCM5_Line->setVisible(false);
         GL_Lvl1_CM5_Line->setVisible(false);
+        GL_Lvl1_WCmNbr->setVisible(false);
 
         if(countL >= 2){
         GL_LVl2_LSpacer1_Line->setVisible(false);
@@ -840,6 +889,7 @@ void MainFrame::uGlaceCm(int etat)
         GL_Lvl2_CM4_Line->setVisible(false);
         GL_LVl2_LCM5_Line->setVisible(false);
         GL_Lvl2_CM5_Line->setVisible(false);
+        GL_Lvl2_WCmNbr->setVisible(false);
         }
         if(countL >=3){
         GL_LVl3_LSpacer1_Line->setVisible(false);
@@ -853,6 +903,7 @@ void MainFrame::uGlaceCm(int etat)
         GL_Lvl3_CM4_Line->setVisible(false);
         GL_LVl3_LCM5_Line->setVisible(false);
         GL_Lvl3_CM5_Line->setVisible(false);
+        GL_Lvl3_WCmNbr->setVisible(false);
         }
         if(countL >=4){
         GL_LVl4_LSpacer1_Line->setVisible(false);
@@ -866,6 +917,7 @@ void MainFrame::uGlaceCm(int etat)
         GL_Lvl4_CM4_Line->setVisible(false);
         GL_LVl4_LCM5_Line->setVisible(false);
         GL_Lvl4_CM5_Line->setVisible(false);
+        GL_Lvl4_WCmNbr->setVisible(false);
         }
         if(countL >=5){
         GL_LVl5_LSpacer1_Line->setVisible(false);
@@ -879,6 +931,7 @@ void MainFrame::uGlaceCm(int etat)
         GL_Lvl5_CM4_Line->setVisible(false);
         GL_LVl5_LCM5_Line->setVisible(false);
         GL_Lvl5_CM5_Line->setVisible(false);
+        GL_Lvl5_WCmNbr->setVisible(false);
         }
     }
 }
@@ -1019,22 +1072,35 @@ void MainFrame::generateCodeGlace()
     }
     QSettings settings("Exiel", "DC_Tools");
 
-    QString protection;
-    QString GL_Main;
-    QString GL_CM1;
-    QString GL_CM2;
-    QString GL_CM3;
-    QString GL_CM4;
-    QString GL_CM5;
-    QString GL_CM6;
-    QString GL_CM7;
-    QString GL_CM8;
-    QString GL_CM9;
-    QString GL_CM10;
+    QString GCG_Protection;
 
-    QString GL_Alrt;
-    QString GL_Lvl;
-    QString GL_End;
+    QString GCG_GL_Main;
+
+    QString GCG_GL_CmTop;
+
+    QString GCG_GL_CM1;
+    QString GCG_GL_CM2;
+    QString GCG_GL_CM3;
+    QString GCG_GL_CM4;
+    QString GCG_GL_CM5;
+    QString GCG_GL_CM6;
+    QString GCG_GL_CM7;
+    QString GCG_GL_CM8;
+    QString GCG_GL_CM9;
+    QString GCG_GL_CM10;
+
+    QString GCG_GL_Alrt;
+    QString GCG_GL_Plan;
+
+    QString GCG_GL_Lvl1;
+    QString GCG_GL_Lvl2;
+    QString GCG_GL_Lvl3;
+    QString GCG_GL_Lvl4;
+    QString GCG_GL_Lvl5;
+
+    QString GCG_GL_End;
+
+    QString glace;
 
     //DEBUT_Protection
         //Importation du Template Protection
@@ -1045,17 +1111,17 @@ void MainFrame::generateCodeGlace()
         fluxPr.setCodec("UTF-8");
 
         //Lecture du Template Protection
-        protection = fluxPr.readAll();
+        GCG_Protection = fluxPr.readAll();
 
         //Remplacement des Variables par les valeurs stocké dans le registre
-            protection.replace("PR_Name", settings.value("Protection/Name").toString());
-            protection.replace("PR_Vers", settings.value("Protection/Version").toString());
-            protection.replace("PR_UrlG", settings.value("Protection/UrlGlace").toString());
-            protection.replace("PR_NGla", settings.value("Protection/NameGlace").toString());
-            protection.replace("PR_Read", settings.value("Protection/Read").toString());
-            protection.replace("PR_Writ", settings.value("Protection/Write").toString());
-            protection.replace("PR_Mode", settings.value("Protection/Moderator").toString());
-            protection.replace("PR_Admi", settings.value("Protection/Administrator").toString());
+            GCG_Protection.replace("PR_Name", settings.value("Protection/Name").toString());
+            GCG_Protection.replace("PR_Vers", settings.value("Protection/Version").toString());
+            GCG_Protection.replace("PR_UrlG", settings.value("Protection/UrlGlace").toString());
+            GCG_Protection.replace("PR_NGla", settings.value("Protection/NameGlace").toString());
+            GCG_Protection.replace("PR_Read", settings.value("Protection/Read").toString());
+            GCG_Protection.replace("PR_Writ", settings.value("Protection/Write").toString());
+            GCG_Protection.replace("PR_Mode", settings.value("Protection/Moderator").toString());
+            GCG_Protection.replace("PR_Admi", settings.value("Protection/Administrator").toString());
     //FIN_Protection
 
     //DEBUT_Glace
@@ -1069,125 +1135,557 @@ void MainFrame::generateCodeGlace()
                 fluxGlMain.setCodec("UTF-8");
 
                     //Lecture du Template Glace_Main
-                        GL_Main = fluxGlMain.readAll();
+                        GCG_GL_Main = fluxGlMain.readAll();
 
                     //Remplacement des Variables par les valeurs stocké dans le registre
-                        GL_Main.replace("GL_Main_Img_Line", GL_Main_Img_Line->text());
-                        GL_Main.replace("GL_Main_Name_Line", GL_Main_Name_Line->text());
+                        GCG_GL_Main.replace("GL_Main_Img_Line", GL_Main_Img_Line->text());
+                        GCG_GL_Main.replace("GL_Main_Name_Line", GL_Main_Name_Line->text());
                         if(glaceon == 1){
-                            GL_Main.replace("GL_Main_Lvl_Line", GL_Main_Lvl_Line->currentText());
+                            GCG_GL_Main.replace("GL_Main_Lvl_Line", GL_Main_Lvl_Line->currentText());
+                        }else{
+                            GCG_GL_Main.replace("GL_Main_Lvl_Line", "");
                         }
-                        GL_Main.replace("GL_Main_Vers_Line", GL_Main_Vers_Line->text());
-                        GL_Main.replace("Gl_Main_Desc_Line", GL_Main_Desc_Line->toPlainText());
+                        GCG_GL_Main.replace("GL_Main_Vers_Line", GL_Main_Vers_Line->text());
+                        GCG_GL_Main.replace("Gl_Main_Desc_Line", GL_Main_Desc_Line->toPlainText());
         //END_GL_Main
 
         //START_GL_CM
             if(glaceon == 1){
             //Importation du Template Glace_CM
-                QString fileNameGlMain = settings.value("Configuration/TemplateGL").toString() + "\\cm.cfg";
-                QFile fileGlCM(fileNameGlMain);
+                QString fileNameGlCm = settings.value("Configuration/TemplateGL").toString() + "\\cm.cfg";
+                QFile fileGlCM(fileNameGlCm);
                 fileGlCM.open(QIODevice::ReadOnly | QIODevice::Text);
                 QTextStream fluxGlCM(&fileGlCM);
                 fluxGlCM.setCodec("UTF-8");
 
                     //Lecture du Template Glace_CM
-                        GL_CM1 = fluxGlCM.readAll();
+                        GCG_GL_CM1 = fluxGlCM.readAll();
                     //Remplacement des Variables par les valeurs stockés dans le registre
-                        GL_CM1.replace("GL_CM_Name_Line", GL_CM1_Name_Line->text());
-                        GL_CM1.replace("GL_CM_Img_Line", GL_CM1_Img_Line->text());
-                        GL_CM1.replace("GL_CM_Cat_Line", GL_CM1_Cat_Line->currentText());
-                        GL_CM1.replace("GL_CM_Comp1_Line", GL_CM1_Comp1_Line->text());
-                        GL_CM1.replace("GL_CM_Comp2_Line", GL_CM1_Comp2_Line->text());
-                        GL_CM1.replace("GL_CM_Comp3_Line", GL_CM1_Comp3_Line->text());
-                        GL_CM1.replace("GL_CM_Alg1_Line", GL_CM1_Alg1_Line->text());
-                        GL_CM1.replace("GL_CM_Alg2_Line", GL_CM1_Alg2_Line->text());
-                        GL_CM1.replace("GL_CM_Alg3_Line", GL_CM1_Alg3_Line->text());
-                        GL_CM1.replace("GL_CM_Desc_Line", GL_CM1_Desc_Line->toPlainText());
+                        GCG_GL_CM1.replace("GL_CM_Name_Line", GL_CM1_Name_Line->text());
+                        GCG_GL_CM1.replace("GL_CM_Img_Line", GL_CM1_Img_Line->text());
+                        GCG_GL_CM1.replace("GL_CM_Cat_Line", GL_CM1_Cat_Line->currentText());
+                        GCG_GL_CM1.replace("GL_CM_Comp1_Line", GL_CM1_Comp1_Line->text());
+                        GCG_GL_CM1.replace("GL_CM_Comp2_Line", GL_CM1_Comp2_Line->text());
+                        GCG_GL_CM1.replace("GL_CM_Comp3_Line", GL_CM1_Comp3_Line->text());
+                        GCG_GL_CM1.replace("GL_CM_Alg1_Line", GL_CM1_Alg1_Line->text());
+                        GCG_GL_CM1.replace("GL_CM_Alg2_Line", GL_CM1_Alg2_Line->text());
+                        GCG_GL_CM1.replace("GL_CM_Alg3_Line", GL_CM1_Alg3_Line->text());
+                        GCG_GL_CM1.replace("GL_CM_Desc_Line", GL_CM1_Desc_Line->toPlainText());
 
-               if(count >= 2){
-                   //Lecture du Template Glace_CM
-                       GL_CM2 = fluxGlCM.readAll();
-                   //Remplacement des Variables par les valeurs stockés dans le registre
-                       GL_CM2.replace("GL_CM_Name_Line", GL_CM2_Name_Line->text());
-                       GL_CM2.replace("GL_CM_Img_Line", GL_CM2_Img_Line->text());
-                       GL_CM2.replace("GL_CM_Cat_Line", GL_CM2_Cat_Line->currentText());
-                       GL_CM2.replace("GL_CM_Comp1_Line", GL_CM2_Comp1_Line->text());
-                       GL_CM2.replace("GL_CM_Comp2_Line", GL_CM2_Comp2_Line->text());
-                       GL_CM2.replace("GL_CM_Comp3_Line", GL_CM2_Comp3_Line->text());
-                       GL_CM2.replace("GL_CM_Alg1_Line", GL_CM2_Alg1_Line->text());
-                       GL_CM2.replace("GL_CM_Alg2_Line", GL_CM2_Alg2_Line->text());
-                       GL_CM2.replace("GL_CM_Alg3_Line", GL_CM2_Alg3_Line->text());
-                       GL_CM2.replace("GL_CM_Desc_Line", GL_CM2_Desc_Line->toPlainText());
-               }
-               if(count >= 3){
-                   //Lecture du Template Glace_CM
-                       GL_CM3 = fluxGlCM.readAll();
-                   //Remplacement des Variables par les valeurs stockés dans le registre
-                       GL_CM3.replace("GL_CM_Name_Line", GL_CM3_Name_Line->text());
-                       GL_CM3.replace("GL_CM_Img_Line", GL_CM3_Img_Line->text());
-                       GL_CM3.replace("GL_CM_Cat_Line", GL_CM3_Cat_Line->currentText());
-                       GL_CM3.replace("GL_CM_Comp1_Line", GL_CM3_Comp1_Line->text());
-                       GL_CM3.replace("GL_CM_Comp2_Line", GL_CM3_Comp2_Line->text());
-                       GL_CM3.replace("GL_CM_Comp3_Line", GL_CM3_Comp3_Line->text());
-                       GL_CM3.replace("GL_CM_Alg1_Line", GL_CM3_Alg1_Line->text());
-                       GL_CM3.replace("GL_CM_Alg2_Line", GL_CM3_Alg2_Line->text());
-                       GL_CM3.replace("GL_CM_Alg3_Line", GL_CM3_Alg3_Line->text());
-                       GL_CM3.replace("GL_CM_Desc_Line", GL_CM3_Desc_Line->toPlainText());
-               }
-               if(count >= 4){
-                   //Lecture du Template Glace_CM
-                       GL_CM4 = fluxGlCM.readAll();
-                   //Remplacement des Variables par les valeurs stockés dans le registre
-                       GL_CM4.replace("GL_CM_Name_Line", GL_CM4_Name_Line->text());
-                       GL_CM4.replace("GL_CM_Img_Line", GL_CM4_Img_Line->text());
-                       GL_CM4.replace("GL_CM_Cat_Line", GL_CM4_Cat_Line->currentText());
-                       GL_CM4.replace("GL_CM_Comp1_Line", GL_CM4_Comp1_Line->text());
-                       GL_CM4.replace("GL_CM_Comp2_Line", GL_CM4_Comp2_Line->text());
-                       GL_CM4.replace("GL_CM_Comp3_Line", GL_CM4_Comp3_Line->text());
-                       GL_CM4.replace("GL_CM_Alg1_Line", GL_CM4_Alg1_Line->text());
-                       GL_CM4.replace("GL_CM_Alg2_Line", GL_CM4_Alg2_Line->text());
-                       GL_CM4.replace("GL_CM_Alg3_Line", GL_CM4_Alg3_Line->text());
-                       GL_CM4.replace("GL_CM_Desc_Line", GL_CM4_Desc_Line->toPlainText());
-               }
-               if(count >= 5){
-                   //Lecture du Template Glace_CM
-                       GL_CM5 = fluxGlCM.readAll();
-                   //Remplacement des Variables par les valeurs stockés dans le registre
-                       GL_CM5.replace("GL_CM_Name_Line", GL_CM5_Name_Line->text());
-                       GL_CM5.replace("GL_CM_Img_Line", GL_CM5_Img_Line->text());
-                       GL_CM5.replace("GL_CM_Cat_Line", GL_CM5_Cat_Line->currentText());
-                       GL_CM5.replace("GL_CM_Comp1_Line", GL_CM5_Comp1_Line->text());
-                       GL_CM5.replace("GL_CM_Comp2_Line", GL_CM5_Comp2_Line->text());
-                       GL_CM5.replace("GL_CM_Comp3_Line", GL_CM5_Comp3_Line->text());
-                       GL_CM5.replace("GL_CM_Alg1_Line", GL_CM5_Alg1_Line->text());
-                       GL_CM5.replace("GL_CM_Alg2_Line", GL_CM5_Alg2_Line->text());
-                       GL_CM5.replace("GL_CM_Alg3_Line", GL_CM5_Alg3_Line->text());
-                       GL_CM5.replace("GL_CM_Desc_Line", GL_CM5_Desc_Line->toPlainText());
-               }
-               if(count >= 6){
-                   //Lecture du Template Glace_CM
-                       GL_CM6 = fluxGlCM.readAll();
-                   //Remplacement des Variables par les valeurs stockés dans le registre
-                       GL_CM6.replace("GL_CM_Name_Line", GL_CM6_Name_Line->text());
-                       GL_CM6.replace("GL_CM_Img_Line", GL_CM6_Img_Line->text());
-                       GL_CM6.replace("GL_CM_Cat_Line", GL_CM6_Cat_Line->currentText());
-                       GL_CM6.replace("GL_CM_Comp1_Line", GL_CM6_Comp1_Line->text());
-                       GL_CM6.replace("GL_CM_Comp2_Line", GL_CM6_Comp2_Line->text());
-                       GL_CM6.replace("GL_CM_Comp3_Line", GL_CM6_Comp3_Line->text());
-                       GL_CM6.replace("GL_CM_Alg1_Line", GL_CM6_Alg1_Line->text());
-                       GL_CM6.replace("GL_CM_Alg2_Line", GL_CM6_Alg2_Line->text());
-                       GL_CM6.replace("GL_CM_Alg3_Line", GL_CM6_Alg3_Line->text());
-                       GL_CM6.replace("GL_CM_Desc_Line", GL_CM6_Desc_Line->toPlainText());
-               }
+                       if(count >= 2){
+                           QString fileNameGlCm2 = settings.value("Configuration/TemplateGL").toString() + "\\cm.cfg";
+                           QFile fileGlCM2(fileNameGlCm2);
+                           fileGlCM2.open(QIODevice::ReadOnly | QIODevice::Text);
+                           QTextStream fluxGlCM2(&fileGlCM2);
+                           fluxGlCM2.setCodec("UTF-8");
+                           //Lecture du Template Glace_CM
+                               GCG_GL_CM2 = fluxGlCM2.readAll();
+                           //Remplacement des Variables par les valeurs stockés dans le registre
+                               GCG_GL_CM2.replace("GL_CM_Name_Line", GL_CM2_Name_Line->text());
+                               GCG_GL_CM2.replace("GL_CM_Img_Line", GL_CM2_Img_Line->text());
+                               GCG_GL_CM2.replace("GL_CM_Cat_Line", GL_CM2_Cat_Line->currentText());
+                               GCG_GL_CM2.replace("GL_CM_Comp1_Line", GL_CM2_Comp1_Line->text());
+                               GCG_GL_CM2.replace("GL_CM_Comp2_Line", GL_CM2_Comp2_Line->text());
+                               GCG_GL_CM2.replace("GL_CM_Comp3_Line", GL_CM2_Comp3_Line->text());
+                               GCG_GL_CM2.replace("GL_CM_Alg1_Line", GL_CM2_Alg1_Line->text());
+                               GCG_GL_CM2.replace("GL_CM_Alg2_Line", GL_CM2_Alg2_Line->text());
+                               GCG_GL_CM2.replace("GL_CM_Alg3_Line", GL_CM2_Alg3_Line->text());
+                               GCG_GL_CM2.replace("GL_CM_Desc_Line", GL_CM2_Desc_Line->toPlainText());
+                       }
+                       if(count >= 3){
+                           QString fileNameGlCm3 = settings.value("Configuration/TemplateGL").toString() + "\\cm.cfg";
+                           QFile fileGlCM3(fileNameGlCm3);
+                           fileGlCM3.open(QIODevice::ReadOnly | QIODevice::Text);
+                           QTextStream fluxGlCM3(&fileGlCM3);
+                           fluxGlCM3.setCodec("UTF-8");
+                           //Lecture du Template Glace_CM
+                               GCG_GL_CM3 = fluxGlCM3.readAll();
+                           //Remplacement des Variables par les valeurs stockés dans le registre
+                               GCG_GL_CM3.replace("GL_CM_Name_Line", GL_CM3_Name_Line->text());
+                               GCG_GL_CM3.replace("GL_CM_Img_Line", GL_CM3_Img_Line->text());
+                               GCG_GL_CM3.replace("GL_CM_Cat_Line", GL_CM3_Cat_Line->currentText());
+                               GCG_GL_CM3.replace("GL_CM_Comp1_Line", GL_CM3_Comp1_Line->text());
+                               GCG_GL_CM3.replace("GL_CM_Comp2_Line", GL_CM3_Comp2_Line->text());
+                               GCG_GL_CM3.replace("GL_CM_Comp3_Line", GL_CM3_Comp3_Line->text());
+                               GCG_GL_CM3.replace("GL_CM_Alg1_Line", GL_CM3_Alg1_Line->text());
+                               GCG_GL_CM3.replace("GL_CM_Alg2_Line", GL_CM3_Alg2_Line->text());
+                               GCG_GL_CM3.replace("GL_CM_Alg3_Line", GL_CM3_Alg3_Line->text());
+                               GCG_GL_CM3.replace("GL_CM_Desc_Line", GL_CM3_Desc_Line->toPlainText());
+                       }
+                       if(count >= 4){
+                           QString fileNameGlCm4 = settings.value("Configuration/TemplateGL").toString() + "\\cm.cfg";
+                           QFile fileGlCM4(fileNameGlCm4);
+                           fileGlCM4.open(QIODevice::ReadOnly | QIODevice::Text);
+                           QTextStream fluxGlCM4(&fileGlCM4);
+                           fluxGlCM4.setCodec("UTF-8");
+                           //Lecture du Template Glace_CM
+                               GCG_GL_CM4 = fluxGlCM4.readAll();
+                           //Remplacement des Variables par les valeurs stockés dans le registre
+                               GCG_GL_CM4.replace("GL_CM_Name_Line", GL_CM4_Name_Line->text());
+                               GCG_GL_CM4.replace("GL_CM_Img_Line", GL_CM4_Img_Line->text());
+                               GCG_GL_CM4.replace("GL_CM_Cat_Line", GL_CM4_Cat_Line->currentText());
+                               GCG_GL_CM4.replace("GL_CM_Comp1_Line", GL_CM4_Comp1_Line->text());
+                               GCG_GL_CM4.replace("GL_CM_Comp2_Line", GL_CM4_Comp2_Line->text());
+                               GCG_GL_CM4.replace("GL_CM_Comp3_Line", GL_CM4_Comp3_Line->text());
+                               GCG_GL_CM4.replace("GL_CM_Alg1_Line", GL_CM4_Alg1_Line->text());
+                               GCG_GL_CM4.replace("GL_CM_Alg2_Line", GL_CM4_Alg2_Line->text());
+                               GCG_GL_CM4.replace("GL_CM_Alg3_Line", GL_CM4_Alg3_Line->text());
+                               GCG_GL_CM4.replace("GL_CM_Desc_Line", GL_CM4_Desc_Line->toPlainText());
+                       }
+                       if(count >= 5){
+                           QString fileNameGlCm5 = settings.value("Configuration/TemplateGL").toString() + "\\cm.cfg";
+                           QFile fileGlCM5(fileNameGlCm5);
+                           fileGlCM5.open(QIODevice::ReadOnly | QIODevice::Text);
+                           QTextStream fluxGlCM5(&fileGlCM5);
+                           fluxGlCM5.setCodec("UTF-8");
+                           //Lecture du Template Glace_CM
+                               GCG_GL_CM5 = fluxGlCM5.readAll();
+                           //Remplacement des Variables par les valeurs stockés dans le registre
+                               GCG_GL_CM5.replace("GL_CM_Name_Line", GL_CM5_Name_Line->text());
+                               GCG_GL_CM5.replace("GL_CM_Img_Line", GL_CM5_Img_Line->text());
+                               GCG_GL_CM5.replace("GL_CM_Cat_Line", GL_CM5_Cat_Line->currentText());
+                               GCG_GL_CM5.replace("GL_CM_Comp1_Line", GL_CM5_Comp1_Line->text());
+                               GCG_GL_CM5.replace("GL_CM_Comp2_Line", GL_CM5_Comp2_Line->text());
+                               GCG_GL_CM5.replace("GL_CM_Comp3_Line", GL_CM5_Comp3_Line->text());
+                               GCG_GL_CM5.replace("GL_CM_Alg1_Line", GL_CM5_Alg1_Line->text());
+                               GCG_GL_CM5.replace("GL_CM_Alg2_Line", GL_CM5_Alg2_Line->text());
+                               GCG_GL_CM5.replace("GL_CM_Alg3_Line", GL_CM5_Alg3_Line->text());
+                               GCG_GL_CM5.replace("GL_CM_Desc_Line", GL_CM5_Desc_Line->toPlainText());
+                       }
+                       if(count >= 6){
+                           QString fileNameGlCm6 = settings.value("Configuration/TemplateGL").toString() + "\\cm.cfg";
+                           QFile fileGlCM6(fileNameGlCm6);
+                           fileGlCM6.open(QIODevice::ReadOnly | QIODevice::Text);
+                           QTextStream fluxGlCM6(&fileGlCM6);
+                           fluxGlCM6.setCodec("UTF-8");
+                           //Lecture du Template Glace_CM
+                               GCG_GL_CM6 = fluxGlCM6.readAll();
+                           //Remplacement des Variables par les valeurs stockés dans le registre
+                               GCG_GL_CM6.replace("GL_CM_Name_Line", GL_CM6_Name_Line->text());
+                               GCG_GL_CM6.replace("GL_CM_Img_Line", GL_CM6_Img_Line->text());
+                               GCG_GL_CM6.replace("GL_CM_Cat_Line", GL_CM6_Cat_Line->currentText());
+                               GCG_GL_CM6.replace("GL_CM_Comp1_Line", GL_CM6_Comp1_Line->text());
+                               GCG_GL_CM6.replace("GL_CM_Comp2_Line", GL_CM6_Comp2_Line->text());
+                               GCG_GL_CM6.replace("GL_CM_Comp3_Line", GL_CM6_Comp3_Line->text());
+                               GCG_GL_CM6.replace("GL_CM_Alg1_Line", GL_CM6_Alg1_Line->text());
+                               GCG_GL_CM6.replace("GL_CM_Alg2_Line", GL_CM6_Alg2_Line->text());
+                               GCG_GL_CM6.replace("GL_CM_Alg3_Line", GL_CM6_Alg3_Line->text());
+                               GCG_GL_CM6.replace("GL_CM_Desc_Line", GL_CM6_Desc_Line->toPlainText());
+                       }
+                       if(count >= 7){
+                           QString fileNameGlCm7 = settings.value("Configuration/TemplateGL").toString() + "\\cm.cfg";
+                           QFile fileGlCM7(fileNameGlCm7);
+                           fileGlCM7.open(QIODevice::ReadOnly | QIODevice::Text);
+                           QTextStream fluxGlCM7(&fileGlCM7);
+                           fluxGlCM7.setCodec("UTF-8");
+                           //Lecture du Template Glace_CM
+                               GCG_GL_CM7 = fluxGlCM7.readAll();
+                           //Remplacement des Variables par les valeurs stockés dans le registre
+                               GCG_GL_CM7.replace("GL_CM_Name_Line", GL_CM7_Name_Line->text());
+                               GCG_GL_CM7.replace("GL_CM_Img_Line", GL_CM7_Img_Line->text());
+                               GCG_GL_CM7.replace("GL_CM_Cat_Line", GL_CM7_Cat_Line->currentText());
+                               GCG_GL_CM7.replace("GL_CM_Comp1_Line", GL_CM7_Comp1_Line->text());
+                               GCG_GL_CM7.replace("GL_CM_Comp2_Line", GL_CM7_Comp2_Line->text());
+                               GCG_GL_CM7.replace("GL_CM_Comp3_Line", GL_CM7_Comp3_Line->text());
+                               GCG_GL_CM7.replace("GL_CM_Alg1_Line", GL_CM7_Alg1_Line->text());
+                               GCG_GL_CM7.replace("GL_CM_Alg2_Line", GL_CM7_Alg2_Line->text());
+                               GCG_GL_CM7.replace("GL_CM_Alg3_Line", GL_CM7_Alg3_Line->text());
+                               GCG_GL_CM7.replace("GL_CM_Desc_Line", GL_CM7_Desc_Line->toPlainText());
+                       }
+                       if(count >= 8){
+                           QString fileNameGlCm8 = settings.value("Configuration/TemplateGL").toString() + "\\cm.cfg";
+                           QFile fileGlCM8(fileNameGlCm8);
+                           fileGlCM8.open(QIODevice::ReadOnly | QIODevice::Text);
+                           QTextStream fluxGlCM8(&fileGlCM8);
+                           fluxGlCM8.setCodec("UTF-8");
+                           //Lecture du Template Glace_CM
+                               GCG_GL_CM8 = fluxGlCM8.readAll();
+                           //Remplacement des Variables par les valeurs stockés dans le registre
+                               GCG_GL_CM8.replace("GL_CM_Name_Line", GL_CM8_Name_Line->text());
+                               GCG_GL_CM8.replace("GL_CM_Img_Line", GL_CM8_Img_Line->text());
+                               GCG_GL_CM8.replace("GL_CM_Cat_Line", GL_CM8_Cat_Line->currentText());
+                               GCG_GL_CM8.replace("GL_CM_Comp1_Line", GL_CM8_Comp1_Line->text());
+                               GCG_GL_CM8.replace("GL_CM_Comp2_Line", GL_CM8_Comp2_Line->text());
+                               GCG_GL_CM8.replace("GL_CM_Comp3_Line", GL_CM8_Comp3_Line->text());
+                               GCG_GL_CM8.replace("GL_CM_Alg1_Line", GL_CM8_Alg1_Line->text());
+                               GCG_GL_CM8.replace("GL_CM_Alg2_Line", GL_CM8_Alg2_Line->text());
+                               GCG_GL_CM8.replace("GL_CM_Alg3_Line", GL_CM8_Alg3_Line->text());
+                               GCG_GL_CM8.replace("GL_CM_Desc_Line", GL_CM8_Desc_Line->toPlainText());
+                       }
+                       if(count >= 9){
+                           QString fileNameGlCm9 = settings.value("Configuration/TemplateGL").toString() + "\\cm.cfg";
+                           QFile fileGlCM9(fileNameGlCm9);
+                           fileGlCM9.open(QIODevice::ReadOnly | QIODevice::Text);
+                           QTextStream fluxGlCM9(&fileGlCM9);
+                           fluxGlCM9.setCodec("UTF-8");
+                           //Lecture du Template Glace_CM
+                               GCG_GL_CM9 = fluxGlCM9.readAll();
+                           //Remplacement des Variables par les valeurs stockés dans le registre
+                               GCG_GL_CM9.replace("GL_CM_Name_Line", GL_CM9_Name_Line->text());
+                               GCG_GL_CM9.replace("GL_CM_Img_Line", GL_CM9_Img_Line->text());
+                               GCG_GL_CM9.replace("GL_CM_Cat_Line", GL_CM9_Cat_Line->currentText());
+                               GCG_GL_CM9.replace("GL_CM_Comp1_Line", GL_CM9_Comp1_Line->text());
+                               GCG_GL_CM9.replace("GL_CM_Comp2_Line", GL_CM9_Comp2_Line->text());
+                               GCG_GL_CM9.replace("GL_CM_Comp3_Line", GL_CM9_Comp3_Line->text());
+                               GCG_GL_CM9.replace("GL_CM_Alg1_Line", GL_CM9_Alg1_Line->text());
+                               GCG_GL_CM9.replace("GL_CM_Alg2_Line", GL_CM9_Alg2_Line->text());
+                               GCG_GL_CM9.replace("GL_CM_Alg3_Line", GL_CM9_Alg3_Line->text());
+                               GCG_GL_CM9.replace("GL_CM_Desc_Line", GL_CM9_Desc_Line->toPlainText());
+                       }
+                       if(count >= 10){
+                           QString fileNameGlCm10 = settings.value("Configuration/TemplateGL").toString() + "\\cm.cfg";
+                           QFile fileGlCM10(fileNameGlCm10);
+                           fileGlCM10.open(QIODevice::ReadOnly | QIODevice::Text);
+                           QTextStream fluxGlCM10(&fileGlCM10);
+                           fluxGlCM10.setCodec("UTF-8");
+                           //Lecture du Template Glace_CM
+                               GCG_GL_CM10 = fluxGlCM10.readAll();
+                           //Remplacement des Variables par les valeurs stockés dans le registre
+                               GCG_GL_CM10.replace("GL_CM_Name_Line", GL_CM10_Name_Line->text());
+                               GCG_GL_CM10.replace("GL_CM_Img_Line", GL_CM10_Img_Line->text());
+                               GCG_GL_CM10.replace("GL_CM_Cat_Line", GL_CM10_Cat_Line->currentText());
+                               GCG_GL_CM10.replace("GL_CM_Comp1_Line", GL_CM10_Comp1_Line->text());
+                               GCG_GL_CM10.replace("GL_CM_Comp2_Line", GL_CM10_Comp2_Line->text());
+                               GCG_GL_CM10.replace("GL_CM_Comp3_Line", GL_CM10_Comp3_Line->text());
+                               GCG_GL_CM10.replace("GL_CM_Alg1_Line", GL_CM10_Alg1_Line->text());
+                               GCG_GL_CM10.replace("GL_CM_Alg2_Line", GL_CM10_Alg2_Line->text());
+                               GCG_GL_CM10.replace("GL_CM_Alg3_Line", GL_CM10_Alg3_Line->text());
+                               GCG_GL_CM10.replace("GL_CM_Desc_Line", GL_CM10_Desc_Line->toPlainText());
+                       }
 
+            //Importation du Template Glace_Alrt
+                QString fileNameGlAlrt = settings.value("Configuration/TemplateGL").toString() + "\\alrt.cfg";
+                QFile fileGlAlrt(fileNameGlAlrt);
+                fileGlAlrt.open(QIODevice::ReadOnly | QIODevice::Text);
+                QTextStream fluxGlAlrt(&fileGlAlrt);
+                fluxGlAlrt.setCodec("UTF-8");
+
+                    //Lecture du Template Glace_Alrt
+                        GCG_GL_Alrt = fluxGlAlrt.readAll();
+                    //Remplacement des Variables par les valeurs stockés dans le registre
+                        GCG_GL_Alrt.replace("GL_CM_NAlrt1_Line", GL_CM_NAlrt1_Line->text());
+                        GCG_GL_Alrt.replace("GL_CM_NAlrt2_Line", GL_CM_NAlrt2_Line->text());
+                        GCG_GL_Alrt.replace("GL_CM_NAlrt3_Line", GL_CM_NAlrt3_Line->text());
+                        GCG_GL_Alrt.replace("GL_CM_FAlrt1_Line", GL_CM_FAlrt1_Line->text());
+                        GCG_GL_Alrt.replace("GL_CM_FAlrt2_Line", GL_CM_FAlrt2_Line->text());
+                        GCG_GL_Alrt.replace("GL_CM_FAlrt3_Line", GL_CM_FAlrt3_Line->text());
+                        GCG_GL_Alrt.replace("GL_CM_HAlrt1_Line", GL_CM_HAlrt1_Line->text());
+                        GCG_GL_Alrt.replace("GL_CM_HAlrt2_Line", GL_CM_HAlrt2_Line->text());
+                        GCG_GL_Alrt.replace("GL_CM_HAlrt3_Line", GL_CM_HAlrt3_Line->text());
             }
+        //START_GL_Plan
+            //Importation du Template GL_Plan
+                QString fileNameGlPlan = settings.value("Configuration/TemplateGL").toString() + "\\plan.cfg";
+                QFile fileGlPlan(fileNameGlPlan);
+                fileGlPlan.open(QIODevice::ReadOnly | QIODevice::Text);
+                QTextStream fluxGlPlan(&fileGlPlan);
+                fluxGlPlan.setCodec("UTF-8");
 
+                    //Lecture du Template GL_Plan
+                        GCG_GL_Plan = fluxGlPlan.readAll();
+                    //Remplacement des Variables par les valeurs stockés dans le registre
+                        GCG_GL_Plan.replace("GL_PL_Img_Line", GL_Main_Plan_Line->text());
+        //END_GL_Plan
+
+        //START_GL_Lvl
+            //Importation du Template GL_Lvl
+                if(glaceon == 1){
+                    QString fileNameGlLvl = settings.value("Configuration/TemplateGL").toString() + "\\lvl_cm.cfg";
+                    QFile fileGlLvl(fileNameGlLvl);
+                    fileGlLvl.open(QIODevice::ReadOnly | QIODevice::Text);
+                    QTextStream fluxGlLvl(&fileGlLvl);
+                    fluxGlLvl.setCodec("UTF-8");
+
+                        //Lecture du Template GL_Plan
+                            GCG_GL_Lvl1 = fluxGlLvl.readAll();
+                        //Remplacement des Variables par les valeurs stockés dans le registre
+                            GCG_GL_Lvl1.replace("GL_LV_Nbr_Line", "1");
+                            GCG_GL_Lvl1.replace("GL_LV_Img_Line", GL_LVl1_Img1_Line->text());
+                            GCG_GL_Lvl1.replace("GL_LV_CM1_Line", QString::number(GL_Lvl1_CM1_Nbr_Line->value()) + "X " + GL_Lvl1_CM1_Line->text());
+                            GCG_GL_Lvl1.replace("GL_LV_CM2_Line", QString::number(GL_Lvl1_CM2_Nbr_Line->value()) + "X " + GL_Lvl1_CM2_Line->text());
+                            GCG_GL_Lvl1.replace("GL_LV_CM3_Line", QString::number(GL_Lvl1_CM3_Nbr_Line->value()) + "X " + GL_Lvl1_CM3_Line->text());
+                            GCG_GL_Lvl1.replace("GL_LV_CM4_Line", QString::number(GL_Lvl1_CM4_Nbr_Line->value()) + "X " + GL_Lvl1_CM4_Line->text());
+                            GCG_GL_Lvl1.replace("GL_LV_CM5_Line", QString::number(GL_Lvl1_CM5_Nbr_Line->value()) + "X " + GL_Lvl1_CM5_Line->text());
+
+                            int GCG_GL_Lvl1_VCM1 = GL_Lvl1_CM1_Nbr_Line->value();
+                            int GCG_GL_Lvl1_VCM2 = GL_Lvl1_CM2_Nbr_Line->value();
+                            int GCG_GL_Lvl1_VCM3 = GL_Lvl1_CM3_Nbr_Line->value();
+                            int GCG_GL_Lvl1_VCM4 = GL_Lvl1_CM4_Nbr_Line->value();
+                            int GCG_GL_Lvl1_VCM5 = GL_Lvl1_CM5_Nbr_Line->value();
+
+                            int GCG_GL_Lvl1_VCMR = GCG_GL_Lvl1_VCM1 + GCG_GL_Lvl1_VCM2 + GCG_GL_Lvl1_VCM3 + GCG_GL_Lvl1_VCM4 + GCG_GL_Lvl1_VCM5;
+
+                            GCG_GL_Lvl1.replace("GL_LV_CMR_Line", QString::number(GCG_GL_Lvl1_VCMR));
+                            GCG_GL_Lvl1.replace("GL_LV_Desc_Line", GL_LVl1_Desc1_Line->toPlainText());
+                            GCG_GL_Lvl1.replace("GL_LV_PImg_Line", GL_LVl1_PImg1_Line->text());
+
+                            if(countL >= 2){
+                                QString fileNameGlLvl2 = settings.value("Configuration/TemplateGL").toString() + "\\lvl_cm.cfg";
+                                QFile fileGlLvl2(fileNameGlLvl2);
+                                fileGlLvl2.open(QIODevice::ReadOnly | QIODevice::Text);
+                                QTextStream fluxGlLvl2(&fileGlLvl2);
+                                fluxGlLvl2.setCodec("UTF-8");
+                                //Lecture du Template GL_Plan
+                                    GCG_GL_Lvl2 = fluxGlLvl2.readAll();
+                                //Remplacement des Variables par les valeurs stockés dans le registre
+                                    GCG_GL_Lvl2.replace("GL_LV_Nbr_Line", "2");
+                                    GCG_GL_Lvl2.replace("GL_LV_Img_Line", GL_LVl2_Img1_Line->text());
+                                    GCG_GL_Lvl2.replace("GL_LV_CM1_Line", QString::number(GL_Lvl2_CM1_Nbr_Line->value()) + "X " + GL_Lvl2_CM1_Line->text());
+                                    GCG_GL_Lvl2.replace("GL_LV_CM2_Line", QString::number(GL_Lvl2_CM2_Nbr_Line->value()) + "X " + GL_Lvl2_CM2_Line->text());
+                                    GCG_GL_Lvl2.replace("GL_LV_CM3_Line", QString::number(GL_Lvl2_CM3_Nbr_Line->value()) + "X " + GL_Lvl2_CM3_Line->text());
+                                    GCG_GL_Lvl2.replace("GL_LV_CM4_Line", QString::number(GL_Lvl2_CM4_Nbr_Line->value()) + "X " + GL_Lvl2_CM4_Line->text());
+                                    GCG_GL_Lvl2.replace("GL_LV_CM5_Line", QString::number(GL_Lvl2_CM5_Nbr_Line->value()) + "X " + GL_Lvl2_CM5_Line->text());
+
+                                    int GCG_GL_Lvl2_VCM1 = GL_Lvl2_CM1_Nbr_Line->value();
+                                    int GCG_GL_Lvl2_VCM2 = GL_Lvl2_CM2_Nbr_Line->value();
+                                    int GCG_GL_Lvl2_VCM3 = GL_Lvl2_CM3_Nbr_Line->value();
+                                    int GCG_GL_Lvl2_VCM4 = GL_Lvl2_CM4_Nbr_Line->value();
+                                    int GCG_GL_Lvl2_VCM5 = GL_Lvl2_CM5_Nbr_Line->value();
+
+                                    int GCG_GL_Lvl2_VCMR = GCG_GL_Lvl2_VCM1 + GCG_GL_Lvl2_VCM2 + GCG_GL_Lvl2_VCM3 + GCG_GL_Lvl2_VCM4 + GCG_GL_Lvl2_VCM5;
+
+                                    GCG_GL_Lvl2.replace("GL_LV_CMR_Line", QString::number(GCG_GL_Lvl2_VCMR));
+                                    GCG_GL_Lvl2.replace("GL_LV_Desc_Line", GL_LVl2_Desc1_Line->toPlainText());
+                                    GCG_GL_Lvl2.replace("GL_LV_PImg_Line", GL_LVl2_PImg1_Line->text());
+                            }
+                            if(countL >= 3){
+                                QString fileNameGlLvl3 = settings.value("Configuration/TemplateGL").toString() + "\\lvl_cm.cfg";
+                                QFile fileGlLvl3(fileNameGlLvl3);
+                                fileGlLvl3.open(QIODevice::ReadOnly | QIODevice::Text);
+                                QTextStream fluxGlLvl3(&fileGlLvl3);
+                                fluxGlLvl3.setCodec("UTF-8");
+                                //Lecture du Template GL_Plan
+                                    GCG_GL_Lvl3 = fluxGlLvl3.readAll();
+                                //Remplacement des Variables par les valeurs stockés dans le registre
+                                    GCG_GL_Lvl3.replace("GL_LV_Nbr_Line", "3");
+                                    GCG_GL_Lvl3.replace("GL_LV_Img_Line", GL_LVl3_Img1_Line->text());
+                                    GCG_GL_Lvl3.replace("GL_LV_CM1_Line", QString::number(GL_Lvl3_CM1_Nbr_Line->value()) + "X " + GL_Lvl3_CM1_Line->text());
+                                    GCG_GL_Lvl3.replace("GL_LV_CM2_Line", QString::number(GL_Lvl3_CM2_Nbr_Line->value()) + "X " + GL_Lvl3_CM2_Line->text());
+                                    GCG_GL_Lvl3.replace("GL_LV_CM3_Line", QString::number(GL_Lvl3_CM3_Nbr_Line->value()) + "X " + GL_Lvl3_CM3_Line->text());
+                                    GCG_GL_Lvl3.replace("GL_LV_CM4_Line", QString::number(GL_Lvl3_CM4_Nbr_Line->value()) + "X " + GL_Lvl3_CM4_Line->text());
+                                    GCG_GL_Lvl3.replace("GL_LV_CM5_Line", QString::number(GL_Lvl3_CM5_Nbr_Line->value()) + "X " + GL_Lvl3_CM5_Line->text());
+
+                                    int GCG_GL_Lvl3_VCM1 = GL_Lvl1_CM1_Nbr_Line->value();
+                                    int GCG_GL_Lvl3_VCM2 = GL_Lvl1_CM2_Nbr_Line->value();
+                                    int GCG_GL_Lvl3_VCM3 = GL_Lvl1_CM3_Nbr_Line->value();
+                                    int GCG_GL_Lvl3_VCM4 = GL_Lvl1_CM4_Nbr_Line->value();
+                                    int GCG_GL_Lvl3_VCM5 = GL_Lvl1_CM5_Nbr_Line->value();
+
+                                    int GCG_GL_Lvl3_VCMR = GCG_GL_Lvl3_VCM1 + GCG_GL_Lvl3_VCM2 + GCG_GL_Lvl3_VCM3 + GCG_GL_Lvl3_VCM4 + GCG_GL_Lvl3_VCM5;
+
+                                    GCG_GL_Lvl3.replace("GL_LV_CMR_Line", QString::number(GCG_GL_Lvl3_VCMR));
+                                    GCG_GL_Lvl3.replace("GL_LV_Desc_Line", GL_LVl3_Desc1_Line->toPlainText());
+                                    GCG_GL_Lvl3.replace("GL_LV_PImg_Line", GL_LVl3_PImg1_Line->text());
+                            }
+                            if(countL >= 4){
+                                QString fileNameGlLvl4 = settings.value("Configuration/TemplateGL").toString() + "\\lvl_cm.cfg";
+                                QFile fileGlLvl4(fileNameGlLvl4);
+                                fileGlLvl4.open(QIODevice::ReadOnly | QIODevice::Text);
+                                QTextStream fluxGlLvl4(&fileGlLvl4);
+                                fluxGlLvl4.setCodec("UTF-8");
+                                //Lecture du Template GL_Plan
+                                    GCG_GL_Lvl4 = fluxGlLvl4.readAll();
+                                //Remplacement des Variables par les valeurs stockés dans le registre
+                                    GCG_GL_Lvl4.replace("GL_LV_Nbr_Line", "4");
+                                    GCG_GL_Lvl4.replace("GL_LV_Img_Line", GL_LVl4_Img1_Line->text());
+                                    GCG_GL_Lvl4.replace("GL_LV_CM1_Line", QString::number(GL_Lvl4_CM1_Nbr_Line->value()) + "X " + GL_Lvl4_CM1_Line->text());
+                                    GCG_GL_Lvl4.replace("GL_LV_CM2_Line", QString::number(GL_Lvl4_CM2_Nbr_Line->value()) + "X " + GL_Lvl4_CM2_Line->text());
+                                    GCG_GL_Lvl4.replace("GL_LV_CM3_Line", QString::number(GL_Lvl4_CM3_Nbr_Line->value()) + "X " + GL_Lvl4_CM3_Line->text());
+                                    GCG_GL_Lvl4.replace("GL_LV_CM4_Line", QString::number(GL_Lvl4_CM4_Nbr_Line->value()) + "X " + GL_Lvl4_CM4_Line->text());
+                                    GCG_GL_Lvl4.replace("GL_LV_CM5_Line", QString::number(GL_Lvl4_CM5_Nbr_Line->value()) + "X " + GL_Lvl4_CM5_Line->text());
+
+                                    int GCG_GL_Lvl4_VCM1 = GL_Lvl4_CM1_Nbr_Line->value();
+                                    int GCG_GL_Lvl4_VCM2 = GL_Lvl4_CM2_Nbr_Line->value();
+                                    int GCG_GL_Lvl4_VCM3 = GL_Lvl4_CM3_Nbr_Line->value();
+                                    int GCG_GL_Lvl4_VCM4 = GL_Lvl4_CM4_Nbr_Line->value();
+                                    int GCG_GL_Lvl4_VCM5 = GL_Lvl4_CM5_Nbr_Line->value();
+
+                                    int GCG_GL_Lvl4_VCMR = GCG_GL_Lvl4_VCM1 + GCG_GL_Lvl4_VCM2 + GCG_GL_Lvl4_VCM3 + GCG_GL_Lvl4_VCM4 + GCG_GL_Lvl4_VCM5;
+
+                                    GCG_GL_Lvl4.replace("GL_LV_CMR_Line", QString::number(GCG_GL_Lvl4_VCMR));
+                                    GCG_GL_Lvl4.replace("GL_LV_Desc_Line", GL_LVl4_Desc1_Line->toPlainText());
+                                    GCG_GL_Lvl4.replace("GL_LV_PImg_Line", GL_LVl4_PImg1_Line->text());
+                            }
+                            if(countL >= 5){
+                                QString fileNameGlLvl5 = settings.value("Configuration/TemplateGL").toString() + "\\lvl_cm.cfg";
+                                QFile fileGlLvl5(fileNameGlLvl5);
+                                fileGlLvl5.open(QIODevice::ReadOnly | QIODevice::Text);
+                                QTextStream fluxGlLvl5(&fileGlLvl5);
+                                fluxGlLvl5.setCodec("UTF-8");
+                                //Lecture du Template GL_Plan
+                                    GCG_GL_Lvl5 = fluxGlLvl5.readAll();
+                                //Remplacement des Variables par les valeurs stockés dans le registre
+                                    GCG_GL_Lvl5.replace("GL_LV_Nbr_Line", "5");
+                                    GCG_GL_Lvl5.replace("GL_LV_Img_Line", GL_LVl5_Img1_Line->text());
+                                    GCG_GL_Lvl5.replace("GL_LV_CM1_Line", QString::number(GL_Lvl5_CM1_Nbr_Line->value()) + "X " + GL_Lvl5_CM1_Line->text());
+                                    GCG_GL_Lvl5.replace("GL_LV_CM2_Line", QString::number(GL_Lvl5_CM2_Nbr_Line->value()) + "X " + GL_Lvl5_CM2_Line->text());
+                                    GCG_GL_Lvl5.replace("GL_LV_CM3_Line", QString::number(GL_Lvl5_CM3_Nbr_Line->value()) + "X " + GL_Lvl5_CM3_Line->text());
+                                    GCG_GL_Lvl5.replace("GL_LV_CM4_Line", QString::number(GL_Lvl5_CM4_Nbr_Line->value()) + "X " + GL_Lvl5_CM4_Line->text());
+                                    GCG_GL_Lvl5.replace("GL_LV_CM5_Line", QString::number(GL_Lvl5_CM5_Nbr_Line->value()) + "X " + GL_Lvl5_CM5_Line->text());
+
+                                    int GCG_GL_Lvl5_VCM1 = GL_Lvl5_CM1_Nbr_Line->value();
+                                    int GCG_GL_Lvl5_VCM2 = GL_Lvl5_CM2_Nbr_Line->value();
+                                    int GCG_GL_Lvl5_VCM3 = GL_Lvl5_CM3_Nbr_Line->value();
+                                    int GCG_GL_Lvl5_VCM4 = GL_Lvl5_CM4_Nbr_Line->value();
+                                    int GCG_GL_Lvl5_VCM5 = GL_Lvl5_CM5_Nbr_Line->value();
+
+                                    int GCG_GL_Lvl5_VCMR = GCG_GL_Lvl5_VCM1 + GCG_GL_Lvl5_VCM2 + GCG_GL_Lvl5_VCM3 + GCG_GL_Lvl5_VCM4 + GCG_GL_Lvl5_VCM5;
+
+                                    GCG_GL_Lvl5.replace("GL_LV_CMR_Line", QString::number(GCG_GL_Lvl5_VCMR));
+                                    GCG_GL_Lvl5.replace("GL_LV_Desc_Line", GL_LVl5_Desc1_Line->toPlainText());
+                                    GCG_GL_Lvl5.replace("GL_LV_PImg_Line", GL_LVl5_PImg1_Line->text());
+                            }
+                }
+                else{
+                    QString fileNameGlHLvl = settings.value("Configuration/TemplateGL").toString() + "\\lvl_hcm.cfg";
+                    QFile fileGlLvl(fileNameGlHLvl);
+                    fileGlLvl.open(QIODevice::ReadOnly | QIODevice::Text);
+                    QTextStream fluxGlLvl(&fileGlLvl);
+                    fluxGlLvl.setCodec("UTF-8");
+
+                        //Lecture du Template GL_Plan
+                            GCG_GL_Lvl1 = fluxGlLvl.readAll();
+                        //Remplacement des Variables par les valeurs stockés dans le registre
+                            GCG_GL_Lvl1.replace("GL_LV_Nbr_Line", "1");
+                            GCG_GL_Lvl1.replace("GL_LV_Img_Line", GL_LVl1_Img1_Line->text());
+                            GCG_GL_Lvl1.replace("GL_LV_Desc_Line", GL_LVl1_Desc1_Line->toPlainText());
+                            GCG_GL_Lvl1.replace("GL_LV_PImg_Line", GL_LVl1_PImg1_Line->text());
+
+                            if(countL >= 2){
+                                QString fileNameGlHLvl2 = settings.value("Configuration/TemplateGL").toString() + "\\lvl_hcm.cfg";
+                                QFile fileGlLvl2(fileNameGlHLvl2);
+                                fileGlLvl2.open(QIODevice::ReadOnly | QIODevice::Text);
+                                QTextStream fluxGlLvl2(&fileGlLvl2);
+                                fluxGlLvl2.setCodec("UTF-8");
+                                //Lecture du Template GL_Plan
+                                    GCG_GL_Lvl2 = fluxGlLvl2.readAll();
+                                //Remplacement des Variables par les valeurs stockés dans le registre
+                                    GCG_GL_Lvl2.replace("GL_LV_Nbr_Line", "2");
+                                    GCG_GL_Lvl2.replace("GL_LV_Img_Line", GL_LVl2_Img1_Line->text());
+                                    GCG_GL_Lvl2.replace("GL_LV_Desc_Line", GL_LVl2_Desc1_Line->toPlainText());
+                                    GCG_GL_Lvl2.replace("GL_LV_PImg_Line", GL_LVl2_PImg1_Line->text());
+                            }
+                            if(countL >= 3){
+                                QString fileNameGlHLvl3 = settings.value("Configuration/TemplateGL").toString() + "\\lvl_hcm.cfg";
+                                QFile fileGlLvl3(fileNameGlHLvl3);
+                                fileGlLvl3.open(QIODevice::ReadOnly | QIODevice::Text);
+                                QTextStream fluxGlLvl3(&fileGlLvl3);
+                                fluxGlLvl3.setCodec("UTF-8");
+                                //Lecture du Template GL_Plan
+                                    GCG_GL_Lvl3 = fluxGlLvl3.readAll();
+                                //Remplacement des Variables par les valeurs stockés dans le registre
+                                    GCG_GL_Lvl3.replace("GL_LV_Nbr_Line", "3");
+                                    GCG_GL_Lvl3.replace("GL_LV_Img_Line", GL_LVl3_Img1_Line->text());
+                                    GCG_GL_Lvl3.replace("GL_LV_Desc_Line", GL_LVl3_Desc1_Line->toPlainText());
+                                    GCG_GL_Lvl3.replace("GL_LV_PImg_Line", GL_LVl3_PImg1_Line->text());
+                            }
+                            if(countL >= 4){
+                                QString fileNameGlHLvl4 = settings.value("Configuration/TemplateGL").toString() + "\\lvl_hcm.cfg";
+                                QFile fileGlLvl4(fileNameGlHLvl4);
+                                fileGlLvl4.open(QIODevice::ReadOnly | QIODevice::Text);
+                                QTextStream fluxGlLvl4(&fileGlLvl4);
+                                fluxGlLvl4.setCodec("UTF-8");
+                                //Lecture du Template GL_Plan
+                                    GCG_GL_Lvl4 = fluxGlLvl4.readAll();
+                                //Remplacement des Variables par les valeurs stockés dans le registre
+                                    GCG_GL_Lvl4.replace("GL_LV_Nbr_Line", "4");
+                                    GCG_GL_Lvl4.replace("GL_LV_Img_Line", GL_LVl4_Img1_Line->text());
+                                    GCG_GL_Lvl4.replace("GL_LV_Desc_Line", GL_LVl4_Desc1_Line->toPlainText());
+                                    GCG_GL_Lvl4.replace("GL_LV_PImg_Line", GL_LVl4_PImg1_Line->text());
+                            }
+                            if(countL >= 5){
+                                QString fileNameGlHLvl5 = settings.value("Configuration/TemplateGL").toString() + "\\lvl_hcm.cfg";
+                                QFile fileGlLvl5(fileNameGlHLvl5);
+                                fileGlLvl5.open(QIODevice::ReadOnly | QIODevice::Text);
+                                QTextStream fluxGlLvl5(&fileGlLvl5);
+                                fluxGlLvl5.setCodec("UTF-8");
+                                //Lecture du Template GL_Plan
+                                    GCG_GL_Lvl5 = fluxGlLvl5.readAll();
+                                //Remplacement des Variables par les valeurs stockés dans le registre
+                                    GCG_GL_Lvl5.replace("GL_LV_Nbr_Line", "5");
+                                    GCG_GL_Lvl5.replace("GL_LV_Img_Line", GL_LVl5_Img1_Line->text());
+                                    GCG_GL_Lvl5.replace("GL_LV_Desc_Line", GL_LVl5_Desc1_Line->toPlainText());
+                                    GCG_GL_Lvl5.replace("GL_LV_PImg_Line", GL_LVl5_PImg1_Line->text());
+                            }
+                }
+        //END_Gl_Llv
+
+            QString fileNameGlCmTop = settings.value("Configuration/TemplateGL").toString() + "\\cm_1.cfg";
+            QFile fileGlCmTop(fileNameGlCmTop);
+            fileGlCmTop.open(QIODevice::ReadOnly | QIODevice::Text);
+            QTextStream fluxGlCmTop(&fileGlCmTop);
+            fluxGlCmTop.setCodec("UTF-8");
+
+                //Lecture du Template GL_Plan
+                    GCG_GL_CmTop = fluxGlCmTop.readAll();
+
+        //START_Gl_End
+            QString fileNameGlEnd = settings.value("Configuration/TemplateGL").toString() + "\\end.cfg";
+            QFile fileGlEnd(fileNameGlEnd);
+            fileGlEnd.open(QIODevice::ReadOnly | QIODevice::Text);
+            QTextStream fluxGlEnd(&fileGlEnd);
+            fluxGlEnd.setCodec("UTF-8");
+
+                //Lecture du Template GL_Plan
+                    GCG_GL_End = fluxGlEnd.readAll();
+        //END_Gl_End
     //FIN_Glace
 
+    //START_Compil_Glace
+        glace += GCG_GL_Main;
+        if(glaceon == 1){
+            glace += GCG_GL_CmTop;
+            glace += GCG_GL_CM1;
+            if(count >= 2){
+                glace += GCG_GL_CM2;
+            }
+            if(count >= 3){
+                glace += GCG_GL_CM3;
+            }
+            if(count >= 4){
+                glace += GCG_GL_CM4;
+            }
+            if(count >= 5){
+                glace += GCG_GL_CM5;
+            }
+            if(count >= 6){
+                glace += GCG_GL_CM6;
+            }
+            if(count >= 7){
+                glace += GCG_GL_CM7;
+            }
+            if(count >= 8){
+                glace += GCG_GL_CM8;
+            }
+            if(count >= 9){
+                glace += GCG_GL_CM9;
+            }
+            if(count >= 10){
+                glace += GCG_GL_CM10;
+            }
+            glace += GCG_GL_Alrt;
+        }
+        glace += GCG_GL_Plan;
+        glace += GCG_GL_Lvl1;
+        if(countL >= 2){
+            glace += GCG_GL_Lvl2;
+        }
+        if(countL >= 3){
+            glace += GCG_GL_Lvl3;
+        }
+        if(countL >= 4){
+            glace += GCG_GL_Lvl4;
+        }
+        if(countL >= 5){
+            glace += GCG_GL_Lvl5;
+        }
+        glace += GCG_GL_End;
+
+    //END_Compil_Glace
 
     //Envoi des codes à la classe FrameCodeGenerator
-        //FrameCodeGenerator *fenetreCode = new FrameCodeGenerator(programme, protection, this);
-        //fenetreCode->exec();
+        FrameCodeGenerator *fenetreCode = new FrameCodeGenerator(glace, GCG_Protection, this);
+        fenetreCode->exec();
 }
 
 void MainFrame::addCM()
@@ -1601,13 +2099,46 @@ void MainFrame::addLvl()
         GL_LVl2_LImg2_Line = new QLabel;
         GL_LVl2_LImg2_Line->setText("Plan du Niveau (Url Image):");
         GL_Lvl2_CM1_Line = new QLineEdit;
+        GL_Lvl2_CM1_Nbr_Line = new QSpinBox;
+        GL_Lvl2_CM1_Nbr_Line->setMaximumWidth(50);
+        GL_LVL2_LCM1NBR_Line = new QLabel;
+        GL_LVL2_LCM1NBR_Line->setText("Nbr CM1 :");
         GL_Lvl2_CM2_Line = new QLineEdit;
+        GL_Lvl2_CM2_Nbr_Line = new QSpinBox;
+        GL_Lvl2_CM2_Nbr_Line->setMaximumWidth(50);
+        GL_LVL2_LCM2NBR_Line = new QLabel;
+        GL_LVL2_LCM2NBR_Line->setText("Nbr CM2 :");
         GL_Lvl2_CM3_Line = new QLineEdit;
+        GL_Lvl2_CM3_Nbr_Line = new QSpinBox;
+        GL_Lvl2_CM3_Nbr_Line->setMaximumWidth(50);
+        GL_LVL2_LCM3NBR_Line = new QLabel;
+        GL_LVL2_LCM3NBR_Line->setText("Nbr CM3 :");
         GL_Lvl2_CM4_Line = new QLineEdit;
+        GL_Lvl2_CM4_Nbr_Line = new QSpinBox;
+        GL_Lvl2_CM4_Nbr_Line->setMaximumWidth(50);
+        GL_LVL2_LCM4NBR_Line = new QLabel;
+        GL_LVL2_LCM4NBR_Line->setText("Nbr CM4 :");
         GL_Lvl2_CM5_Line = new QLineEdit;
-        GL_LVl2_Nbr1_Line = new QLineEdit;
+        GL_Lvl2_CM5_Nbr_Line = new QSpinBox;
+        GL_Lvl2_CM5_Nbr_Line->setMaximumWidth(50);
+        GL_LVL2_LCM5NBR_Line = new QLabel;
+        GL_LVL2_LCM5NBR_Line->setText("Nbr CM5 :");
+        GL_LVl2_Img1_Line = new QLineEdit;
         GL_LVl2_Desc1_Line = new QTextEdit;
         GL_LVl2_PImg1_Line = new QLineEdit;
+
+        GL_Lvl2_WCmNbr = new QWidget();
+        QHBoxLayout *GL_Lvl2_CmNbr = new QHBoxLayout(GL_Lvl2_WCmNbr);
+        GL_Lvl2_CmNbr->addWidget(GL_LVL2_LCM1NBR_Line);
+        GL_Lvl2_CmNbr->addWidget(GL_Lvl2_CM1_Nbr_Line);
+        GL_Lvl2_CmNbr->addWidget(GL_LVL2_LCM2NBR_Line);
+        GL_Lvl2_CmNbr->addWidget(GL_Lvl2_CM2_Nbr_Line);
+        GL_Lvl2_CmNbr->addWidget(GL_LVL2_LCM3NBR_Line);
+        GL_Lvl2_CmNbr->addWidget(GL_Lvl2_CM3_Nbr_Line);
+        GL_Lvl2_CmNbr->addWidget(GL_LVL2_LCM4NBR_Line);
+        GL_Lvl2_CmNbr->addWidget(GL_Lvl2_CM4_Nbr_Line);
+        GL_Lvl2_CmNbr->addWidget(GL_LVL2_LCM5NBR_Line);
+        GL_Lvl2_CmNbr->addWidget(GL_Lvl2_CM5_Nbr_Line);
 
         GL_LVl2_LSpacer1_Line->setVisible(false);
         GL_LVl2_LCM1_Line->setVisible(false);
@@ -1620,10 +2151,11 @@ void MainFrame::addLvl()
         GL_Lvl2_CM4_Line->setVisible(false);
         GL_LVl2_LCM5_Line->setVisible(false);
         GL_Lvl2_CM5_Line->setVisible(false);
+        GL_Lvl2_WCmNbr->setVisible(false);
 
         QGridLayout *GL_Lvl2 = new QGridLayout;
         GL_Lvl2->addWidget(GL_LVl2_LImg1_Line, 0, 0);
-        GL_Lvl2->addWidget(GL_LVl2_Nbr1_Line, 0, 1);
+        GL_Lvl2->addWidget(GL_LVl2_Img1_Line, 0, 1);
         GL_Lvl2->addWidget(GL_LVl2_LSpacer1_Line, 1, 1, Qt::AlignCenter);
         GL_Lvl2->addWidget(GL_LVl2_LCM1_Line, 2, 0);
         GL_Lvl2->addWidget(GL_Lvl2_CM1_Line, 2, 1);
@@ -1635,12 +2167,13 @@ void MainFrame::addLvl()
         GL_Lvl2->addWidget(GL_Lvl2_CM4_Line, 5, 1);
         GL_Lvl2->addWidget(GL_LVl2_LCM5_Line, 6, 0);
         GL_Lvl2->addWidget(GL_Lvl2_CM5_Line, 6, 1);
-        GL_Lvl2->addWidget(GL_LVl2_LSpacer2_Line, 7, 1, Qt::AlignCenter);
-        GL_Lvl2->addWidget(GL_LVl2_LDesc_Line, 8, 0);
-        GL_Lvl2->addWidget(GL_LVl2_Desc1_Line, 8, 1);
-        GL_Lvl2->addWidget(GL_LVl2_LSpacer3_Line, 9, 1, Qt::AlignCenter);
-        GL_Lvl2->addWidget(GL_LVl2_LImg2_Line, 10, 0);
-        GL_Lvl2->addWidget(GL_LVl2_PImg1_Line, 10, 1);
+        GL_Lvl2->addWidget(GL_Lvl2_WCmNbr, 7, 1);
+        GL_Lvl2->addWidget(GL_LVl2_LSpacer2_Line, 8, 1, Qt::AlignCenter);
+        GL_Lvl2->addWidget(GL_LVl2_LDesc_Line, 9, 0);
+        GL_Lvl2->addWidget(GL_LVl2_Desc1_Line, 9, 1);
+        GL_Lvl2->addWidget(GL_LVl2_LSpacer3_Line, 10, 1, Qt::AlignCenter);
+        GL_Lvl2->addWidget(GL_LVl2_LImg2_Line, 11, 0);
+        GL_Lvl2->addWidget(GL_LVl2_PImg1_Line, 11, 1);
 
         QVBoxLayout *PVB_Lvl2 = new QVBoxLayout;
         PVB_Lvl2->addLayout(GL_Lvl2);
@@ -1672,13 +2205,46 @@ void MainFrame::addLvl()
         GL_LVl3_LImg2_Line = new QLabel;
         GL_LVl3_LImg2_Line->setText("Plan du Niveau (Url Image):");
         GL_Lvl3_CM1_Line = new QLineEdit;
+        GL_Lvl3_CM1_Nbr_Line = new QSpinBox;
+        GL_Lvl3_CM1_Nbr_Line->setMaximumWidth(50);
+        GL_LVL3_LCM1NBR_Line = new QLabel;
+        GL_LVL3_LCM1NBR_Line->setText("Nbr CM1 :");
         GL_Lvl3_CM2_Line = new QLineEdit;
+        GL_Lvl3_CM2_Nbr_Line = new QSpinBox;
+        GL_Lvl3_CM2_Nbr_Line->setMaximumWidth(50);
+        GL_LVL3_LCM2NBR_Line = new QLabel;
+        GL_LVL3_LCM2NBR_Line->setText("Nbr CM2 :");
         GL_Lvl3_CM3_Line = new QLineEdit;
+        GL_Lvl3_CM3_Nbr_Line = new QSpinBox;
+        GL_Lvl3_CM3_Nbr_Line->setMaximumWidth(50);
+        GL_LVL3_LCM3NBR_Line = new QLabel;
+        GL_LVL3_LCM3NBR_Line->setText("Nbr CM3 :");
         GL_Lvl3_CM4_Line = new QLineEdit;
+        GL_Lvl3_CM4_Nbr_Line = new QSpinBox;
+        GL_Lvl3_CM4_Nbr_Line->setMaximumWidth(50);
+        GL_LVL3_LCM4NBR_Line = new QLabel;
+        GL_LVL3_LCM4NBR_Line->setText("Nbr CM4 :");
         GL_Lvl3_CM5_Line = new QLineEdit;
-        GL_LVl3_Nbr1_Line = new QLineEdit;
+        GL_Lvl3_CM5_Nbr_Line = new QSpinBox;
+        GL_Lvl3_CM5_Nbr_Line->setMaximumWidth(50);
+        GL_LVL3_LCM5NBR_Line = new QLabel;
+        GL_LVL3_LCM5NBR_Line->setText("Nbr CM5 :");
+        GL_LVl3_Img1_Line = new QLineEdit;
         GL_LVl3_Desc1_Line = new QTextEdit;
         GL_LVl3_PImg1_Line = new QLineEdit;
+
+        GL_Lvl3_WCmNbr = new QWidget();
+        QHBoxLayout *GL_Lvl3_CmNbr = new QHBoxLayout(GL_Lvl3_WCmNbr);
+        GL_Lvl3_CmNbr->addWidget(GL_LVL3_LCM1NBR_Line);
+        GL_Lvl3_CmNbr->addWidget(GL_Lvl3_CM1_Nbr_Line);
+        GL_Lvl3_CmNbr->addWidget(GL_LVL3_LCM2NBR_Line);
+        GL_Lvl3_CmNbr->addWidget(GL_Lvl3_CM2_Nbr_Line);
+        GL_Lvl3_CmNbr->addWidget(GL_LVL3_LCM3NBR_Line);
+        GL_Lvl3_CmNbr->addWidget(GL_Lvl3_CM3_Nbr_Line);
+        GL_Lvl3_CmNbr->addWidget(GL_LVL3_LCM4NBR_Line);
+        GL_Lvl3_CmNbr->addWidget(GL_Lvl3_CM4_Nbr_Line);
+        GL_Lvl3_CmNbr->addWidget(GL_LVL3_LCM5NBR_Line);
+        GL_Lvl3_CmNbr->addWidget(GL_Lvl3_CM5_Nbr_Line);
 
         GL_LVl3_LSpacer1_Line->setVisible(false);
         GL_LVl3_LCM1_Line->setVisible(false);
@@ -1691,10 +2257,11 @@ void MainFrame::addLvl()
         GL_Lvl3_CM4_Line->setVisible(false);
         GL_LVl3_LCM5_Line->setVisible(false);
         GL_Lvl3_CM5_Line->setVisible(false);
+        GL_Lvl3_WCmNbr->setVisible(false);
 
         QGridLayout *GL_Lvl3 = new QGridLayout;
         GL_Lvl3->addWidget(GL_LVl3_LImg1_Line, 0, 0);
-        GL_Lvl3->addWidget(GL_LVl3_Nbr1_Line, 0, 1);
+        GL_Lvl3->addWidget(GL_LVl3_Img1_Line, 0, 1);
         GL_Lvl3->addWidget(GL_LVl3_LSpacer1_Line, 1, 1, Qt::AlignCenter);
         GL_Lvl3->addWidget(GL_LVl3_LCM1_Line, 2, 0);
         GL_Lvl3->addWidget(GL_Lvl3_CM1_Line, 2, 1);
@@ -1706,12 +2273,13 @@ void MainFrame::addLvl()
         GL_Lvl3->addWidget(GL_Lvl3_CM4_Line, 5, 1);
         GL_Lvl3->addWidget(GL_LVl3_LCM5_Line, 6, 0);
         GL_Lvl3->addWidget(GL_Lvl3_CM5_Line, 6, 1);
-        GL_Lvl3->addWidget(GL_LVl3_LSpacer2_Line, 7, 1, Qt::AlignCenter);
-        GL_Lvl3->addWidget(GL_LVl3_LDesc_Line, 8, 0);
-        GL_Lvl3->addWidget(GL_LVl3_Desc1_Line, 8, 1);
-        GL_Lvl3->addWidget(GL_LVl3_LSpacer3_Line, 9, 1, Qt::AlignCenter);
-        GL_Lvl3->addWidget(GL_LVl3_LImg2_Line, 10, 0);
-        GL_Lvl3->addWidget(GL_LVl3_PImg1_Line, 10, 1);
+        GL_Lvl3->addWidget(GL_Lvl3_WCmNbr, 7, 1);
+        GL_Lvl3->addWidget(GL_LVl3_LSpacer2_Line, 8, 1, Qt::AlignCenter);
+        GL_Lvl3->addWidget(GL_LVl3_LDesc_Line, 9, 0);
+        GL_Lvl3->addWidget(GL_LVl3_Desc1_Line, 9, 1);
+        GL_Lvl3->addWidget(GL_LVl3_LSpacer3_Line, 10, 1, Qt::AlignCenter);
+        GL_Lvl3->addWidget(GL_LVl3_LImg2_Line, 11, 0);
+        GL_Lvl3->addWidget(GL_LVl3_PImg1_Line, 11, 1);
 
         QVBoxLayout *PVB_Lvl3 = new QVBoxLayout;
         PVB_Lvl3->addLayout(GL_Lvl3);
@@ -1743,13 +2311,46 @@ void MainFrame::addLvl()
         GL_LVl4_LImg2_Line = new QLabel;
         GL_LVl4_LImg2_Line->setText("Plan du Niveau (Url Image):");
         GL_Lvl4_CM1_Line = new QLineEdit;
+        GL_Lvl4_CM1_Nbr_Line = new QSpinBox;
+        GL_Lvl4_CM1_Nbr_Line->setMaximumWidth(50);
+        GL_LVL4_LCM1NBR_Line = new QLabel;
+        GL_LVL4_LCM1NBR_Line->setText("Nbr CM1 :");
         GL_Lvl4_CM2_Line = new QLineEdit;
+        GL_Lvl4_CM2_Nbr_Line = new QSpinBox;
+        GL_Lvl4_CM2_Nbr_Line->setMaximumWidth(50);
+        GL_LVL4_LCM2NBR_Line = new QLabel;
+        GL_LVL4_LCM2NBR_Line->setText("Nbr CM2 :");
         GL_Lvl4_CM3_Line = new QLineEdit;
+        GL_Lvl4_CM3_Nbr_Line = new QSpinBox;
+        GL_Lvl4_CM3_Nbr_Line->setMaximumWidth(50);
+        GL_LVL4_LCM3NBR_Line = new QLabel;
+        GL_LVL4_LCM3NBR_Line->setText("Nbr CM3 :");
         GL_Lvl4_CM4_Line = new QLineEdit;
+        GL_Lvl4_CM4_Nbr_Line = new QSpinBox;
+        GL_Lvl4_CM4_Nbr_Line->setMaximumWidth(50);
+        GL_LVL4_LCM4NBR_Line = new QLabel;
+        GL_LVL4_LCM4NBR_Line->setText("Nbr CM4 :");
         GL_Lvl4_CM5_Line = new QLineEdit;
-        GL_LVl4_Nbr1_Line = new QLineEdit;
+        GL_Lvl4_CM5_Nbr_Line = new QSpinBox;
+        GL_Lvl4_CM5_Nbr_Line->setMaximumWidth(50);
+        GL_LVL4_LCM5NBR_Line = new QLabel;
+        GL_LVL4_LCM5NBR_Line->setText("Nbr CM5 :");
+        GL_LVl4_Img1_Line = new QLineEdit;
         GL_LVl4_Desc1_Line = new QTextEdit;
         GL_LVl4_PImg1_Line = new QLineEdit;
+
+        GL_Lvl4_WCmNbr = new QWidget();
+        QHBoxLayout *GL_Lvl4_CmNbr = new QHBoxLayout(GL_Lvl4_WCmNbr);
+        GL_Lvl4_CmNbr->addWidget(GL_LVL4_LCM1NBR_Line);
+        GL_Lvl4_CmNbr->addWidget(GL_Lvl4_CM1_Nbr_Line);
+        GL_Lvl4_CmNbr->addWidget(GL_LVL4_LCM2NBR_Line);
+        GL_Lvl4_CmNbr->addWidget(GL_Lvl4_CM2_Nbr_Line);
+        GL_Lvl4_CmNbr->addWidget(GL_LVL4_LCM3NBR_Line);
+        GL_Lvl4_CmNbr->addWidget(GL_Lvl4_CM3_Nbr_Line);
+        GL_Lvl4_CmNbr->addWidget(GL_LVL4_LCM4NBR_Line);
+        GL_Lvl4_CmNbr->addWidget(GL_Lvl4_CM4_Nbr_Line);
+        GL_Lvl4_CmNbr->addWidget(GL_LVL4_LCM5NBR_Line);
+        GL_Lvl4_CmNbr->addWidget(GL_Lvl4_CM5_Nbr_Line);
 
         GL_LVl4_LSpacer1_Line->setVisible(false);
         GL_LVl4_LCM1_Line->setVisible(false);
@@ -1762,10 +2363,11 @@ void MainFrame::addLvl()
         GL_Lvl4_CM4_Line->setVisible(false);
         GL_LVl4_LCM5_Line->setVisible(false);
         GL_Lvl4_CM5_Line->setVisible(false);
+        GL_Lvl4_WCmNbr->setVisible(false);
 
         QGridLayout *GL_Lvl4 = new QGridLayout;
         GL_Lvl4->addWidget(GL_LVl4_LImg1_Line, 0, 0);
-        GL_Lvl4->addWidget(GL_LVl4_Nbr1_Line, 0, 1);
+        GL_Lvl4->addWidget(GL_LVl4_Img1_Line, 0, 1);
         GL_Lvl4->addWidget(GL_LVl4_LSpacer1_Line, 1, 1, Qt::AlignCenter);
         GL_Lvl4->addWidget(GL_LVl4_LCM1_Line, 2, 0);
         GL_Lvl4->addWidget(GL_Lvl4_CM1_Line, 2, 1);
@@ -1777,12 +2379,13 @@ void MainFrame::addLvl()
         GL_Lvl4->addWidget(GL_Lvl4_CM4_Line, 5, 1);
         GL_Lvl4->addWidget(GL_LVl4_LCM5_Line, 6, 0);
         GL_Lvl4->addWidget(GL_Lvl4_CM5_Line, 6, 1);
-        GL_Lvl4->addWidget(GL_LVl4_LSpacer2_Line, 7, 1, Qt::AlignCenter);
-        GL_Lvl4->addWidget(GL_LVl4_LDesc_Line, 8, 0);
-        GL_Lvl4->addWidget(GL_LVl4_Desc1_Line, 8, 1);
-        GL_Lvl4->addWidget(GL_LVl4_LSpacer3_Line, 9, 1, Qt::AlignCenter);
-        GL_Lvl4->addWidget(GL_LVl4_LImg2_Line, 10, 0);
-        GL_Lvl4->addWidget(GL_LVl4_PImg1_Line, 10, 1);
+        GL_Lvl4->addWidget(GL_Lvl4_WCmNbr, 7, 1);
+        GL_Lvl4->addWidget(GL_LVl4_LSpacer2_Line, 8, 1, Qt::AlignCenter);
+        GL_Lvl4->addWidget(GL_LVl4_LDesc_Line, 9, 0);
+        GL_Lvl4->addWidget(GL_LVl4_Desc1_Line, 9, 1);
+        GL_Lvl4->addWidget(GL_LVl4_LSpacer3_Line, 10, 1, Qt::AlignCenter);
+        GL_Lvl4->addWidget(GL_LVl4_LImg2_Line, 11, 0);
+        GL_Lvl4->addWidget(GL_LVl4_PImg1_Line, 11, 1);
 
         QVBoxLayout *PVB_Lvl4 = new QVBoxLayout;
         PVB_Lvl4->addLayout(GL_Lvl4);
@@ -1814,13 +2417,46 @@ void MainFrame::addLvl()
         GL_LVl5_LImg2_Line = new QLabel;
         GL_LVl5_LImg2_Line->setText("Plan du Niveau (Url Image):");
         GL_Lvl5_CM1_Line = new QLineEdit;
+        GL_Lvl5_CM1_Nbr_Line = new QSpinBox;
+        GL_Lvl5_CM1_Nbr_Line->setMaximumWidth(50);
+        GL_LVL5_LCM1NBR_Line = new QLabel;
+        GL_LVL5_LCM1NBR_Line->setText("Nbr CM1 :");
         GL_Lvl5_CM2_Line = new QLineEdit;
+        GL_Lvl5_CM2_Nbr_Line = new QSpinBox;
+        GL_Lvl5_CM2_Nbr_Line->setMaximumWidth(50);
+        GL_LVL5_LCM2NBR_Line = new QLabel;
+        GL_LVL5_LCM2NBR_Line->setText("Nbr CM2 :");
         GL_Lvl5_CM3_Line = new QLineEdit;
+        GL_Lvl5_CM3_Nbr_Line = new QSpinBox;
+        GL_Lvl5_CM3_Nbr_Line->setMaximumWidth(50);
+        GL_LVL5_LCM3NBR_Line = new QLabel;
+        GL_LVL5_LCM3NBR_Line->setText("Nbr CM3 :");
         GL_Lvl5_CM4_Line = new QLineEdit;
+        GL_Lvl5_CM4_Nbr_Line = new QSpinBox;
+        GL_Lvl5_CM4_Nbr_Line->setMaximumWidth(50);
+        GL_LVL5_LCM4NBR_Line = new QLabel;
+        GL_LVL5_LCM4NBR_Line->setText("Nbr CM4 :");
         GL_Lvl5_CM5_Line = new QLineEdit;
-        GL_LVl5_Nbr1_Line = new QLineEdit;
+        GL_Lvl5_CM5_Nbr_Line = new QSpinBox;
+        GL_Lvl5_CM5_Nbr_Line->setMaximumWidth(50);
+        GL_LVL5_LCM5NBR_Line = new QLabel;
+        GL_LVL5_LCM5NBR_Line->setText("Nbr CM5 :");
+        GL_LVl5_Img1_Line = new QLineEdit;
         GL_LVl5_Desc1_Line = new QTextEdit;
         GL_LVl5_PImg1_Line = new QLineEdit;
+
+        GL_Lvl5_WCmNbr = new QWidget();
+        QHBoxLayout *GL_Lvl5_CmNbr = new QHBoxLayout(GL_Lvl5_WCmNbr);
+        GL_Lvl5_CmNbr->addWidget(GL_LVL5_LCM1NBR_Line);
+        GL_Lvl5_CmNbr->addWidget(GL_Lvl5_CM1_Nbr_Line);
+        GL_Lvl5_CmNbr->addWidget(GL_LVL5_LCM2NBR_Line);
+        GL_Lvl5_CmNbr->addWidget(GL_Lvl5_CM2_Nbr_Line);
+        GL_Lvl5_CmNbr->addWidget(GL_LVL5_LCM3NBR_Line);
+        GL_Lvl5_CmNbr->addWidget(GL_Lvl5_CM3_Nbr_Line);
+        GL_Lvl5_CmNbr->addWidget(GL_LVL5_LCM4NBR_Line);
+        GL_Lvl5_CmNbr->addWidget(GL_Lvl5_CM4_Nbr_Line);
+        GL_Lvl5_CmNbr->addWidget(GL_LVL5_LCM5NBR_Line);
+        GL_Lvl5_CmNbr->addWidget(GL_Lvl5_CM5_Nbr_Line);
 
         GL_LVl5_LSpacer1_Line->setVisible(false);
         GL_LVl5_LCM1_Line->setVisible(false);
@@ -1833,10 +2469,11 @@ void MainFrame::addLvl()
         GL_Lvl5_CM4_Line->setVisible(false);
         GL_LVl5_LCM5_Line->setVisible(false);
         GL_Lvl5_CM5_Line->setVisible(false);
+        GL_Lvl5_WCmNbr->setVisible(false);
 
         QGridLayout *GL_Lvl5 = new QGridLayout;
         GL_Lvl5->addWidget(GL_LVl5_LImg1_Line, 0, 0);
-        GL_Lvl5->addWidget(GL_LVl5_Nbr1_Line, 0, 1);
+        GL_Lvl5->addWidget(GL_LVl5_Img1_Line, 0, 1);
         GL_Lvl5->addWidget(GL_LVl5_LSpacer1_Line, 1, 1, Qt::AlignCenter);
         GL_Lvl5->addWidget(GL_LVl5_LCM1_Line, 2, 0);
         GL_Lvl5->addWidget(GL_Lvl5_CM1_Line, 2, 1);
@@ -1848,12 +2485,13 @@ void MainFrame::addLvl()
         GL_Lvl5->addWidget(GL_Lvl5_CM4_Line, 5, 1);
         GL_Lvl5->addWidget(GL_LVl5_LCM5_Line, 6, 0);
         GL_Lvl5->addWidget(GL_Lvl5_CM5_Line, 6, 1);
-        GL_Lvl5->addWidget(GL_LVl5_LSpacer2_Line, 7, 1, Qt::AlignCenter);
-        GL_Lvl5->addWidget(GL_LVl5_LDesc_Line, 8, 0);
-        GL_Lvl5->addWidget(GL_LVl5_Desc1_Line, 8, 1);
-        GL_Lvl5->addWidget(GL_LVl5_LSpacer3_Line, 9, 1, Qt::AlignCenter);
-        GL_Lvl5->addWidget(GL_LVl5_LImg2_Line, 10, 0);
-        GL_Lvl5->addWidget(GL_LVl5_PImg1_Line, 10, 1);
+        GL_Lvl5->addWidget(GL_Lvl5_WCmNbr, 7, 1);
+        GL_Lvl5->addWidget(GL_LVl5_LSpacer2_Line, 8, 1, Qt::AlignCenter);
+        GL_Lvl5->addWidget(GL_LVl5_LDesc_Line, 9, 0);
+        GL_Lvl5->addWidget(GL_LVl5_Desc1_Line, 9, 1);
+        GL_Lvl5->addWidget(GL_LVl5_LSpacer3_Line, 10, 1, Qt::AlignCenter);
+        GL_Lvl5->addWidget(GL_LVl5_LImg2_Line, 11, 0);
+        GL_Lvl5->addWidget(GL_LVl5_PImg1_Line, 11, 1);
 
         QVBoxLayout *PVB_Lvl5 = new QVBoxLayout;
         PVB_Lvl5->addLayout(GL_Lvl5);
@@ -1861,4 +2499,13 @@ void MainFrame::addLvl()
         Lvl5->setLayout(PVB_Lvl5);
         mainLvl->addTab(Lvl5, "Niveau 5");
     }
+}
+
+void MainFrame::uniqIDShow(){
+    QSettings settings("Exiel", "DC_Tools");
+
+    QString UniqID;
+    UniqID = settings.value("Configuration/ID").toString();
+
+    QMessageBox::information(this, tr("ID Unique"), tr("L'ID unique de cet ordinateur est : ") + UniqID);
 }

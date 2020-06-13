@@ -34,10 +34,13 @@ private:
     QLabel *templateL;
     QLabel *templatePL;
     QLabel *templateIaL;
+    QLabel *templateGlL;
     QPushButton *save;
     QComboBox *templateC;
     QComboBox *templatePC;
     QComboBox *templateIaC;
+    QComboBox *templateGlC;
+
 };
 
 #endif // CONFIG_H
