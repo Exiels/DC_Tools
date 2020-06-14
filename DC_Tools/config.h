@@ -7,7 +7,7 @@ class Config : public QDialog
 {
     Q_OBJECT
 
-public:
+public :
     Config();
 
 private slots :

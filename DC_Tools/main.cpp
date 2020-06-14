@@ -1,3 +1,17 @@
+/*
+ * Project under Apache-2.0 License
+ *
+ * Apache License
+ *
+ * Version 2.0, January 2004
+ *
+ * http://www.apache.org/licenses/
+ *
+ *    Copyright 2020 Exiel
+ *
+ * Project DC_Tools created by Exiel
+*/
+
 #include <QApplication>
 #include <QtWidgets>
 #include "mainframe.h"

@@ -18,7 +18,7 @@ MainFrame::MainFrame()
 
     QWidget *zoneCentrale = new QWidget;
 
-    resize(500, 500);
+    resize(510, 680);
 
         //DEBUT_Création des Menus
             QMenu *menuFichier = menuBar()->addMenu("&Fichier");
@@ -109,8 +109,8 @@ void MainFrame::Program()
     //Importation des Paramètres stocké dans le registre
         QSettings settings("Exiel", "DC_Tools");
 
-        QLabel *nameL = new QLabel;
-        nameL->setText("Programs Creator");
+        QLabel *nameP = new QLabel;
+        nameP->setText("Programs Creator");
 
     //DEBUT_Groupe Main
 
@@ -213,7 +213,7 @@ void MainFrame::Program()
 
     //DEBUT_Main Layout
         QVBoxLayout *layoutMainL = new QVBoxLayout;
-        layoutMainL->addWidget(nameL);
+        layoutMainL->addWidget(nameP);
         layoutMainL->addWidget(GB_Main);
         layoutMainL->addWidget(GB_Desc);
         layoutMainL->addWidget(GB_Tech);
@@ -300,9 +300,14 @@ void MainFrame::generateCode()
 
 void MainFrame::Glace()
 {
+    i_g = "i";
     //DEBUT_Système de sauvegarde
     QSettings settings("Exiel", "DC_Tools");
         //DEBUT_Save Programme
+
+    QLabel *nameG = new QLabel;
+    nameG->setText("RV/GLACE Creator");
+
     if (i_p == "i")
     {
             settings.setValue("Programme/Nom", QString(pname = PRG_Main_Name_Line->text()));
@@ -616,6 +621,7 @@ void MainFrame::Glace()
             mainGL->insertTab(0, principal, "Principal");
             mainGL->insertTab(3, niveau, "Niveaux");
     //FIN_Onglet Main
+    MainLayout->addWidget(nameG);
     MainLayout->addWidget(mainGL);
     MainLayout->addWidget(PRG_Generate);
     QWidget *layout = new QWidget();
@@ -990,7 +996,9 @@ void MainFrame::closeEvent(QCloseEvent* event) {
     {
 
     }
-    event->accept();
+    else{
+        event->accept();
+    }
 }
 
 void MainFrame::generateCodeIa()
