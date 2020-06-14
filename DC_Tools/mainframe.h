@@ -23,12 +23,9 @@ private slots:
     void About();
 
 public slots:
-    void newProgram();
     void Program();
-    void newGlace();
     void Glace();
     void config();
-    void newIa();
     void Ia();
     void updater();
     void uGlaceCm(int etat);

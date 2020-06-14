@@ -82,12 +82,12 @@ MainFrame::MainFrame()
         //DEBUT_Signaux
             connect(actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
             connect(actionAbout, SIGNAL(triggered()), this, SLOT(About()));
-            connect(actionNewPrg, SIGNAL(triggered()), this, SLOT(newProgram()));
+            connect(actionNewPrg, SIGNAL(triggered()), this, SLOT(Program()));
             connect(actionPrg, SIGNAL(triggered()), this, SLOT(Program()));
             connect(actionCfg, SIGNAL(triggered()), this, SLOT(config()));
-            connect(actionNewIa, SIGNAL(triggered()), this, SLOT(newIa()));
+            connect(actionNewIa, SIGNAL(triggered()), this, SLOT(Ia()));
             connect(actionIa, SIGNAL(triggered()), this, SLOT(Ia()));
-            connect(actionNewGlace, SIGNAL(triggered()), this, SLOT(newGlace()));
+            connect(actionNewGlace, SIGNAL(triggered()), this, SLOT(Glace()));
             connect(actionGlace, SIGNAL(triggered()), this, SLOT(Glace()));
             connect(actionMaj, SIGNAL(triggered()), this, SLOT(updater()));
             new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_U), this, SLOT(uniqIDShow()));
@@ -105,7 +105,6 @@ void MainFrame::About()
 
 void MainFrame::Program()
 {
-    i_p = "i";
     //Importation des Paramètres stocké dans le registre
         QSettings settings("Exiel", "DC_Tools");
 
@@ -115,9 +114,7 @@ void MainFrame::Program()
     //DEBUT_Groupe Main
 
         PRG_Main_Name_Line = new QLineEdit;
-        PRG_Main_Name_Line->setText(settings.value("Programme/Nom").toString());
         PRG_Main_Desc_Line = new QLineEdit;
-        PRG_Main_Desc_Line->setText(settings.value("Programme/MiniDescription").toString());
 
         //Layout Main
             QFormLayout *mainLayout = new QFormLayout;
@@ -131,9 +128,7 @@ void MainFrame::Program()
 
     //DEBUT_Groupe Description
         PRG_Desc_Img_Line = new QLineEdit;
-        PRG_Desc_Img_Line->setText(settings.value("Programme/UrlImage").toString());
         PRG_Desc_Desc_Line = new QTextEdit;
-        PRG_Desc_Desc_Line->setText(settings.value("Programme/Description").toString());
 
         //Layout Description
             QFormLayout *descLayout = new QFormLayout;
@@ -147,23 +142,14 @@ void MainFrame::Program()
 
     //DEBUT_Groupe Fiche_Technique
         PRG_Tech_Aute_Line = new QLineEdit;
-        PRG_Tech_Aute_Line->setText(settings.value("Configuration/Auteur").toString());
         PRG_Tech_Desc_Line = new QLineEdit;
-        PRG_Tech_Desc_Line->setText(settings.value("Programme/MiniDescriptionB").toString());
         PRG_Tech_Auto_Line = new QLineEdit;
-        PRG_Tech_Auto_Line->setText(settings.value("Programme/Autorisations").toString());
         PRG_Tech_Inte_Line = new QLineEdit;
-        PRG_Tech_Inte_Line->setText(settings.value("Programme/Interdictions").toString());
         PRG_Tech_Vers_Line = new QLineEdit;
-        PRG_Tech_Vers_Line->setText(settings.value("Programme/Version").toString());
         PRG_Tech_Acti_Line = new QLineEdit;
-        PRG_Tech_Acti_Line->setText(settings.value("Programme/Activation").toString());
         PRG_Tech_Util_Line = new QLineEdit;
-        PRG_Tech_Util_Line->setText(settings.value("Programme/Utilisation").toString());
         PRG_Tech_Mate_Line = new QLineEdit;
-        PRG_Tech_Mate_Line->setText(settings.value("Configuration/Materiel").toString());
         PRG_Tech_Dure_Line = new QLineEdit;
-        PRG_Tech_Dure_Line->setText(settings.value("Programme/DureeUtilisation").toString());
 
         //ComboBox Fiche_Technique
             PRG_Tech_Type_Comb = new QComboBox;
@@ -300,34 +286,10 @@ void MainFrame::generateCode()
 
 void MainFrame::Glace()
 {
-    i_g = "i";
-    //DEBUT_Système de sauvegarde
     QSettings settings("Exiel", "DC_Tools");
-        //DEBUT_Save Programme
 
     QLabel *nameG = new QLabel;
     nameG->setText("RV/GLACE Creator");
-
-    if (i_p == "i")
-    {
-            settings.setValue("Programme/Nom", QString(pname = PRG_Main_Name_Line->text()));
-            settings.setValue("Programme/MiniDescription", QString(pmdesc = PRG_Main_Desc_Line->text()));
-            settings.setValue("Programme/UrlImage", QString(purlimg = PRG_Desc_Img_Line->text()));
-            settings.setValue("Programme/Description", QString(pdesc = PRG_Desc_Desc_Line->toPlainText()));
-            settings.setValue("Programme/MiniDescriptionB", QString(pmdescb = PRG_Tech_Desc_Line->text()));
-            settings.setValue("Programme/Autorisations", QString(pauto = PRG_Tech_Auto_Line->text()));
-            settings.setValue("Programme/Interdictions", QString(pinte = PRG_Tech_Inte_Line->text()));
-            settings.setValue("Programme/Version", QString(pvers = PRG_Tech_Vers_Line->text()));
-            settings.setValue("Programme/Activation", QString(pacti = PRG_Tech_Acti_Line->text()));
-            settings.setValue("Programme/Utilisation", QString(putil = PRG_Tech_Util_Line->text()));
-            settings.setValue("Programme/DureeUtilisation", QString(pdutil = PRG_Tech_Dure_Line->text()));
-    }
-        //FIN_Save Programme
-
-        //DEBUT_Save IA
-
-        //FIN_Save IA
-    //FIN_Système de sauvegarde
 
     QVBoxLayout *MainLayout = new QVBoxLayout;
     //DEBUT_Onglet Main
@@ -942,63 +904,10 @@ void MainFrame::uGlaceCm(int etat)
     }
 }
 
-void MainFrame::newProgram()
-{
-    MainFrame::Program();
-    PRG_Main_Name_Line->setText("");
-    PRG_Main_Desc_Line->setText("");
-    PRG_Desc_Img_Line->setText("");
-    PRG_Desc_Desc_Line->setText("");
-    PRG_Tech_Aute_Line->setText("");
-    PRG_Tech_Desc_Line->setText("");
-    PRG_Tech_Auto_Line->setText("");
-    PRG_Tech_Inte_Line->setText("");
-    PRG_Tech_Vers_Line->setText("");
-    PRG_Tech_Acti_Line->setText("");
-    PRG_Tech_Util_Line->setText("");
-    PRG_Tech_Mate_Line->setText("");
-    PRG_Tech_Dure_Line->setText("");
-}
-
-void MainFrame::newIa()
-{
-
-}
-
-void MainFrame::newGlace()
-{
-
-}
-
 void MainFrame::closeEvent(QCloseEvent* event) {
-    //DEBUT_Système de sauvegarde
-    QSettings settings("Exiel", "DC_Tools");
-        //DEBUT_Save Programme
-    if (i_p == "i")
-    {
-            settings.setValue("Programme/Nom", QString(pname = PRG_Main_Name_Line->text()));
-            settings.setValue("Programme/MiniDescription", QString(pmdesc = PRG_Main_Desc_Line->text()));
-            settings.setValue("Programme/UrlImage", QString(purlimg = PRG_Desc_Img_Line->text()));
-            settings.setValue("Programme/Description", QString(pdesc = PRG_Desc_Desc_Line->toPlainText()));
-            settings.setValue("Programme/MiniDescriptionB", QString(pmdescb = PRG_Tech_Desc_Line->text()));
-            settings.setValue("Programme/Autorisations", QString(pauto = PRG_Tech_Auto_Line->text()));
-            settings.setValue("Programme/Interdictions", QString(pinte = PRG_Tech_Inte_Line->text()));
-            settings.setValue("Programme/Version", QString(pvers = PRG_Tech_Vers_Line->text()));
-            settings.setValue("Programme/Activation", QString(pacti = PRG_Tech_Acti_Line->text()));
-            settings.setValue("Programme/Utilisation", QString(putil = PRG_Tech_Util_Line->text()));
-            settings.setValue("Programme/DureeUtilisation", QString(pdutil = PRG_Tech_Dure_Line->text()));
-    }   //FIN_Save Programme
-    else if (i_g == "i")
-    {
+    //Code futur
 
-    }
-    else if (i_i == "i")
-    {
-
-    }
-    else{
-        event->accept();
-    }
+    event->accept();
 }
 
 void MainFrame::generateCodeIa()
