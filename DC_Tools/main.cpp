@@ -25,12 +25,17 @@ int main(int argc, char *argv[])
 
     if(ID.isEmpty() or IDC != ID){
         QString IDN;
-            IDN.resize(10);
-            for (int s = 0; s < 10 ; ++s)
-                IDN[s] = QChar('A' + char(qrand() % ('Z' - 'A')));
+        const QString possibleCharacters("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+        const int randomStringLength = 12;
 
-            settings.setValue("Configuration/ID", IDN);
-            settings.setValue("Protection/ID", IDN);
+        for(int i=0; i<randomStringLength; ++i){
+
+            quint32 NombreAleatoire = QRandomGenerator::global()->bounded(62);
+            IDN += possibleCharacters[NombreAleatoire];
+        }
+
+        settings.setValue("Configuration/ID", IDN);
+        settings.setValue("Protection/IDC", IDN);
     }
 
     QApplication app(argc, argv);

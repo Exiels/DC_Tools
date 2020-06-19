@@ -21,6 +21,7 @@ private slots:
     void generateCodeIa();
     void generateCodeGlace();
     void About();
+    void showMinimized();
 
 public slots:
     void Program();
@@ -452,7 +453,9 @@ protected :
         QTextEdit *IA_Desa_Line;
 
         //Détails Technique
-        QComboBox *IA_Natu_line;
+        QComboBox *IA_Natu1_line;
+        QComboBox *IA_Natu2_line;
+        QComboBox *IA_Natu3_line;
         QLineEdit *IA_Home_Line;
         QLineEdit *IA_HomeP_Line;
         QLineEdit *IA_HomeM_Line;
@@ -477,9 +480,6 @@ protected :
         QString putil;
         QString pdutil;
 
-        QString i_p;
-        QString i_g;
-        QString i_i;
 };
 
 #endif // MAINFRAME_H

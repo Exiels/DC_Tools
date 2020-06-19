@@ -8,13 +8,13 @@ using namespace std;
 MainFrame::MainFrame()
 {
     //DEBUT_Informations
-        version = "0.8";
+        version = "0.9";
     //FIN_Informations
 
-    //DEBUT_Titre et Icone
+    //DEBUT_Titre
         setWindowTitle("DC_Tools V" + version);
-        setWindowIcon(QIcon("resources/icone.png"));
-    //FIN_Titre et Icone
+        setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowCloseButtonHint | Qt::WindowMinimizeButtonHint | Qt::MSWindowsFixedSizeDialogHint);
+    //FIN_Titre
 
     QWidget *zoneCentrale = new QWidget;
 
@@ -71,16 +71,19 @@ MainFrame::MainFrame()
                 toolBarMain->addAction(actionMaj);
                 toolBarMain->addAction(actionCfg);
                 toolBarMain->addSeparator();
+                QAction *actionMinimize = toolBarMain->addAction("&Réduire");
                 toolBarMain->addAction(actionQuit);
 
             //Ajout des Icones des actions
                 actionPrg->setIcon(QIcon("resources/prg.png"));
                 actionGlace->setIcon(QIcon("resources/glace.png"));
                 actionIa->setIcon(QIcon("resources/ia.png"));
+                actionMinimize->setIcon(QIcon("resources/minimize.png"));
         //FIN_Création de la barre d'outils
 
         //DEBUT_Signaux
             connect(actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
+            connect(actionMinimize, SIGNAL(triggered()), this, SLOT(showMinimized()));
             connect(actionAbout, SIGNAL(triggered()), this, SLOT(About()));
             connect(actionNewPrg, SIGNAL(triggered()), this, SLOT(Program()));
             connect(actionPrg, SIGNAL(triggered()), this, SLOT(Program()));
@@ -529,7 +532,7 @@ void MainFrame::Glace()
                     GL_Lvl1 = new QGridLayout;
                     GL_Lvl1->addWidget(GL_LVl1_LImg1_Line, 0, 0);
                     GL_Lvl1->addWidget(GL_LVl1_Img1_Line, 0, 1);
-                    GL_Lvl1->addWidget(GL_LVl1_LSpacer1_Line, 1, 1, Qt::AlignCenter);
+                    GL_Lvl1->addWidget(GL_LVl1_LSpacer1_Line, 1, 0, Qt::AlignCenter);
                     GL_Lvl1->addWidget(GL_LVl1_LCM1_Line, 2, 0);
                     GL_Lvl1->addWidget(GL_Lvl1_CM1_Line, 2, 1);
                     GL_Lvl1->addWidget(GL_LVl1_LCM2_Line, 3, 0);
@@ -640,9 +643,18 @@ void MainFrame::  Ia()
                 IA_Ress_Line = new QTextEdit;
                 IA_Meth_Line = new QTextEdit;
 
-                IA_Natu_line = new QComboBox;
-                IA_Natu_line->addItem("Faible");
-                IA_Natu_line->addItem("Forte");
+                IA_Natu1_line = new QComboBox;
+                IA_Natu1_line->addItem("Faible");
+                IA_Natu1_line->addItem("Forte");
+
+                IA_Natu2_line = new QComboBox;
+                IA_Natu2_line->addItem("Fixe");
+                IA_Natu2_line->addItem("Evolutive");
+
+                IA_Natu3_line = new QComboBox;
+                IA_Natu3_line->addItem("Statique");
+                IA_Natu3_line->addItem("Mobile");
+
             //Layout Page IA Principal
                 QFormLayout *P_IA_M = new QFormLayout;
                 P_IA_M->addRow("Nom :", IA_Name_Line);
@@ -672,7 +684,9 @@ void MainFrame::  Ia()
 
             //Layout Page IA Détails Techniques
                 QFormLayout *P_IA_F = new QFormLayout;
-                P_IA_F->addRow("Nature :", IA_Natu_line);
+                P_IA_F->addRow("Nature :", IA_Natu1_line);
+                P_IA_F->addWidget(IA_Natu2_line);
+                P_IA_F->addWidget(IA_Natu3_line);
                 P_IA_F->addRow("Hébergement :", IA_Home_Line);
                 P_IA_F->addRow("Localisation Physique du Coeur :", IA_HomeP_Line);
                 P_IA_F->addRow("Localisation Matricielle du Coeur :", IA_HomeM_Line);
@@ -729,7 +743,7 @@ void MainFrame::updater()
     //Initialisation du Manager
     QNetworkAccessManager manager;
     //Vérification de la version du serveur
-    reply = manager.get(QNetworkRequest(QUrl("http://31.38.22.246/DC_Tools/version.txt")));
+    reply = manager.get(QNetworkRequest(QUrl("http://dctools.xyz/DC_Tools/version.txt")));
     QEventLoop loop;
     QObject::connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
     loop.exec();
@@ -920,7 +934,7 @@ void MainFrame::generateCodeIa()
     QSettings settings("Exiel", "DC_Tools");
 
     QString protection;
-    QString programme;
+    QString ia;
 
     //DEBUT_Protection
         //Importation du Template Protection
@@ -944,39 +958,41 @@ void MainFrame::generateCodeIa()
             protection.replace("PR_Admi", settings.value("Protection/Administrator").toString());
     //FIN_Protection
 
-    //DEBUT_Programme
-        //Importation du Template Programme
-        QString fileNameP = settings.value("Configuration/TemplateIa").toString();
-        QFile fichierP(fileNameP);
-        fichierP.open(QIODevice::ReadOnly | QIODevice::Text);
-        QTextStream fluxP(&fichierP);
-        fluxP.setCodec("UTF-8");
+    //START_IA
+        //Importation du Template IA
+        QString fileNameIA = settings.value("Configuration/TemplateIa").toString();
+        QFile fichierIA(fileNameIA);
+        fichierIA.open(QIODevice::ReadOnly | QIODevice::Text);
+        QTextStream fluxIA(&fichierIA);
+        fluxIA.setCodec("UTF-8");
 
             //Lecture du Template Programme
-            programme = fluxP.readAll();
+            ia = fluxIA.readAll();
 
             //Remplacement des Variables par les valeurs stocké dans le registre
-            programme.replace("IA_Img_Line", IA_Img_Line->text());
-            programme.replace("IA_Name_Line", IA_Name_Line->text());
-            programme.replace("IA_Tach_Line", IA_Tach_Line->toPlainText());
-            programme.replace("IA_Phys_Line", IA_Phys_Line->toPlainText());
-            programme.replace("IA_Phys_Img_Line", IA_Phys_Img_Line->text());
-            programme.replace("IA_Comp_Line", IA_Comp_Line->toPlainText());
-            programme.replace("IA_Comb_Line", IA_Comb_Line->toPlainText());
-            programme.replace("IA_Desa_Line", IA_Desa_Line->toPlainText());
-            programme.replace("IA_Natu_line", IA_Natu_line->currentText());
-            programme.replace("IA_Home_Line", IA_Home_Line->text());
-            programme.replace("IA_HomeP_Line", IA_HomeP_Line->text());
-            programme.replace("IA_HomeM_Line", IA_HomeM_Line->text());
-            programme.replace("IA_Fonc_Line", IA_Fonc_Line->toPlainText());
-            programme.replace("IA_Hier_Line", IA_Hier_Line->toPlainText());
-            programme.replace("IA_Port_Line", IA_Port_Line->toPlainText());
-            programme.replace("IA_Ress_Line", IA_Ress_Line->toPlainText());
-            programme.replace("IA_Meth_Line", IA_Meth_Line->toPlainText());
-    //FIN_Programme
+            ia.replace("IA_Img_Line", IA_Img_Line->text());
+            ia.replace("IA_Name_Line", IA_Name_Line->text());
+            ia.replace("IA_Tach_Line", IA_Tach_Line->toPlainText());
+            ia.replace("IA_Phys_Line", IA_Phys_Line->toPlainText());
+            ia.replace("IA_Phys_Img_Line", IA_Phys_Img_Line->text());
+            ia.replace("IA_Comp_Line", IA_Comp_Line->toPlainText());
+            ia.replace("IA_Comb_Line", IA_Comb_Line->toPlainText());
+            ia.replace("IA_Desa_Line", IA_Desa_Line->toPlainText());
+            ia.replace("IA_Natu1_line", IA_Natu1_line->currentText());
+            ia.replace("IA_Natu2_line", IA_Natu2_line->currentText());
+            ia.replace("IA_Natu3_line", IA_Natu3_line->currentText());
+            ia.replace("IA_Home_Line", IA_Home_Line->text());
+            ia.replace("IA_HomeP_Line", IA_HomeP_Line->text());
+            ia.replace("IA_HomeM_Line", IA_HomeM_Line->text());
+            ia.replace("IA_Fonc_Line", IA_Fonc_Line->toPlainText());
+            ia.replace("IA_Hier_Line", IA_Hier_Line->toPlainText());
+            ia.replace("IA_Port_Line", IA_Port_Line->toPlainText());
+            ia.replace("IA_Ress_Line", IA_Ress_Line->toPlainText());
+            ia.replace("IA_Meth_Line", IA_Meth_Line->toPlainText());
+    //END_IA
 
     //Envoi des codes à la classe FrameCodeGenerator
-    FrameCodeGenerator *fenetreCode = new FrameCodeGenerator(programme, protection, this);
+    FrameCodeGenerator *fenetreCode = new FrameCodeGenerator(ia, protection, this);
     fenetreCode->exec();
 }
 
@@ -2425,4 +2441,8 @@ void MainFrame::uniqIDShow(){
     UniqID = settings.value("Configuration/ID").toString();
 
     QMessageBox::information(this, tr("ID Unique"), tr("L'ID unique de cet ordinateur est : ") + UniqID);
+}
+
+void MainFrame::showMinimized(){
+    this->setWindowState(Qt::WindowMinimized);
 }

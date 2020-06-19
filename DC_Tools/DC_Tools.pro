@@ -22,5 +22,7 @@ QT += widgets
 QT += network
 QT += xml
 
+RC_ICONS = icone.ico
+
 LIBS += -lz
 LIBS += -L$${QUAZIPLIBDIR} -lquazip

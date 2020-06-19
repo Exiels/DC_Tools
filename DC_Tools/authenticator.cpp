@@ -33,7 +33,7 @@ void Authenticator::login()
 
     QNetworkAccessManager managerA;
 
-    replyA = managerA.get(QNetworkRequest(QUrl("http://31.38.22.246/DC_Tools/users/" + User + ".txt")));
+    replyA = managerA.get(QNetworkRequest(QUrl("http://dctools.xyz/DC_Tools/users/" + User + ".txt")));
     QEventLoop loopA;
     QObject::connect(replyA, SIGNAL(finished()), &loopA, SLOT(quit()));
     loopA.exec();
