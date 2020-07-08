@@ -11,36 +11,43 @@ public :
     Config();
 
 private slots :
-    void saveS();
+    void save();
 
 protected :
-    void closeEvent(QCloseEvent* event);
 
 private:
-    QLineEdit *CFG_Name_Line;
-    QLineEdit *CFG_Mate_Line;
-    QLineEdit *CFG_Prot_Line;
-    QLineEdit *CFG_PUrl_Line;
 
-    QLineEdit *GB_Prot_Name_Line;
-    QLineEdit *GB_Prot_Vers_Line;
-    QLineEdit *GB_Prot_NaPr_Line;
-    QLineEdit *GB_Prot_UrlP_Line;
-    QLineEdit *GB_Prot_Read_Line;
-    QLineEdit *GB_Prot_Writ_Line;
-    QLineEdit *GB_Prot_Mode_Line;
-    QLineEdit *GB_Prot_Admi_Line;
+    //Var Config()
+        QTabWidget *Config_Tab;
+        QWidget *Config_Protection_Page;
+        QWidget *Config_Template_Page;
+        QWidget *Config_Other_Page;
+        QWidget *Config_About_Page;
+        //Protection Page
+            QLineEdit *Config_Prot_Name;
+            QLineEdit *Config_Prot_Vers;
+            QLineEdit *Config_Prot_GlaceName;
+            QLineEdit *Config_Prot_GlaceLink;
+            QLineEdit *Config_Prot_Read;
+            QLineEdit *Config_Prot_Write;
+            QLineEdit *Config_Prot_Mod;
+            QLineEdit *Config_Prot_Admin;
+            QLabel *Config_Prot_Template;
+            QComboBox *Config_Prot_NewTemplate;
+            QCheckBox *Config_Prot_ProtectionCheck;
 
-    QLabel *templateL;
-    QLabel *templatePL;
-    QLabel *templateIaL;
-    QLabel *templateGlL;
-    QPushButton *save;
-    QComboBox *templateC;
-    QComboBox *templatePC;
-    QComboBox *templateIaC;
-    QComboBox *templateGlC;
-
+        //Template Page
+            QLabel *Config_Template_Program;
+            QLabel *Config_Template_Glace;
+            QLabel *Config_Template_Ai;
+            QComboBox *Config_Template_NewProgram;
+            QComboBox *Config_Template_NewGlace;
+            QComboBox *Config_Template_NewAi;
+        //Other Page
+            QLineEdit *Config_Other_Name;
+            QLineEdit *Config_Other_Mate;
+        //About Page
+            QLabel *Config_About_Logo;
 };
 
 #endif // CONFIG_H

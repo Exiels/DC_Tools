@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/images">
+        <file alias="about">../resources/about.png</file>
+        <file alias="config">../resources/cfg.png</file>
+        <file alias="glace">../resources/glace.png</file>
+        <file alias="ai">../resources/ia.png</file>
+        <file alias="login">../resources/login.png</file>
+        <file alias="logo">../resources/logo.png</file>
+        <file alias="update">../resources/maj.png</file>
+        <file alias="minimize">../resources/minimize.png</file>
+        <file alias="new_glace">../resources/nouveau_glace.png</file>
+        <file alias="new_ia">../resources/nouveau_ia.png</file>
+        <file alias="new_program">../resources/nouveau_prg.png</file>
+        <file alias="program">../resources/prg.png</file>
+        <file alias="exit">../resources/quitter.png</file>
+    </qresource>
+</RCC>

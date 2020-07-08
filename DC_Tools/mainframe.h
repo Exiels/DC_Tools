@@ -2,483 +2,377 @@
 #define MAINFRAME_H
 
 #include <QtWidgets>
-#include <QtNetwork/QNetworkAccessManager>
-#include <QtNetwork/QNetworkRequest>
-#include <QtNetwork/QNetworkReply>
-#include <QtXml>
-#include <iostream>
-#include "quazip.h"
+#include <QtNetwork>
 
 class MainFrame : public QMainWindow
 {
     Q_OBJECT
 
 public:
+
     MainFrame();
 
 private slots:
-    void generateCode();
-    void generateCodeIa();
-    void generateCodeGlace();
-    void About();
-    void showMinimized();
 
-public slots:
-    void Program();
-    void Glace();
-    void config();
-    void Ia();
+    void program();
+    void glace();
+    void ai();
     void updater();
-    void uGlaceCm(int etat);
-    void addCM();
+    void config();
+    void showMinimized();
+    void uniqueIdShow();
+
+    void uGlaceCm(int state);
+    void addCm();
     void addLvl();
-    void stateChanged(QString Slvl);
-    void uniqIDShow();
+    void stateChanged(QString stateLvl);
 
-protected :
-    QNetworkReply *reply;
-    QString version;
-    QString versionNew;
-    QLabel label;
-    void closeEvent(QCloseEvent* event);
+    void generateCodeProgram();
+    void generateCodeGlace();
+    void generateCodeIa();
 
+private:
 
-    //START_Var_Programs
+    //Var Mainframe()
+        QWidget *centralArea;
+        QString version;
 
-        QLineEdit *PRG_Main_Name_Line;
-        QLineEdit *PRG_Main_Desc_Line;
+    //Var Program()
+        QLabel *PRG_WindowName;
+        //Main Group
+            QLineEdit *PRG_Main_Name;
+            QLineEdit *PRG_Main_Desc;
+        //Description Group
+            QLineEdit *PRG_Desc_Img;
+            QTextEdit *PRG_Desc_Desc;
+        //Technical_Sheet Group
+            QLineEdit *PRG_Tech_Auth;
+            QLineEdit *PRG_Tech_Desc;
+            QLineEdit *PRG_Tech_Auto;
+            QLineEdit *PRG_Tech_Inte;
+            QLineEdit *PRG_Tech_Vers;
+            QLineEdit *PRG_Tech_Acti;
+            QLineEdit *PRG_Tech_Util;
+            QLineEdit *PRG_Tech_Mate;
+            QLineEdit *PRG_Tech_Dure;
+            QComboBox *PRG_Tech_Type;
+        //Generate Button
+            QPushButton *PRG_Generate;
 
-        QLineEdit *PRG_Desc_Img_Line;
-        QTextEdit *PRG_Desc_Desc_Line;
+    //Var Glace()
+        QLabel *GL_WindowName;
+        QTabWidget *GL_Main_Tab;
+        QWidget *GL_Main_Page;
+        QWidget *GL_Cm_Page;
+        QWidget *GL_Alarm_Page;
+        QWidget *GL_Lvl_Page;
+        //Main Page
+            QLineEdit *GL_Main_Name;
+            QLineEdit *GL_Main_Img;
+            QLineEdit *GL_Main_Vers;
+            QTextEdit *GL_Main_Desc;
+            QLineEdit *GL_Main_Plan;
+            QCheckBox *GL_Main_GlaceCheck;
+        //Cm Page
+            QTabWidget *GL_Cm_Tab;
+            QComboBox *GL_Cm_GLType;
+            QPushButton *GL_Cm_AddCM;
+            QWidget *Gl_Cm_CM1;
+            QWidget *Gl_Cm_CM2;
+            QWidget *Gl_Cm_CM3;
+            QWidget *Gl_Cm_CM4;
+            QWidget *Gl_Cm_CM5;
+            QWidget *Gl_Cm_CM6;
+            QWidget *Gl_Cm_CM7;
+            QWidget *Gl_Cm_CM8;
+            QWidget *Gl_Cm_CM9;
+            QWidget *Gl_Cm_CM10;
+            int GL_Cm_CmCount = 1;
+            //CM1
+                QLineEdit *GL_Cm_CM1_Name;
+                QLineEdit *GL_Cm_CM1_Img;
+                QComboBox *GL_Cm_CM1_Cat;
+                QLineEdit *GL_Cm_CM1_Comp1;
+                QLineEdit *GL_Cm_CM1_Comp2;
+                QLineEdit *GL_Cm_CM1_Comp3;
+                QLineEdit *GL_Cm_CM1_Alg1;
+                QLineEdit *GL_Cm_CM1_Alg2;
+                QLineEdit *GL_Cm_CM1_Alg3;
+                QTextEdit *GL_Cm_CM1_Desc;
 
-        QLineEdit *PRG_Tech_Aute_Line;
-        QLineEdit *PRG_Tech_Desc_Line;
-        QLineEdit *PRG_Tech_Auto_Line;
-        QLineEdit *PRG_Tech_Inte_Line;
-        QLineEdit *PRG_Tech_Vers_Line;
-        QLineEdit *PRG_Tech_Acti_Line;
-        QLineEdit *PRG_Tech_Util_Line;
-        QLineEdit *PRG_Tech_Mate_Line;
-        QLineEdit *PRG_Tech_Dure_Line;
-        QComboBox *PRG_Tech_Type_Comb;
+                QLineEdit *GL_Cm_CM2_Name;
+                QLineEdit *GL_Cm_CM2_Img;
+                QComboBox *GL_Cm_CM2_Cat;
+                QLineEdit *GL_Cm_CM2_Comp1;
+                QLineEdit *GL_Cm_CM2_Comp2;
+                QLineEdit *GL_Cm_CM2_Comp3;
+                QLineEdit *GL_Cm_CM2_Alg1;
+                QLineEdit *GL_Cm_CM2_Alg2;
+                QLineEdit *GL_Cm_CM2_Alg3;
+                QTextEdit *GL_Cm_CM2_Desc;
 
-        QPushButton *PRG_Generate;
+                QLineEdit *GL_Cm_CM3_Name;
+                QLineEdit *GL_Cm_CM3_Img;
+                QComboBox *GL_Cm_CM3_Cat;
+                QLineEdit *GL_Cm_CM3_Comp1;
+                QLineEdit *GL_Cm_CM3_Comp2;
+                QLineEdit *GL_Cm_CM3_Comp3;
+                QLineEdit *GL_Cm_CM3_Alg1;
+                QLineEdit *GL_Cm_CM3_Alg2;
+                QLineEdit *GL_Cm_CM3_Alg3;
+                QTextEdit *GL_Cm_CM3_Desc;
 
-    //END_Var_Programs
+                QLineEdit *GL_Cm_CM4_Name;
+                QLineEdit *GL_Cm_CM4_Img;
+                QComboBox *GL_Cm_CM4_Cat;
+                QLineEdit *GL_Cm_CM4_Comp1;
+                QLineEdit *GL_Cm_CM4_Comp2;
+                QLineEdit *GL_Cm_CM4_Comp3;
+                QLineEdit *GL_Cm_CM4_Alg1;
+                QLineEdit *GL_Cm_CM4_Alg2;
+                QLineEdit *GL_Cm_CM4_Alg3;
+                QTextEdit *GL_Cm_CM4_Desc;
 
-    //START_Var_Glace
+                QLineEdit *GL_Cm_CM5_Name;
+                QLineEdit *GL_Cm_CM5_Img;
+                QComboBox *GL_Cm_CM5_Cat;
+                QLineEdit *GL_Cm_CM5_Comp1;
+                QLineEdit *GL_Cm_CM5_Comp2;
+                QLineEdit *GL_Cm_CM5_Comp3;
+                QLineEdit *GL_Cm_CM5_Alg1;
+                QLineEdit *GL_Cm_CM5_Alg2;
+                QLineEdit *GL_Cm_CM5_Alg3;
+                QTextEdit *GL_Cm_CM5_Desc;
 
-        //START_Var_Glace_Menu
-            QTabWidget *mainGL;
-            QWidget *principal;
-            QWidget *cm;
-            QWidget *alerte;
-            QWidget *niveau;
-        //END_Var_Menu
+                QLineEdit *GL_Cm_CM6_Name;
+                QLineEdit *GL_Cm_CM6_Img;
+                QComboBox *GL_Cm_CM6_Cat;
+                QLineEdit *GL_Cm_CM6_Comp1;
+                QLineEdit *GL_Cm_CM6_Comp2;
+                QLineEdit *GL_Cm_CM6_Comp3;
+                QLineEdit *GL_Cm_CM6_Alg1;
+                QLineEdit *GL_Cm_CM6_Alg2;
+                QLineEdit *GL_Cm_CM6_Alg3;
+                QTextEdit *GL_Cm_CM6_Desc;
 
-        //START_Var_Glace_Main
-            QLineEdit *GL_Main_Name_Line;
-            QLineEdit *GL_Main_Img_Line;
-            QLineEdit *GL_Main_Vers_Line;
-            QComboBox *GL_Main_Lvl_Line;
-            QTextEdit *GL_Main_Desc_Line;
-            QLineEdit *GL_Main_Plan_Line;
-            QCheckBox *GL_Glace_Check;
-        //END_Var_Glace_Main
+                QLineEdit *GL_Cm_CM7_Name;
+                QLineEdit *GL_Cm_CM7_Img;
+                QComboBox *GL_Cm_CM7_Cat;
+                QLineEdit *GL_Cm_CM7_Comp1;
+                QLineEdit *GL_Cm_CM7_Comp2;
+                QLineEdit *GL_Cm_CM7_Comp3;
+                QLineEdit *GL_Cm_CM7_Alg1;
+                QLineEdit *GL_Cm_CM7_Alg2;
+                QLineEdit *GL_Cm_CM7_Alg3;
+                QTextEdit *GL_Cm_CM7_Desc;
 
-        //START_Var_Glace_Cm
-            //START_Var_Glace_Cm_Main
-                QTabWidget *mainCM;
-                QWidget *CM1;
-                QWidget *CM2;
-                QWidget *CM3;
-                QWidget *CM4;
-                QWidget *CM5;
-                QWidget *CM6;
-                QWidget *CM7;
-                QWidget *CM8;
-                QWidget *CM9;
-                QWidget *CM10;
-                QPushButton *GL_CM_Add_CM;
-                int count = 1;
-                int glace = 0;
-                int glaceon = 0;
-            //END_Var_Glace_Cm_Main
+                QLineEdit *GL_Cm_CM8_Name;
+                QLineEdit *GL_Cm_CM8_Img;
+                QComboBox *GL_Cm_CM8_Cat;
+                QLineEdit *GL_Cm_CM8_Comp1;
+                QLineEdit *GL_Cm_CM8_Comp2;
+                QLineEdit *GL_Cm_CM8_Comp3;
+                QLineEdit *GL_Cm_CM8_Alg1;
+                QLineEdit *GL_Cm_CM8_Alg2;
+                QLineEdit *GL_Cm_CM8_Alg3;
+                QTextEdit *GL_Cm_CM8_Desc;
 
-            //START_Var_Glace_Cm_Cm1
-                QLineEdit *GL_CM1_Name_Line;
-                QLineEdit *GL_CM1_Img_Line;
-                QComboBox *GL_CM1_Cat_Line;
-                QLineEdit *GL_CM1_Comp1_Line;
-                QLineEdit *GL_CM1_Comp2_Line;
-                QLineEdit *GL_CM1_Comp3_Line;
-                QLineEdit *GL_CM1_Alg1_Line;
-                QLineEdit *GL_CM1_Alg2_Line;
-                QLineEdit *GL_CM1_Alg3_Line;
-                QTextEdit *GL_CM1_Desc_Line;
-            //END_Var_Glace_Cm_Cm1
+                QLineEdit *GL_Cm_CM9_Name;
+                QLineEdit *GL_Cm_CM9_Img;
+                QComboBox *GL_Cm_CM9_Cat;
+                QLineEdit *GL_Cm_CM9_Comp1;
+                QLineEdit *GL_Cm_CM9_Comp2;
+                QLineEdit *GL_Cm_CM9_Comp3;
+                QLineEdit *GL_Cm_CM9_Alg1;
+                QLineEdit *GL_Cm_CM9_Alg2;
+                QLineEdit *GL_Cm_CM9_Alg3;
+                QTextEdit *GL_Cm_CM9_Desc;
 
-            //START_Var_Glace_Cm_Cm2
-                QLineEdit *GL_CM2_Name_Line;
-                QLineEdit *GL_CM2_Img_Line;
-                QComboBox *GL_CM2_Cat_Line;
-                QLineEdit *GL_CM2_Comp1_Line;
-                QLineEdit *GL_CM2_Comp2_Line;
-                QLineEdit *GL_CM2_Comp3_Line;
-                QLineEdit *GL_CM2_Alg1_Line;
-                QLineEdit *GL_CM2_Alg2_Line;
-                QLineEdit *GL_CM2_Alg3_Line;
-                QTextEdit *GL_CM2_Desc_Line;
-            //END_Var_Glace_Cm_Cm2
+                QLineEdit *GL_Cm_CM10_Name;
+                QLineEdit *GL_Cm_CM10_Img;
+                QComboBox *GL_Cm_CM10_Cat;
+                QLineEdit *GL_Cm_CM10_Comp1;
+                QLineEdit *GL_Cm_CM10_Comp2;
+                QLineEdit *GL_Cm_CM10_Comp3;
+                QLineEdit *GL_Cm_CM10_Alg1;
+                QLineEdit *GL_Cm_CM10_Alg2;
+                QLineEdit *GL_Cm_CM10_Alg3;
+                QTextEdit *GL_Cm_CM10_Desc;
+        //Alarm Page
+            QLabel *GL_Alarm_Label1;
+            QLabel *GL_Alarm_Label2;
+            QLabel *GL_Alarm_Label3;
+            QLineEdit *GL_Alarm_NoAlarm1;
+            QLineEdit *GL_Alarm_NoAlarm2;
+            QLineEdit *GL_Alarm_NoAlarm3;
+            QLineEdit *GL_Alarm_LowAlarm1;
+            QLineEdit *GL_Alarm_LowAlarm2;
+            QLineEdit *GL_Alarm_LowAlarm3;
+            QLineEdit *GL_Alarm_HighAlarm1;
+            QLineEdit *GL_Alarm_HighAlarm2;
+            QLineEdit *GL_Alarm_HighAlarm3;
+        //Lvl Page
+            QTabWidget *GL_Lvl_Tab;
+            QWidget *GL_Lvl_Lvl1;
+            QWidget *GL_Lvl_Lvl2;
+            QWidget *GL_Lvl_Lvl3;
+            QWidget *GL_Lvl_Lvl4;
+            QWidget *GL_Lvl_Lvl5;
+            QPushButton *GL_Lvl_AddLvl;
+            int GL_Lvl_LvlCount = 1;
+            //Lvl1
+                QLineEdit *GL_Lvl_Lvl1_Img;
+                QWidget *GL_Lvl_Lvl1_WCM;
+                QLineEdit *GL_Lvl_Lvl1_CM1;
+                QLineEdit *GL_Lvl_Lvl1_CM2;
+                QLineEdit *GL_Lvl_Lvl1_CM3;
+                QLineEdit *GL_Lvl_Lvl1_CM4;
+                QLineEdit *GL_Lvl_Lvl1_CM5;
+                QWidget *GL_Lvl_Lvl1_WNbrCM;
+                QWidget *GL_Lvl_Lvl1_Spacer1;
+                QWidget *GL_Lvl_Lvl1_Spacer2;
+                QLabel *GL_Lvl_Lvl1_LNbrCM1;
+                QLabel *GL_Lvl_Lvl1_LNbrCM2;
+                QLabel *GL_Lvl_Lvl1_LNbrCM3;
+                QLabel *GL_Lvl_Lvl1_LNbrCM4;
+                QLabel *GL_Lvl_Lvl1_LNbrCM5;
+                QSpinBox *GL_Lvl_Lvl1_NbrCM1;
+                QSpinBox *GL_Lvl_Lvl1_NbrCM2;
+                QSpinBox *GL_Lvl_Lvl1_NbrCM3;
+                QSpinBox *GL_Lvl_Lvl1_NbrCM4;
+                QSpinBox *GL_Lvl_Lvl1_NbrCM5;
+                QTextEdit *GL_Lvl_Lvl1_Desc;
+                QLineEdit *GL_Lvl_Lvl1_PlanImg;
+            //Lvl2
+                QLineEdit *GL_Lvl_Lvl2_Img;
+                QWidget *GL_Lvl_Lvl2_WCM;
+                QLineEdit *GL_Lvl_Lvl2_CM1;
+                QLineEdit *GL_Lvl_Lvl2_CM2;
+                QLineEdit *GL_Lvl_Lvl2_CM3;
+                QLineEdit *GL_Lvl_Lvl2_CM4;
+                QLineEdit *GL_Lvl_Lvl2_CM5;
+                QWidget *GL_Lvl_Lvl2_WNbrCM;
+                QWidget *GL_Lvl_Lvl2_Spacer1;
+                QWidget *GL_Lvl_Lvl2_Spacer2;
+                QLabel *GL_Lvl_Lvl2_LNbrCM1;
+                QLabel *GL_Lvl_Lvl2_LNbrCM2;
+                QLabel *GL_Lvl_Lvl2_LNbrCM3;
+                QLabel *GL_Lvl_Lvl2_LNbrCM4;
+                QLabel *GL_Lvl_Lvl2_LNbrCM5;
+                QSpinBox *GL_Lvl_Lvl2_NbrCM1;
+                QSpinBox *GL_Lvl_Lvl2_NbrCM2;
+                QSpinBox *GL_Lvl_Lvl2_NbrCM3;
+                QSpinBox *GL_Lvl_Lvl2_NbrCM4;
+                QSpinBox *GL_Lvl_Lvl2_NbrCM5;
+                QTextEdit *GL_Lvl_Lvl2_Desc;
+                QLineEdit *GL_Lvl_Lvl2_PlanImg;
+            //Lvl3
+                QLineEdit *GL_Lvl_Lvl3_Img;
+                QWidget *GL_Lvl_Lvl3_WCM;
+                QLineEdit *GL_Lvl_Lvl3_CM1;
+                QLineEdit *GL_Lvl_Lvl3_CM2;
+                QLineEdit *GL_Lvl_Lvl3_CM3;
+                QLineEdit *GL_Lvl_Lvl3_CM4;
+                QLineEdit *GL_Lvl_Lvl3_CM5;
+                QWidget *GL_Lvl_Lvl3_WNbrCM;
+                QWidget *GL_Lvl_Lvl3_Spacer1;
+                QWidget *GL_Lvl_Lvl3_Spacer2;
+                QLabel *GL_Lvl_Lvl3_LNbrCM1;
+                QLabel *GL_Lvl_Lvl3_LNbrCM2;
+                QLabel *GL_Lvl_Lvl3_LNbrCM3;
+                QLabel *GL_Lvl_Lvl3_LNbrCM4;
+                QLabel *GL_Lvl_Lvl3_LNbrCM5;
+                QSpinBox *GL_Lvl_Lvl3_NbrCM1;
+                QSpinBox *GL_Lvl_Lvl3_NbrCM2;
+                QSpinBox *GL_Lvl_Lvl3_NbrCM3;
+                QSpinBox *GL_Lvl_Lvl3_NbrCM4;
+                QSpinBox *GL_Lvl_Lvl3_NbrCM5;
+                QTextEdit *GL_Lvl_Lvl3_Desc;
+                QLineEdit *GL_Lvl_Lvl3_PlanImg;
+            //Lvl4
+                QLineEdit *GL_Lvl_Lvl4_Img;
+                QWidget *GL_Lvl_Lvl4_WCM;
+                QLineEdit *GL_Lvl_Lvl4_CM1;
+                QLineEdit *GL_Lvl_Lvl4_CM2;
+                QLineEdit *GL_Lvl_Lvl4_CM3;
+                QLineEdit *GL_Lvl_Lvl4_CM4;
+                QLineEdit *GL_Lvl_Lvl4_CM5;
+                QWidget *GL_Lvl_Lvl4_WNbrCM;
+                QWidget *GL_Lvl_Lvl4_Spacer1;
+                QWidget *GL_Lvl_Lvl4_Spacer2;
+                QLabel *GL_Lvl_Lvl4_LNbrCM1;
+                QLabel *GL_Lvl_Lvl4_LNbrCM2;
+                QLabel *GL_Lvl_Lvl4_LNbrCM3;
+                QLabel *GL_Lvl_Lvl4_LNbrCM4;
+                QLabel *GL_Lvl_Lvl4_LNbrCM5;
+                QSpinBox *GL_Lvl_Lvl4_NbrCM1;
+                QSpinBox *GL_Lvl_Lvl4_NbrCM2;
+                QSpinBox *GL_Lvl_Lvl4_NbrCM3;
+                QSpinBox *GL_Lvl_Lvl4_NbrCM4;
+                QSpinBox *GL_Lvl_Lvl4_NbrCM5;
+                QTextEdit *GL_Lvl_Lvl4_Desc;
+                QLineEdit *GL_Lvl_Lvl4_PlanImg;
+           //Lvl5
+                QLineEdit *GL_Lvl_Lvl5_Img;
+                QWidget *GL_Lvl_Lvl5_WCM;
+                QLineEdit *GL_Lvl_Lvl5_CM1;
+                QLineEdit *GL_Lvl_Lvl5_CM2;
+                QLineEdit *GL_Lvl_Lvl5_CM3;
+                QLineEdit *GL_Lvl_Lvl5_CM4;
+                QLineEdit *GL_Lvl_Lvl5_CM5;
+                QWidget *GL_Lvl_Lvl5_WNbrCM;
+                QWidget *GL_Lvl_Lvl5_Spacer1;
+                QWidget *GL_Lvl_Lvl5_Spacer2;
+                QLabel *GL_Lvl_Lvl5_LNbrCM1;
+                QLabel *GL_Lvl_Lvl5_LNbrCM2;
+                QLabel *GL_Lvl_Lvl5_LNbrCM3;
+                QLabel *GL_Lvl_Lvl5_LNbrCM4;
+                QLabel *GL_Lvl_Lvl5_LNbrCM5;
+                QSpinBox *GL_Lvl_Lvl5_NbrCM1;
+                QSpinBox *GL_Lvl_Lvl5_NbrCM2;
+                QSpinBox *GL_Lvl_Lvl5_NbrCM3;
+                QSpinBox *GL_Lvl_Lvl5_NbrCM4;
+                QSpinBox *GL_Lvl_Lvl5_NbrCM5;
+                QTextEdit *GL_Lvl_Lvl5_Desc;
+                QLineEdit *GL_Lvl_Lvl5_PlanImg;
 
-            //START_Var_Glace_Cm_Cm3
-                QLineEdit *GL_CM3_Name_Line;
-                QLineEdit *GL_CM3_Img_Line;
-                QComboBox *GL_CM3_Cat_Line;
-                QLineEdit *GL_CM3_Comp1_Line;
-                QLineEdit *GL_CM3_Comp2_Line;
-                QLineEdit *GL_CM3_Comp3_Line;
-                QLineEdit *GL_CM3_Alg1_Line;
-                QLineEdit *GL_CM3_Alg2_Line;
-                QLineEdit *GL_CM3_Alg3_Line;
-                QTextEdit *GL_CM3_Desc_Line;
-            //END_Var_Glace_Cm_Cm3
+    //Var Ai()
+        QLabel *AI_WindowName;
+        QTabWidget *AI_Main_Tab;
+        QWidget *AI_Main_Page;
+        QWidget *AI_Desc_Page;
+        QWidget *AI_Tech_Page;
+        //Main Page
+            QLineEdit *AI_Main_Name;
+            QLineEdit *AI_Main_Img;
+        //Desc Page
+            QTextEdit *AI_Desc_Task;
+            QTextEdit *AI_Desc_Phys;
+            QLineEdit *AI_Desc_Phys_Img;
+            QTextEdit *AI_Desc_Beha;
+            QTextEdit *AI_Desc_Fight;
+            QTextEdit *AI_Desc_Disa;
+        //Tech Page
+            QComboBox *AI_Tech_Nature1;
+            QComboBox *AI_Tech_Nature2;
+            QComboBox *AI_Tech_Nature3;
+            QLineEdit *AI_Tech_Home;
+            QLineEdit *AI_Tech_HomeP;
+            QLineEdit *AI_Tech_HomeM;
+            QTextEdit *AI_Tech_Func;
+            QTextEdit *AI_Tech_Hier;
+            QTextEdit *AI_Tech_Scope;
+            QTextEdit *AI_Tech_Ress;
+            QTextEdit *AI_Tech_Meth;
 
-            //START_Var_Glace_Cm_Cm4
-                QLineEdit *GL_CM4_Name_Line;
-                QLineEdit *GL_CM4_Img_Line;
-                QComboBox *GL_CM4_Cat_Line;
-                QLineEdit *GL_CM4_Comp1_Line;
-                QLineEdit *GL_CM4_Comp2_Line;
-                QLineEdit *GL_CM4_Comp3_Line;
-                QLineEdit *GL_CM4_Alg1_Line;
-                QLineEdit *GL_CM4_Alg2_Line;
-                QLineEdit *GL_CM4_Alg3_Line;
-                QTextEdit *GL_CM4_Desc_Line;
-            //END_Var_Glace_Cm_Cm4
+    //Var Updater()
+        QNetworkReply *Updater_Reply;
+        QString Updater_Server_Version;
 
-            //START_Var_Glace_Cm_Cm5
-                QLineEdit *GL_CM5_Name_Line;
-                QLineEdit *GL_CM5_Img_Line;
-                QComboBox *GL_CM5_Cat_Line;
-                QLineEdit *GL_CM5_Comp1_Line;
-                QLineEdit *GL_CM5_Comp2_Line;
-                QLineEdit *GL_CM5_Comp3_Line;
-                QLineEdit *GL_CM5_Alg1_Line;
-                QLineEdit *GL_CM5_Alg2_Line;
-                QLineEdit *GL_CM5_Alg3_Line;
-                QTextEdit *GL_CM5_Desc_Line;
-            //END_Var_Glace_Cm_Cm5
+    //Var uGlaceCM(int etat)
+        int Glace_State = 0;
 
-            //START_Var_Glace_Cm_Cm6
-                QLineEdit *GL_CM6_Name_Line;
-                QLineEdit *GL_CM6_Img_Line;
-                QComboBox *GL_CM6_Cat_Line;
-                QLineEdit *GL_CM6_Comp1_Line;
-                QLineEdit *GL_CM6_Comp2_Line;
-                QLineEdit *GL_CM6_Comp3_Line;
-                QLineEdit *GL_CM6_Alg1_Line;
-                QLineEdit *GL_CM6_Alg2_Line;
-                QLineEdit *GL_CM6_Alg3_Line;
-                QTextEdit *GL_CM6_Desc_Line;
-            //END_Var_Glace_Cm_Cm6
-
-            //START_Var_Glace_Cm_Cm7
-                QLineEdit *GL_CM7_Name_Line;
-                QLineEdit *GL_CM7_Img_Line;
-                QComboBox *GL_CM7_Cat_Line;
-                QLineEdit *GL_CM7_Comp1_Line;
-                QLineEdit *GL_CM7_Comp2_Line;
-                QLineEdit *GL_CM7_Comp3_Line;
-                QLineEdit *GL_CM7_Alg1_Line;
-                QLineEdit *GL_CM7_Alg2_Line;
-                QLineEdit *GL_CM7_Alg3_Line;
-                QTextEdit *GL_CM7_Desc_Line;
-            //END_Var_Glace_Cm_Cm7
-
-            //START_Var_Glace_Cm_Cm8
-                QLineEdit *GL_CM8_Name_Line;
-                QLineEdit *GL_CM8_Img_Line;
-                QComboBox *GL_CM8_Cat_Line;
-                QLineEdit *GL_CM8_Comp1_Line;
-                QLineEdit *GL_CM8_Comp2_Line;
-                QLineEdit *GL_CM8_Comp3_Line;
-                QLineEdit *GL_CM8_Alg1_Line;
-                QLineEdit *GL_CM8_Alg2_Line;
-                QLineEdit *GL_CM8_Alg3_Line;
-                QTextEdit *GL_CM8_Desc_Line;
-            //END_Var_Glace_Cm_Cm8
-
-            //START_Var_Glace_Cm_Cm9
-                QLineEdit *GL_CM9_Name_Line;
-                QLineEdit *GL_CM9_Img_Line;
-                QComboBox *GL_CM9_Cat_Line;
-                QLineEdit *GL_CM9_Comp1_Line;
-                QLineEdit *GL_CM9_Comp2_Line;
-                QLineEdit *GL_CM9_Comp3_Line;
-                QLineEdit *GL_CM9_Alg1_Line;
-                QLineEdit *GL_CM9_Alg2_Line;
-                QLineEdit *GL_CM9_Alg3_Line;
-                QTextEdit *GL_CM9_Desc_Line;
-            //END_Var_Glace_Cm_Cm9
-
-            //START_Var_Glace_Cm_Cm10
-                QLineEdit *GL_CM10_Name_Line;
-                QLineEdit *GL_CM10_Img_Line;
-                QComboBox *GL_CM10_Cat_Line;
-                QLineEdit *GL_CM10_Comp1_Line;
-                QLineEdit *GL_CM10_Comp2_Line;
-                QLineEdit *GL_CM10_Comp3_Line;
-                QLineEdit *GL_CM10_Alg1_Line;
-                QLineEdit *GL_CM10_Alg2_Line;
-                QLineEdit *GL_CM10_Alg3_Line;
-                QTextEdit *GL_CM10_Desc_Line;
-            //END_Var_Glace_Cm_Cm10
-        //END_Var_Glace_Cm
-
-        //START_Var_Glace_Alerte
-                QLabel *GL_CM_Lab1_Line;
-                QLabel *GL_CM_Lab2_Line;
-                QLabel *GL_CM_Lab3_Line;
-                QLineEdit *GL_CM_NAlrt1_Line;
-                QLineEdit *GL_CM_NAlrt2_Line;
-                QLineEdit *GL_CM_NAlrt3_Line;
-                QLineEdit *GL_CM_FAlrt1_Line;
-                QLineEdit *GL_CM_FAlrt2_Line;
-                QLineEdit *GL_CM_FAlrt3_Line;
-                QLineEdit *GL_CM_HAlrt1_Line;
-                QLineEdit *GL_CM_HAlrt2_Line;
-                QLineEdit *GL_CM_HAlrt3_Line;
-        //END_Var_Glace_Alerte
-
-        //START_Var_Glace_Level
-            //START_Var_Glace_Level_Main
-                QTabWidget *mainLvl;
-                QWidget *Lvl1;
-                QWidget *Lvl2;
-                QWidget *Lvl3;
-                QWidget *Lvl4;
-                QWidget *Lvl5;
-                QFormLayout *L_Lvl1;
-                QPushButton *GL_Lvl_Add_Lvl;
-                int countL = 1;
-            //END_Var_Glace_Level_Main
-
-            //START_Var_Glace_Level_Lvl1
-                QGridLayout *GL_Lvl1;
-                QLabel *GL_LVl1_LImg1_Line;
-                QLabel *GL_LVl1_LSpacer1_Line;
-                QLabel *GL_LVl1_LSpacer2_Line;
-                QLabel *GL_LVl1_LSpacer3_Line;
-                QLabel *GL_LVl1_LCM1_Line;
-                QLabel *GL_LVL1_LCM1NBR_Line;
-                QLabel *GL_LVl1_LCM2_Line;
-                QLabel *GL_LVL1_LCM2NBR_Line;
-                QLabel *GL_LVl1_LCM3_Line;
-                QLabel *GL_LVL1_LCM3NBR_Line;
-                QLabel *GL_LVl1_LCM4_Line;
-                QLabel *GL_LVL1_LCM4NBR_Line;
-                QLabel *GL_LVl1_LCM5_Line;
-                QLabel *GL_LVL1_LCM5NBR_Line;
-                QLabel *GL_LVl1_LDesc_Line;
-                QLabel *GL_LVl1_LImg2_Line;
-                QLineEdit *GL_Lvl1_CM1_Line;
-                QSpinBox *GL_Lvl1_CM1_Nbr_Line;
-                QLineEdit *GL_Lvl1_CM2_Line;
-                QSpinBox *GL_Lvl1_CM2_Nbr_Line;
-                QLineEdit *GL_Lvl1_CM3_Line;
-                QSpinBox *GL_Lvl1_CM3_Nbr_Line;
-                QLineEdit *GL_Lvl1_CM4_Line;
-                QSpinBox *GL_Lvl1_CM4_Nbr_Line;
-                QLineEdit *GL_Lvl1_CM5_Line;
-                QSpinBox *GL_Lvl1_CM5_Nbr_Line;
-                QWidget *GL_Lvl1_WCmNbr;
-                QLineEdit *GL_LVl1_Nbr1_Line;
-                QLineEdit *GL_LVl1_Img1_Line;
-                QTextEdit *GL_LVl1_Desc1_Line;
-                QLineEdit *GL_LVl1_PImg1_Line;
-            //END_Var_Glace_Level_Lvl1
-
-            //START_Var_Glace_Level_Lvl2
-                QLabel *GL_LVl2_LImg1_Line;
-                QLabel *GL_LVl2_LSpacer1_Line;
-                QLabel *GL_LVl2_LSpacer2_Line;
-                QLabel *GL_LVl2_LSpacer3_Line;
-                QLabel *GL_LVl2_LCM1_Line;
-                QLabel *GL_LVL2_LCM1NBR_Line;
-                QLabel *GL_LVl2_LCM2_Line;
-                QLabel *GL_LVL2_LCM2NBR_Line;
-                QLabel *GL_LVl2_LCM3_Line;
-                QLabel *GL_LVL2_LCM3NBR_Line;
-                QLabel *GL_LVl2_LCM4_Line;
-                QLabel *GL_LVL2_LCM4NBR_Line;
-                QLabel *GL_LVl2_LCM5_Line;
-                QLabel *GL_LVL2_LCM5NBR_Line;
-                QLabel *GL_LVl2_LDesc_Line;
-                QLabel *GL_LVl2_LImg2_Line;
-                QLineEdit *GL_Lvl2_CM1_Line;
-                QSpinBox *GL_Lvl2_CM1_Nbr_Line;
-                QLineEdit *GL_Lvl2_CM2_Line;
-                QSpinBox *GL_Lvl2_CM2_Nbr_Line;
-                QLineEdit *GL_Lvl2_CM3_Line;
-                QSpinBox *GL_Lvl2_CM3_Nbr_Line;
-                QLineEdit *GL_Lvl2_CM4_Line;
-                QSpinBox *GL_Lvl2_CM4_Nbr_Line;
-                QLineEdit *GL_Lvl2_CM5_Line;
-                QSpinBox *GL_Lvl2_CM5_Nbr_Line;
-                QWidget *GL_Lvl2_WCmNbr;
-                QLineEdit *GL_LVl2_Nbr1_Line;
-                QLineEdit *GL_LVl2_Img1_Line;
-                QTextEdit *GL_LVl2_Desc1_Line;
-                QLineEdit *GL_LVl2_PImg1_Line;
-            //END_Var_Glace_Level_Lvl2
-
-            //START_Var_Glace_Level_Lvl3
-                QLabel *GL_LVl3_LImg1_Line;
-                QLabel *GL_LVl3_LSpacer1_Line;
-                QLabel *GL_LVl3_LSpacer2_Line;
-                QLabel *GL_LVl3_LSpacer3_Line;
-                QLabel *GL_LVl3_LCM1_Line;
-                QLabel *GL_LVL3_LCM1NBR_Line;
-                QLabel *GL_LVl3_LCM2_Line;
-                QLabel *GL_LVL3_LCM2NBR_Line;
-                QLabel *GL_LVl3_LCM3_Line;
-                QLabel *GL_LVL3_LCM3NBR_Line;
-                QLabel *GL_LVl3_LCM4_Line;
-                QLabel *GL_LVL3_LCM4NBR_Line;
-                QLabel *GL_LVl3_LCM5_Line;
-                QLabel *GL_LVL3_LCM5NBR_Line;
-                QLabel *GL_LVl3_LDesc_Line;
-                QLabel *GL_LVl3_LImg2_Line;
-                QLineEdit *GL_Lvl3_CM1_Line;
-                QSpinBox *GL_Lvl3_CM1_Nbr_Line;
-                QLineEdit *GL_Lvl3_CM2_Line;
-                QSpinBox *GL_Lvl3_CM2_Nbr_Line;
-                QLineEdit *GL_Lvl3_CM3_Line;
-                QSpinBox *GL_Lvl3_CM3_Nbr_Line;
-                QLineEdit *GL_Lvl3_CM4_Line;
-                QSpinBox *GL_Lvl3_CM4_Nbr_Line;
-                QLineEdit *GL_Lvl3_CM5_Line;
-                QSpinBox *GL_Lvl3_CM5_Nbr_Line;
-                QWidget *GL_Lvl3_WCmNbr;
-                QLineEdit *GL_LVl3_Nbr1_Line;
-                QLineEdit *GL_LVl3_Img1_Line;
-                QTextEdit *GL_LVl3_Desc1_Line;
-                QLineEdit *GL_LVl3_PImg1_Line;
-            //END_Var_Glace_Level_Lvl3
-
-            //START_Var_Glace_Level_Lvl4
-                QLabel *GL_LVl4_LImg1_Line;
-                QLabel *GL_LVl4_LSpacer1_Line;
-                QLabel *GL_LVl4_LSpacer2_Line;
-                QLabel *GL_LVl4_LSpacer3_Line;
-                QLabel *GL_LVl4_LCM1_Line;
-                QLabel *GL_LVL4_LCM1NBR_Line;
-                QLabel *GL_LVl4_LCM2_Line;
-                QLabel *GL_LVL4_LCM2NBR_Line;
-                QLabel *GL_LVl4_LCM3_Line;
-                QLabel *GL_LVL4_LCM3NBR_Line;
-                QLabel *GL_LVl4_LCM4_Line;
-                QLabel *GL_LVL4_LCM4NBR_Line;
-                QLabel *GL_LVl4_LCM5_Line;
-                QLabel *GL_LVL4_LCM5NBR_Line;
-                QLabel *GL_LVl4_LDesc_Line;
-                QLabel *GL_LVl4_LImg2_Line;
-                QLineEdit *GL_Lvl4_CM1_Line;
-                QSpinBox *GL_Lvl4_CM1_Nbr_Line;
-                QLineEdit *GL_Lvl4_CM2_Line;
-                QSpinBox *GL_Lvl4_CM2_Nbr_Line;
-                QLineEdit *GL_Lvl4_CM3_Line;
-                QSpinBox *GL_Lvl4_CM3_Nbr_Line;
-                QLineEdit *GL_Lvl4_CM4_Line;
-                QSpinBox *GL_Lvl4_CM4_Nbr_Line;
-                QLineEdit *GL_Lvl4_CM5_Line;
-                QSpinBox *GL_Lvl4_CM5_Nbr_Line;
-                QWidget *GL_Lvl4_WCmNbr;
-                QLineEdit *GL_LVl4_Nbr1_Line;
-                QLineEdit *GL_LVl4_Img1_Line;
-                QTextEdit *GL_LVl4_Desc1_Line;
-                QLineEdit *GL_LVl4_PImg1_Line;
-            //END_Var_Glace_Level_Lvl4
-
-            //START_Var_Glace_Level_Lvl5
-                QLabel *GL_LVl5_LImg1_Line;
-                QLabel *GL_LVl5_LSpacer1_Line;
-                QLabel *GL_LVl5_LSpacer2_Line;
-                QLabel *GL_LVl5_LSpacer3_Line;
-                QLabel *GL_LVl5_LCM1_Line;
-                QLabel *GL_LVL5_LCM1NBR_Line;
-                QLabel *GL_LVl5_LCM2_Line;
-                QLabel *GL_LVL5_LCM2NBR_Line;
-                QLabel *GL_LVl5_LCM3_Line;
-                QLabel *GL_LVL5_LCM3NBR_Line;
-                QLabel *GL_LVl5_LCM4_Line;
-                QLabel *GL_LVL5_LCM4NBR_Line;
-                QLabel *GL_LVl5_LCM5_Line;
-                QLabel *GL_LVL5_LCM5NBR_Line;
-                QLabel *GL_LVl5_LDesc_Line;
-                QLabel *GL_LVl5_LImg2_Line;
-                QLineEdit *GL_Lvl5_CM1_Line;
-                QSpinBox *GL_Lvl5_CM1_Nbr_Line;
-                QLineEdit *GL_Lvl5_CM2_Line;
-                QSpinBox *GL_Lvl5_CM2_Nbr_Line;
-                QLineEdit *GL_Lvl5_CM3_Line;
-                QSpinBox *GL_Lvl5_CM3_Nbr_Line;
-                QLineEdit *GL_Lvl5_CM4_Line;
-                QSpinBox *GL_Lvl5_CM4_Nbr_Line;
-                QLineEdit *GL_Lvl5_CM5_Line;
-                QSpinBox *GL_Lvl5_CM5_Nbr_Line;
-                QWidget *GL_Lvl5_WCmNbr;
-                QLineEdit *GL_LVl5_Nbr1_Line;
-                QLineEdit *GL_LVl5_Img1_Line;
-                QTextEdit *GL_LVl5_Desc1_Line;
-                QLineEdit *GL_LVl5_PImg1_Line;
-            //END_Var_Glace_Level_Lvl5
-
-        //Page IA
-
-        QLabel *PR_Importer_IA;
-
-    //FIN_Attributs Glace
-
-    //DEBUT_Attributs IA
-
-        QLineEdit *IA_Name_Line;
-        QLineEdit *IA_Img_Line;
-        QTextEdit *IA_Tach_Line;
-        QTextEdit *IA_Phys_Line;
-        QLineEdit *IA_Phys_Img_Line;
-        QTextEdit *IA_Comp_Line;
-        QTextEdit *IA_Comb_Line;
-        QTextEdit *IA_Desa_Line;
-
-        //Détails Technique
-        QComboBox *IA_Natu1_line;
-        QComboBox *IA_Natu2_line;
-        QComboBox *IA_Natu3_line;
-        QLineEdit *IA_Home_Line;
-        QLineEdit *IA_HomeP_Line;
-        QLineEdit *IA_HomeM_Line;
-        QTextEdit *IA_Fonc_Line;
-        QTextEdit *IA_Hier_Line;
-        QTextEdit *IA_Port_Line;
-        QTextEdit *IA_Ress_Line;
-        QTextEdit *IA_Meth_Line;
-
-        QPushButton *IA_Generate;
-    //FIN_Attributs IA
-
-        QString pname;
-        QString pmdesc;
-        QString purlimg;
-        QString pdesc;
-        QString pmdescb;
-        QString pauto;
-        QString pinte;
-        QString pvers;
-        QString pacti;
-        QString putil;
-        QString pdutil;
+    //Var generateCodeProgram()
 
 };
 

@@ -26,3 +26,6 @@ RC_ICONS = icone.ico
 
 LIBS += -lz
 LIBS += -L$${QUAZIPLIBDIR} -lquazip
+
+RESOURCES += \
+    resources.qrc

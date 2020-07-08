@@ -1,33 +1,42 @@
 #include "framecodegenerator.h"
 
-FrameCodeGenerator::FrameCodeGenerator(QString &prg, QString &pro, QWidget *parent = 0) : QDialog(parent)
+FrameCodeGenerator::FrameCodeGenerator(QString &data, QString &protection, QWidget *parent = 0) : QDialog(parent)
 {
-    codeProtection = new QTextEdit();
-    codeProtection->setPlainText(pro);
-    codeProtection->setReadOnly(true);
-    codeProtection->setFont(QFont("Courier"));
-    codeProtection->setLineWrapMode(QTextEdit::NoWrap);
-
-    codeProgramme = new QTextEdit();
-    codeProgramme->setPlainText(prg);
-    codeProgramme->setReadOnly(true);
-    codeProgramme->setFont(QFont("Courier"));
-    codeProgramme->setLineWrapMode(QTextEdit::NoWrap);
-
-    saveB = new QPushButton("Enregistrer Sous..");
-    close = new QPushButton("Fermer");
-
-    QVBoxLayout *layoutPrincipal = new QVBoxLayout;
-    layoutPrincipal->addWidget(codeProtection);
-    layoutPrincipal->addWidget(codeProgramme);
-    layoutPrincipal->addWidget(saveB);
-    layoutPrincipal->addWidget(close);
+    QSettings settings("Exiel", "DC_Tools");
 
     resize(1000, 1000);
-    setLayout(layoutPrincipal);
 
-    connect(saveB, SIGNAL(clicked()), this, SLOT(save()));
-    connect(close, SIGNAL(clicked()), this, SLOT(accept()));
+    bool ProtectionCheck = settings.value("Protection/ProtectionCheck").toBool();
+
+    Data = new QTextEdit;
+    ProtectionData = new QTextEdit;
+    QPushButton *saveButton = new QPushButton("Enregistrer Sous...");
+    QPushButton *exit = new QPushButton("Fermer");
+    QVBoxLayout *mainLayout = new QVBoxLayout;
+
+    Data->setPlainText(data);
+    Data->setReadOnly(true);
+    Data->setFont(QFont("Courier"));
+    Data->setLineWrapMode(QTextEdit::NoWrap);
+
+    //Check if Protection is Active
+        if(ProtectionCheck){
+            ProtectionData->setPlainText(protection);
+            ProtectionData->setReadOnly(true);
+            ProtectionData->setFont(QFont("Courier"));
+            ProtectionData->setLineWrapMode(QTextEdit::NoWrap);
+
+            mainLayout->addWidget(ProtectionData);
+        }
+
+    mainLayout->addWidget(Data);
+    mainLayout->addWidget(saveButton);
+    mainLayout->addWidget(exit);
+
+    connect(saveButton, SIGNAL(clicked()), this, SLOT(save()));
+    connect(exit, SIGNAL(clicked()), this, SLOT(accept()));
+
+    setLayout(mainLayout);
 }
 
 void FrameCodeGenerator::save()
@@ -44,8 +53,8 @@ void FrameCodeGenerator::save()
                 } else {
                     QTextStream stream(&file);
                     stream.setCodec("UTF-8");
-                    stream << codeProtection->toPlainText();
-                    stream << codeProgramme->toPlainText();
+                    stream << ProtectionData->toPlainText();
+                    stream << Data->toPlainText();
                     stream.flush();
                     file.close();
                 }

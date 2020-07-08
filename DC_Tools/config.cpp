@@ -2,217 +2,194 @@
 
 Config::Config() : QDialog()
 {
-
-    QDirIterator dirIteratorP("template/programme", QStringList() << "*.cfg", QDir::Files | QDir::NoSymLinks, QDirIterator::Subdirectories);
-    QStringList fileListP;
-    while(dirIteratorP.hasNext())
-    {
-        // ...on va au prochain fichier correspondant à notre filtre
-        fileListP << dirIteratorP.next();
-    }
-    QDirIterator dirIteratorPr("template/protection", QStringList() << "*.cfg", QDir::Files | QDir::NoSymLinks, QDirIterator::Subdirectories);
-    QStringList fileListPr;
-    while(dirIteratorPr.hasNext())
-    {
-        // ...on va au prochain fichier correspondant à notre filtre
-        fileListPr << dirIteratorPr.next();
-    }
-    QDirIterator dirIteratorIa("template/ia", QStringList() << "*.cfg", QDir::Files | QDir::NoSymLinks, QDirIterator::Subdirectories);
-    QStringList fileListIa;
-    while(dirIteratorIa.hasNext())
-    {
-        // ...on va au prochain fichier correspondant à notre filtre
-        fileListIa << dirIteratorIa.next();
-    }
-    QDirIterator dirIteratorGlace("template/glace", QDir::AllDirs | QDir::NoSymLinks | QDir::NoDotAndDotDot);
-    QStringList dirListGlace;
-    while(dirIteratorGlace.hasNext())
-    {
-        // ...on va au prochain fichier correspondant à notre filtre
-        dirListGlace << dirIteratorGlace.next();
-    }
-
     QSettings settings("Exiel", "DC_Tools");
+
     resize(600, 500);
 
-    CFG_Name_Line = new QLineEdit;
-    CFG_Name_Line->setText(settings.value("Configuration/Auteur").toString());
-    CFG_Mate_Line = new QLineEdit;
-    CFG_Mate_Line->setText(settings.value("Configuration/Materiel").toString());
-    templateL = new QLabel;
-    templateL->setText(" " + settings.value("Configuration/TemplateP").toString());
-    templateC = new QComboBox;
-    templateC->addItems(fileListP);
-    templatePL = new QLabel;
-    templatePL->setText(" " + settings.value("Configuration/TemplatePr").toString());
-    templatePC = new QComboBox;
-    templatePC->addItems(fileListPr);
-    templateIaL = new QLabel;
-    templateIaL->setText(" " + settings.value("Configuration/TemplateIa").toString());
-    templateIaC = new QComboBox;
-    templateIaC->addItems(fileListIa);
-    templateGlL = new QLabel;
-    templateGlL->setText(" " + settings.value("Configuration/TemplateGL").toString());
-    templateGlC = new QComboBox;
-    templateGlC->addItems(dirListGlace);
+    QVBoxLayout *Config_MainLayout = new QVBoxLayout;
 
-    GB_Prot_Name_Line = new QLineEdit;
-    GB_Prot_Name_Line->setText(settings.value("Protection/Name").toString());
-    GB_Prot_Vers_Line = new QLineEdit;
-    GB_Prot_Vers_Line->setText(settings.value("Protection/Version").toString());
-    GB_Prot_NaPr_Line = new QLineEdit;
-    GB_Prot_NaPr_Line->setText(settings.value("Protection/NameGlace").toString());
-    GB_Prot_UrlP_Line = new QLineEdit;
-    GB_Prot_UrlP_Line->setText(settings.value("Protection/UrlGlace").toString());
-    GB_Prot_Read_Line = new QLineEdit;
-    GB_Prot_Read_Line->setText(settings.value("Protection/Read").toString());
-    GB_Prot_Writ_Line = new QLineEdit;
-    GB_Prot_Writ_Line->setText(settings.value("Protection/Write").toString());
-    GB_Prot_Mode_Line = new QLineEdit;
-    GB_Prot_Mode_Line->setText(settings.value("Protection/Moderator").toString());
-    GB_Prot_Admi_Line = new QLineEdit;
-    GB_Prot_Admi_Line->setText(settings.value("Protection/Administrator").toString());
+    Config_Tab = new QTabWidget(this);
+    Config_Protection_Page = new QWidget;
+    Config_Template_Page = new QWidget;
+    Config_Other_Page = new QWidget;
+    Config_About_Page = new QWidget;
 
+    //Template DIR's
+        QDirIterator Protection_Dir("template/protection", QStringList() << "*.pouik", QDir::Files | QDir::NoSymLinks, QDirIterator::Subdirectories);
+        QStringList Protection_FileList;
+        while(Protection_Dir.hasNext())
+        {
+            Protection_FileList << Protection_Dir.next();
+        }
 
-    QFormLayout *protLayout = new QFormLayout;
-    protLayout->addRow("&Nom :", GB_Prot_Name_Line);
-    protLayout->addRow("&Version :", GB_Prot_Vers_Line);
-    protLayout->addRow("&Nom GLACE Protection :", GB_Prot_NaPr_Line);
-    protLayout->addRow("&Lien GLACE Protection :", GB_Prot_UrlP_Line);
-    protLayout->addRow("&Lecture :", GB_Prot_Read_Line);
-    protLayout->addRow("&Ecriture :", GB_Prot_Writ_Line);
-    protLayout->addRow("&Modération :", GB_Prot_Mode_Line);
-    protLayout->addRow("&Administration :", GB_Prot_Admi_Line);
-    protLayout->addRow("Template Protection Actuel :", templatePL);
-    protLayout->addRow("Template Protection :",templatePC);
+        QDirIterator Program_Dir("template/programme", QStringList() << "*.pouik", QDir::Files | QDir::NoSymLinks, QDirIterator::Subdirectories);
+        QStringList Program_FileList;
+        while(Program_Dir.hasNext())
+        {
+            Program_FileList << Program_Dir.next();
+        }
 
-    QGroupBox *GB_Prot = new QGroupBox("Protection EM");
-    GB_Prot->setLayout(protLayout);
+        QDirIterator Glace_Dir("template/glace", QDir::AllDirs | QDir::NoSymLinks | QDir::NoDotAndDotDot);
+        QStringList Glace_FileList;
+        while(Glace_Dir.hasNext())
+        {
+            Glace_FileList << Glace_Dir.next();
+        }
 
-    save = new QPushButton("Enregistrer");
+        QDirIterator Ai_Dir("template/ia", QStringList() << "*.pouik", QDir::Files | QDir::NoSymLinks, QDirIterator::Subdirectories);
+        QStringList Ai_FileList;
+        while(Ai_Dir.hasNext())
+        {
+            Ai_FileList << Ai_Dir.next();
+        }
 
-    QFormLayout *cfgLayout = new QFormLayout;
-    cfgLayout->addRow("&Auteur + ID :", CFG_Name_Line);
-    cfgLayout->addRow("&Matériel Hôte :", CFG_Mate_Line);
-    cfgLayout->addRow("Template Programme Actuel :", templateL);
-    cfgLayout->addRow("Template Programme :",templateC);
-    cfgLayout->addRow("Template IA Actuel :", templateIaL);
-    cfgLayout->addRow("Template Ia :", templateIaC);
-    cfgLayout->addRow("Template Glace Actuel :", templateGlL);
-    cfgLayout->addRow("Template Glace :", templateGlC);
+    //Protection Page
+        Config_Prot_Name = new QLineEdit;
+        Config_Prot_Name->setText(settings.value("Protection/Name").toString());
+        Config_Prot_Vers = new QLineEdit;
+        Config_Prot_Vers->setText(settings.value("Protection/Version").toString());
+        Config_Prot_GlaceName = new QLineEdit;
+        Config_Prot_GlaceName->setText(settings.value("Protection/NameGlace").toString());
+        Config_Prot_GlaceLink = new QLineEdit;
+        Config_Prot_GlaceLink->setText(settings.value("Protection/UrlGlace").toString());
+        Config_Prot_Read = new QLineEdit;
+        Config_Prot_Read->setText(settings.value("Protection/Read").toString());
+        Config_Prot_Write = new QLineEdit;
+        Config_Prot_Write->setText(settings.value("Protection/Write").toString());
+        Config_Prot_Mod = new QLineEdit;
+        Config_Prot_Mod->setText(settings.value("Protection/Moderator").toString());
+        Config_Prot_Admin = new QLineEdit;
+        Config_Prot_Admin->setText(settings.value("Protection/Administrator").toString());
+        Config_Prot_Template = new QLabel;
+        Config_Prot_Template->setText(" " + settings.value("Protection/TemplateProtection").toString());
+        Config_Prot_NewTemplate = new QComboBox;
+        Config_Prot_NewTemplate->addItems(Protection_FileList);
+        Config_Prot_ProtectionCheck = new QCheckBox;
+        Config_Prot_ProtectionCheck->setChecked(settings.value("Protection/ProtectionCheck").toBool());
 
-    QGroupBox *GB_Cfg = new QGroupBox("Configuration");
-    GB_Cfg->setLayout(cfgLayout);
+        //Protection Page Layout
+            QFormLayout *Config_Prot_Layout = new QFormLayout;
+            Config_Prot_Layout->addRow("&Nom :", Config_Prot_Name);
+            Config_Prot_Layout->addRow("&Version :", Config_Prot_Vers);
+            Config_Prot_Layout->addRow("&Nom GLACE Protection :", Config_Prot_GlaceName);
+            Config_Prot_Layout->addRow("&Lien GLACE Protection :", Config_Prot_GlaceLink);
+            Config_Prot_Layout->addRow("&Lecture :", Config_Prot_Read);
+            Config_Prot_Layout->addRow("&Ecriture :", Config_Prot_Write);
+            Config_Prot_Layout->addRow("&Modération :", Config_Prot_Mod);
+            Config_Prot_Layout->addRow("&Administration :", Config_Prot_Admin);
+            Config_Prot_Layout->addRow("Template Protection Actuel :", Config_Prot_Template);
+            Config_Prot_Layout->addRow("Template Protection :",Config_Prot_NewTemplate);
+            Config_Prot_Layout->addRow("Activer Protection ?", Config_Prot_ProtectionCheck);
 
-    QVBoxLayout *layoutMainL = new QVBoxLayout;
-    layoutMainL->addWidget(GB_Cfg);
-    layoutMainL->addWidget(GB_Prot);
-    layoutMainL->addWidget(save);
+        QGroupBox *Config_Prot_GroupBox = new QGroupBox;
+        Config_Prot_GroupBox->setLayout(Config_Prot_Layout);
 
-    setLayout(layoutMainL);
+        QVBoxLayout *Config_Prot_VLayout = new QVBoxLayout;
+        Config_Prot_VLayout->addWidget(Config_Prot_GroupBox);
 
-    connect(save, SIGNAL(clicked()), this, SLOT(saveS()));
+        Config_Protection_Page->setLayout(Config_Prot_VLayout);
+
+    //Template Page
+        Config_Template_Program = new QLabel;
+        Config_Template_Program->setText(" " + settings.value("Configuration/TemplateProgram").toString());
+        Config_Template_Glace = new QLabel;
+        Config_Template_Glace->setText(" " + settings.value("Configuration/TemplateGlace").toString());
+        Config_Template_Ai = new QLabel;
+        Config_Template_Ai->setText(" " + settings.value("Configuration/TemplateAi").toString());
+        Config_Template_NewProgram = new QComboBox;
+        Config_Template_NewProgram->addItems(Program_FileList);
+        Config_Template_NewGlace = new QComboBox;
+        Config_Template_NewGlace->addItems(Glace_FileList);
+        Config_Template_NewAi = new QComboBox;
+        Config_Template_NewAi->addItems(Ai_FileList);
+
+        //Template Page Layout
+            QFormLayout *Config_Template_Layout = new QFormLayout;
+            Config_Template_Layout->addRow("Template Programme Actuel :", Config_Template_Program);
+            Config_Template_Layout->addRow("Template Programme :",Config_Template_NewProgram);
+            Config_Template_Layout->addRow("Template Glace Actuel :", Config_Template_Glace);
+            Config_Template_Layout->addRow("Template Glace :", Config_Template_NewGlace);
+            Config_Template_Layout->addRow("Template IA Actuel :", Config_Template_Ai);
+            Config_Template_Layout->addRow("Template Ia :", Config_Template_NewAi);
+
+        QGroupBox *Config_Template_GroupBox = new QGroupBox;
+        Config_Template_GroupBox->setLayout(Config_Template_Layout);
+
+        QVBoxLayout *Config_Template_VLayout = new QVBoxLayout;
+        Config_Template_VLayout->addWidget(Config_Template_GroupBox);
+
+        Config_Template_Page->setLayout(Config_Template_VLayout);
+
+    //Other Page
+        Config_Other_Name = new QLineEdit;
+        Config_Other_Name->setText(settings.value("Configuration/Auteur").toString());
+        Config_Other_Mate = new QLineEdit;
+        Config_Other_Mate->setText(settings.value("Configuration/Materiel").toString());
+
+        //Other Page Layout
+            QFormLayout *Config_Other_Layout = new QFormLayout;
+            Config_Other_Layout->addRow("&Auteur + ID :", Config_Other_Name);
+            Config_Other_Layout->addRow("&Matériel Hôte :", Config_Other_Mate);
+
+        QGroupBox *Config_Other_GroupBox = new QGroupBox;
+        Config_Other_GroupBox->setLayout(Config_Other_Layout);
+
+        QVBoxLayout *Config_OtherVLayout = new QVBoxLayout;
+        Config_OtherVLayout->addWidget(Config_Other_GroupBox);
+
+        Config_Other_Page->setLayout(Config_OtherVLayout);
+
+    //About Page
+        Config_About_Logo = new QLabel;
+        Config_About_Logo->setPixmap(QPixmap(":/images/logo"));
+
+        //About Page Layout
+
+        QVBoxLayout *Config_About_VLayout = new QVBoxLayout;
+        Config_About_VLayout->setAlignment(Qt::AlignCenter);
+        Config_About_VLayout->addWidget(Config_About_Logo);
+
+        Config_About_Page->setLayout(Config_About_VLayout);
+
+    QPushButton *saveButton = new QPushButton("Enregistrer");
+
+    Config_Tab->addTab(Config_Protection_Page, "Protection");
+    Config_Tab->addTab(Config_Template_Page, "Template");
+    Config_Tab->addTab(Config_Other_Page, "Autres");
+    Config_Tab->addTab(Config_About_Page, "A Propos");
+
+    Config_MainLayout->addWidget(Config_Tab);
+    Config_MainLayout->addWidget(saveButton);
+
+    setLayout(Config_MainLayout);
+
+    connect(saveButton, SIGNAL(clicked()), this, SLOT(save()));
 }
 
-void Config::saveS()
+void Config::save()
 {
     QSettings settings("Exiel", "DC_Tools");
-    QString name;
-    name += CFG_Name_Line->text();
-    QString mate;
-    mate += CFG_Mate_Line->text();
-    QString type;
-    type += templateC->currentText();
 
-    QString PName;
-    PName += GB_Prot_Name_Line->text();
-    QString PVers;
-    PVers += GB_Prot_Vers_Line->text();
-    QString PNGP;
-    PNGP += GB_Prot_NaPr_Line->text();
-    QString PLGP;
-    PLGP += GB_Prot_UrlP_Line->text();
-    QString read;
-    read += GB_Prot_Read_Line->text();
-    QString writ;
-    writ += GB_Prot_Writ_Line->text();
-    QString mode;
-    mode += GB_Prot_Mode_Line->text();
-    QString admi;
-    admi += GB_Prot_Admi_Line->text();
-    QString typePr;
-    typePr += templatePC->currentText();
-    QString typeIa;
-    typeIa += templateIaC->currentText();
-    QString typeGl;
-    typeGl += templateGlC->currentText();
+    //Protection Page Save
+        settings.setValue("Protection/Name", Config_Prot_Name->text());
+        settings.setValue("Protection/Version", Config_Prot_Vers->text());
+        settings.setValue("Protection/NameGlace", Config_Prot_GlaceName->text());
+        settings.setValue("Protection/UrlGlace", Config_Prot_GlaceLink->text());
+        settings.setValue("Protection/Read", Config_Prot_Read->text());
+        settings.setValue("Protection/Write", Config_Prot_Write->text());
+        settings.setValue("Protection/Moderator", Config_Prot_Mod->text());
+        settings.setValue("Protection/Administrator", Config_Prot_Admin->text());
+        settings.setValue("Protection/TemplateProtection", Config_Prot_NewTemplate->currentText());
+        settings.setValue("Protection/ProtectionCheck", Config_Prot_ProtectionCheck->isChecked());
 
-    settings.setValue("Configuration/Auteur", name);
-    settings.setValue("Configuration/Materiel", mate);
-    settings.setValue("Configuration/TemplateP", type);
+    //Template Page Save
+        settings.setValue("Configuration/TemplateProgram", Config_Template_NewProgram->currentText());
+        settings.setValue("Configuration/TemplateGlace", Config_Template_NewGlace->currentText());
+        settings.setValue("Configuration/TemplateAi", Config_Template_NewAi->currentText());
 
-    settings.setValue("Protection/Name", PName);
-    settings.setValue("Protection/Version", PVers);
-    settings.setValue("Protection/NameGlace", PNGP);
-    settings.setValue("Protection/UrlGlace", PLGP);
-    settings.setValue("Protection/Read", read);
-    settings.setValue("Protection/Write", writ);
-    settings.setValue("Protection/Moderator", mode);
-    settings.setValue("Protection/Administrator", admi);
-    settings.setValue("Configuration/TemplatePr", typePr);
-    settings.setValue("Configuration/TemplateIa", typeIa);
-    settings.setValue("Configuration/TemplateGL", typeGl);
+    //Other Page Save
+        settings.setValue("Configuration/Auteur", Config_Other_Name->text());
+        settings.setValue("Configuration/Materiel", Config_Other_Mate->text());
+
     close();
-}
-
-void Config::closeEvent(QCloseEvent* event) {
-    //DEBUT_Système de sauvegarde
-    QSettings settings("Exiel", "DC_Tools");
-        //DEBUT_Save Programme
-    QString name;
-    name += CFG_Name_Line->text();
-    QString mate;
-    mate += CFG_Mate_Line->text();
-    QString type;
-    type += templateC->currentText();
-
-    QString PName;
-    PName += GB_Prot_Name_Line->text();
-    QString PVers;
-    PVers += GB_Prot_Vers_Line->text();
-    QString PNGP;
-    PNGP += GB_Prot_NaPr_Line->text();
-    QString PLGP;
-    PLGP += GB_Prot_UrlP_Line->text();
-    QString read;
-    read += GB_Prot_Read_Line->text();
-    QString writ;
-    writ += GB_Prot_Writ_Line->text();
-    QString mode;
-    mode += GB_Prot_Mode_Line->text();
-    QString admi;
-    admi += GB_Prot_Admi_Line->text();
-    QString typePr;
-    typePr += templatePC->currentText();
-    QString typeIa;
-    typeIa += templateIaC->currentText();
-    QString typeGl;
-    typeGl += templateGlC->currentText();
-
-    settings.setValue("Configuration/Auteur", name);
-    settings.setValue("Configuration/Materiel", mate);
-    settings.setValue("Configuration/TemplateP", type);
-
-    settings.setValue("Protection/Name", PName);
-    settings.setValue("Protection/Version", PVers);
-    settings.setValue("Protection/NameGlace", PNGP);
-    settings.setValue("Protection/UrlGlace", PLGP);
-    settings.setValue("Protection/Read", read);
-    settings.setValue("Protection/Write", writ);
-    settings.setValue("Protection/Moderator", mode);
-    settings.setValue("Protection/Administrator", admi);
-    settings.setValue("Configuration/TemplatePr", typePr);
-    settings.setValue("Configuration/TemplateIa", typeIa);
-    settings.setValue("Configuration/TemplateGL", typeGl);
-    event->accept();
 }

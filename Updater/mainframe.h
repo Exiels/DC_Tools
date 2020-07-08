@@ -2,7 +2,7 @@
 #define MAINFRAME_H
 
 #include <QApplication>
-#include <QWidget>
+#include <QtWidgets>
 #include <QIcon>
 #include <QtNetwork/QNetworkAccessManager>
 #include <QtNetwork/QNetworkRequest>
@@ -16,17 +16,20 @@
 
 
 
-class MainFrame : public QWidget
+class MainFrame : public QDialog
 {
 
     Q_OBJECT
-        public:
-            MainFrame();
-        private:
-            QNetworkReply *reply;
-            QNetworkAccessManager manager;
-        public slots:
-           void enregistrer();
+public:
+        MainFrame();
+private:
+        QNetworkReply *reply;
+        QNetworkAccessManager manager;
+public slots:
+        void enregistrer();
+        void downloadProgress(qint64 ist, qint64 max);
+protected:
+        QProgressBar *pBar;
 };
 
 #endif // MAINFRAME_H

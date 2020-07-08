@@ -26,9 +26,8 @@ int main(int argc, char *argv[])
     if(ID.isEmpty() or IDC != ID){
         QString IDN;
         const QString possibleCharacters("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
-        const int randomStringLength = 12;
 
-        for(int i=0; i<randomStringLength; ++i){
+        for(int i=0; i<12; ++i){
 
             quint32 NombreAleatoire = QRandomGenerator::global()->bounded(62);
             IDN += possibleCharacters[NombreAleatoire];
@@ -41,8 +40,9 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 
     //Authenticator authenticate;
-    //authenticate.setWindowFlags(Qt::Tool);
+    //authenticate.setWindowFlags(Qt::Window | Qt::FramelessWindowHint );
     //authenticate.show();
+
     MainFrame fenetre;
     fenetre.show();
 
