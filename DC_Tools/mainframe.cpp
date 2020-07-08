@@ -4,7 +4,7 @@
 
 MainFrame::MainFrame()
 {
-    version = "0.9";
+    version = "1.0";
     setWindowFlags(Qt::Window | Qt::FramelessWindowHint );
     resize(510, 680);
 
@@ -496,7 +496,7 @@ void MainFrame::ai()
 void MainFrame::updater()
 {
     QNetworkAccessManager Updater_Manager;
-    QUrl Updater_Url = QUrl("https://dctools.xyz/DC_Tools/version.txt");
+    QUrl Updater_Url = QUrl("http://dctools.xyz/DC_Tools/version.txt");
     QTcpSocket Updater_Socket;
 
     //Connect to the server

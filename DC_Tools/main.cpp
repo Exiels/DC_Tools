@@ -39,12 +39,12 @@ int main(int argc, char *argv[])
 
     QApplication app(argc, argv);
 
-    //Authenticator authenticate;
-    //authenticate.setWindowFlags(Qt::Window | Qt::FramelessWindowHint );
-    //authenticate.show();
+    Authenticator authenticate;
+    authenticate.setWindowFlags(Qt::Window | Qt::FramelessWindowHint );
+    authenticate.show();
 
-    MainFrame fenetre;
-    fenetre.show();
+    //MainFrame fenetre;
+    //fenetre.show();
 
     return app.exec();
 }

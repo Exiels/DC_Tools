@@ -15,7 +15,7 @@ MainFrame::MainFrame() : QDialog()
 
     setLayout(MainLayout);
 
-    reply = manager.get(QNetworkRequest(QUrl("https://dctools.xyz/DC_Tools/update.zip")));
+    reply = manager.get(QNetworkRequest(QUrl("http://dctools.xyz/DC_Tools/update.zip")));
     connect(reply, &QNetworkReply::downloadProgress,this, &MainFrame::downloadProgress);
     QObject::connect(reply, SIGNAL(finished()), this, SLOT(enregistrer()));
 }

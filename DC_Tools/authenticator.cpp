@@ -3,10 +3,10 @@
 
 Authenticator::Authenticator() : QDialog()
 {
-    version = "0.9";
+    version = "1.0";
 
     QNetworkAccessManager Updater_Manager;
-    QUrl Updater_Url = QUrl("https://dctools.xyz/DC_Tools/version.txt");
+    QUrl Updater_Url = QUrl("http://dctools.xyz/DC_Tools/version.txt");
     QTcpSocket Updater_Socket;
 
     //Connect to the server
@@ -70,7 +70,7 @@ void Authenticator::Login()
 
     QNetworkAccessManager loginManager;
 
-    QUrl loginUrl = QUrl("https://dctools.xyz/DC_Tools/users/" + UsernameLogin + ".txt");
+    QUrl loginUrl = QUrl("http://dctools.xyz/DC_Tools/users/" + UsernameLogin + ".txt");
 
     QTcpSocket loginSocket;
     loginSocket.connectToHost(loginUrl.host(), 80);
